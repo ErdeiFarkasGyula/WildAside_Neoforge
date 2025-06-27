@@ -1,0 +1,14 @@
+{
+  "type": "wildaside:bioengineering",
+  "ingredients": [
+    { "item": "wildaside:entorium" },
+    { "item": "wildaside:entorium" },
+    {},
+    { "item": "wildaside:entorium" },
+    {}
+  ],
+  "output": {
+    "count": 1,
+    "id": "wildaside:entorium_pill"
+  }
+}

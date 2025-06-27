@@ -1,0 +1,14 @@
+{
+  "type": "wildaside:bioengineering",
+  "ingredients": [
+    { "item": "wildaside:spore_blaster" },
+    {},
+    { "item": "minecraft:redstone" },
+    { "item": "minecraft:glass_bottle" },
+    { "item": "minecraft:redstone" }
+  ],
+  "output": {
+    "count": 1,
+    "id": "wildaside:potion_blaster"
+  }
+}

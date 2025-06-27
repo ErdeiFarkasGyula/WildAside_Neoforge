@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "id": "wildaside:substilium_soil"
+    },
+    "title": {
+      "translate": "advancements.descent.title"
+    },
+    "description": {
+      "translate": "advancements.descent.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "descent": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": {
+          "location": {
+            "biomes": "wildaside:vibrion_hive"
+          }
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 2
+  },
+  "parent": "wildaside:wild_wilder_wildest"
+}
