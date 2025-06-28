@@ -2,6 +2,7 @@ package net.farkas.wildaside.block.custom;
 
 import net.farkas.wildaside.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -21,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Math;
 
 public class GlowingSaplingBlock extends SaplingBlock {
@@ -64,7 +64,7 @@ public class GlowingSaplingBlock extends SaplingBlock {
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
             if (pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             pLevel.setBlock(pPos, pState.setValue(GlowingSaplingBlock.FIXED_LIGHTING, true), 3);
-            pLevel.playSound(null, pPos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
+            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
             if (!pPlayer.isCreative()) {

@@ -4,7 +4,10 @@ import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.enchantment.ModEnchantments;
 import net.farkas.wildaside.particle.ModParticles;
 import net.farkas.wildaside.util.AdvancementHandler;
+import net.farkas.wildaside.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -18,7 +21,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class OvergrownEntoriumOre extends EntoriumOre {
     public OvergrownEntoriumOre(Properties pProperties) {
@@ -35,14 +37,14 @@ public class OvergrownEntoriumOre extends EntoriumOre {
             BlockState newBlock = ModBlocks.ENTORIUM_ORE.get().defaultBlockState();
 
             pLevel.setBlock(pPos, newBlock, 3);
-            pLevel.playSound(null, pPos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("entity.mooshroom.shear")), SoundSource.BLOCKS, 1, 1);
+            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("entity.mooshroom.shear")), SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
             if (!pPlayer.isCreative()) {
                 playerItem.hurtAndBreak(1, pPlayer, pStack.getEquipmentSlot());
             }
 
-            if (EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.EXTENSIVE_RESEARCH.getOrThrow(pLevel), pStack) > 0) {
+            if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentUtils.getEnchtantmentHolder(pLevel, ModEnchantments.EXTENSIVE_RESEARCH), pStack) > 0) {
                 AdvancementHandler.givePlayerAdvancement((ServerPlayer) pPlayer, "extensive_research");
                 for (int i = -1; i <= 1; i++) {
                     for (int j = -1; j <= 1; j++) {

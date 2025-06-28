@@ -1,0 +1,91 @@
+{
+  "values": {
+    "wildaside:brown_glowing_hickory_leaf": {
+      "chance": 0.15
+    },
+    "wildaside:brown_glowing_hickory_leaves": {
+      "chance": 0.5
+    },
+    "wildaside:brown_glowing_hickory_sapling": {
+      "chance": 0.5
+    },
+    "wildaside:compressed_vibrion_block": {
+      "chance": 1.0
+    },
+    "wildaside:entorium": {
+      "chance": 0.3
+    },
+    "wildaside:entorium_shroom": {
+      "chance": 0.5
+    },
+    "wildaside:green_glowing_hickory_leaf": {
+      "chance": 0.15
+    },
+    "wildaside:green_glowing_hickory_leaves": {
+      "chance": 0.5
+    },
+    "wildaside:green_glowing_hickory_sapling": {
+      "chance": 0.5
+    },
+    "wildaside:hanging_vibrion_vines": {
+      "chance": 0.5
+    },
+    "wildaside:hickory_leaf": {
+      "chance": 0.1
+    },
+    "wildaside:hickory_leaves": {
+      "chance": 0.3
+    },
+    "wildaside:hickory_nut": {
+      "chance": 0.65
+    },
+    "wildaside:hickory_sapling": {
+      "chance": 0.3
+    },
+    "wildaside:lit_vibrion_gel": {
+      "chance": 0.5
+    },
+    "wildaside:pinkster_flower": {
+      "chance": 0.65
+    },
+    "wildaside:red_glowing_hickory_leaf": {
+      "chance": 0.15
+    },
+    "wildaside:red_glowing_hickory_leaves": {
+      "chance": 0.5
+    },
+    "wildaside:red_glowing_hickory_sapling": {
+      "chance": 0.5
+    },
+    "wildaside:spotted_wintergreen": {
+      "chance": 0.65
+    },
+    "wildaside:substilium_sprouts": {
+      "chance": 0.3
+    },
+    "wildaside:vibrion": {
+      "chance": 0.25
+    },
+    "wildaside:vibrion_block": {
+      "chance": 1.0
+    },
+    "wildaside:vibrion_gel": {
+      "chance": 0.5
+    },
+    "wildaside:vibrion_growth": {
+      "chance": 0.3
+    },
+    "wildaside:vibrion_sporeholder": {
+      "chance": 1.0
+    },
+    "wildaside:yellow_glowing_hickory_leaf": {
+      "chance": 0.15
+    },
+    "wildaside:yellow_glowing_hickory_leaves": {
+      "chance": 0.5
+    },
+    "wildaside:yellow_glowing_hickory_sapling": {
+      "chance": 0.5
+    }
+  }
+}

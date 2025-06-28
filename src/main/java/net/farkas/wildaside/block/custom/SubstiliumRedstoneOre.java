@@ -1,7 +1,10 @@
 package net.farkas.wildaside.block.custom;
 
+import net.farkas.wildaside.enchantment.ModEnchantments;
+import net.farkas.wildaside.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -13,13 +16,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedstoneTorchBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class SubstiliumRedstoneOre extends SubstiliumSoil {
     public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
@@ -77,8 +84,8 @@ public class SubstiliumRedstoneOre extends SubstiliumSoil {
     }
 
     @Override
-    public int getExpDrop(BlockState state, net.minecraft.world.level.LevelReader world, RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
-        return silktouch == 0 ? 1 + randomSource.nextInt(5) : 0;
+    public int getExpDrop(BlockState state, LevelAccessor level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity breaker, ItemStack tool) {
+        return tool.getEnchantmentLevel(EnchantmentUtils.getEnchtantmentHolder(level, Enchantments.SILK_TOUCH)) == 0 ? 1 + level.getRandom().nextInt(5) : 0;
     }
 
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {

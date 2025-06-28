@@ -8,6 +8,7 @@ import net.farkas.wildaside.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Math;
 
 public class GlowingLeavesBlock extends LeavesBlock {
@@ -67,7 +67,7 @@ public class GlowingLeavesBlock extends LeavesBlock {
 
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
             pLevel.setBlock(pPos, pState.setValue(GlowingLeavesBlock.FIXED_LIGHTING, true), 3);
-            pLevel.playSound(null, pPos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
+            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
             if (!pPlayer.isCreative()) {

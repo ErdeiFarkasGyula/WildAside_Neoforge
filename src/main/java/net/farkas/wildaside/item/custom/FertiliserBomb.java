@@ -1,5 +1,6 @@
 package net.farkas.wildaside.item.custom;
 
+import net.farkas.wildaside.entity.custom.vibrion.FertiliserBombEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;

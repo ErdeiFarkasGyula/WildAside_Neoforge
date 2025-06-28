@@ -38,8 +38,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.SPORE_ARROW);
         simpleItem(ModItems.SPORE_BOMB);
         simpleItem(ModItems.FERTILISER_BOMB);
-        evenSimplerBlockItem(ModBlocks.ENTORIUM_ORE);
-        evenSimplerBlockItem(ModBlocks.OVERGROWN_ENTORIUM_ORE);
 
         //SUBSTILIUM
         simpleBlockItem(ModBlocks.SUBSTILIUM_DOOR);

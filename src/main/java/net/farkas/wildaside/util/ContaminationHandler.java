@@ -1,5 +1,6 @@
 package net.farkas.wildaside.util;
 
+import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.entity.custom.vibrion.MucellithEntity;
 import net.minecraft.core.Holder;
@@ -15,17 +16,16 @@ public class ContaminationHandler {
     public static void giveContaminationDose(Entity entity, int dose) {
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
-        livingEntity.getCapability(ContaminationCapability.INSTANCE).ifPresent(data -> {
-            data.addDose(dose);
-            applyContamination(livingEntity, data.getDose());
-        });
+        var data = livingEntity.getData(ModAttachments.CONTAMINATION);
+        data.addDose(dose);
+        applyContamination(livingEntity, data.getDose());
 
     }
 
     public static void applyContamination(LivingEntity entity, int dose) {
         if (entity instanceof MucellithEntity) return;
 
-        Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getHolder().get();
+        Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
         if (entity.hasEffect(immunity)) {
             int immunityAmp = entity.getEffect(immunity).getAmplifier();
             if (dose < (immunityAmp + 1) * 1000) {
@@ -33,7 +33,7 @@ public class ContaminationHandler {
             }
         }
 
-        Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getHolder().get();
+        Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getDelegate();
         int amplifier = Math.min(maxAmplifier, dose / 1000);
         if (entity.hasEffect(contamination)) {
             entity.removeEffect(contamination);

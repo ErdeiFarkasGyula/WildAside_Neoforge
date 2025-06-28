@@ -130,7 +130,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         ResourceLocation parentModel = modLoc("custom/flat_block");
         ResourceLocation tintedModel = modLoc("custom/flat_tinted_block");
 
-
         ModelFile[][] models = new ModelFile[colours.length][3];
         for (int ci = 0; ci < colours.length; ci++) {
             String colName = colours[ci].getSerializedName();
@@ -225,5 +224,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void blockWithItem(DeferredBlock<?> deferredBlock) {
         simpleBlockWithItem(deferredBlock.get(), cubeAll(deferredBlock.get()));
+    }
+
+    private void blockItem(DeferredBlock<?> deferredBlock) {
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("wildaside:block/" + deferredBlock.getId().getPath()));
+    }
+
+    private void blockItem(DeferredBlock<?> deferredBlock, String appendix) {
+        simpleBlockItem(deferredBlock.get(), new ModelFile.UncheckedModelFile("wildaside:block/" + deferredBlock.getId().getPath() + appendix));
     }
 }

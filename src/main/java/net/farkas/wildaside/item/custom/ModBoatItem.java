@@ -1,5 +1,7 @@
 package net.farkas.wildaside.item.custom;
 
+import net.farkas.wildaside.entity.custom.ModBoatEntity;
+import net.farkas.wildaside.entity.custom.ModChestBoatEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -45,8 +47,8 @@ public class ModBoatItem extends Item {
             List<Entity> list = pLevel.getEntities(pPlayer, pPlayer.getBoundingBox().expandTowards(vec3.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
             if (!list.isEmpty()) {
                 Vec3 vec31 = pPlayer.getEyePosition();
-                for(Entity entity : list) {
-                    AABB aabb = entity.getBoundingBox().inflate((double)entity.getPickRadius());
+                for (Entity entity : list) {
+                    AABB aabb = entity.getBoundingBox().inflate((double) entity.getPickRadius());
                     if (aabb.contains(vec31)) {
                         return InteractionResultHolder.pass(itemstack);
                     }
@@ -54,11 +56,12 @@ public class ModBoatItem extends Item {
             }
             if (hitresult.getType() == HitResult.Type.BLOCK) {
                 Boat boat = this.getBoat(pLevel, hitresult);
-                if(boat instanceof ModChestBoatEntity chestBoat) {
+                if (boat instanceof ModChestBoatEntity chestBoat) {
                     chestBoat.setVariant(this.type);
-                } else if(boat instanceof ModBoatEntity) {
-                    ((ModBoatEntity)boat).setVariant(this.type);
-                }
+                } else
+                    if (boat instanceof ModBoatEntity) {
+                        ((ModBoatEntity) boat).setVariant(this.type);
+                    }
                 boat.setYRot(pPlayer.getYRot());
                 if (!pLevel.noCollision(boat, boat.getBoundingBox())) {
                     return InteractionResultHolder.fail(itemstack);
@@ -80,6 +83,7 @@ public class ModBoatItem extends Item {
     }
 
     private Boat getBoat(Level p_220017_, HitResult p_220018_) {
-        return (Boat)(this.hasChest ? new ModChestBoatEntity(p_220017_, p_220018_.getLocation().x, p_220018_.getLocation().y, p_220018_.getLocation().z) :
+        return (Boat) (this.hasChest ? new ModChestBoatEntity(p_220017_, p_220018_.getLocation().x, p_220018_.getLocation().y, p_220018_.getLocation().z) :
                 new ModBoatEntity(p_220017_, p_220018_.getLocation().x, p_220018_.getLocation().y, p_220018_.getLocation().z));
     }
+}

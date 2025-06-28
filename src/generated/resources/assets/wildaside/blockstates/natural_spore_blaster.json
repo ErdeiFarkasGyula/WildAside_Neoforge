@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "wildaside:block/natural_spore_blaster_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "wildaside:block/natural_spore_blaster"
+    },
+    "axis=z": {
+      "model": "wildaside:block/natural_spore_blaster_horizontal",
+      "x": 90
+    }
+  }
+}

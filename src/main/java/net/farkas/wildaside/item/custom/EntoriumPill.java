@@ -1,5 +1,7 @@
 package net.farkas.wildaside.item.custom;
 
+import net.farkas.wildaside.effect.ModMobEffects;
+import net.farkas.wildaside.util.AdvancementHandler;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
@@ -20,7 +22,7 @@ public class EntoriumPill extends Item {
         if (!pLevel.isClientSide && pLivingEntity instanceof ServerPlayer player) {
             int amplifier = 0;
 
-            Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getHolder().get();
+            Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getDelegate();
             if (player.hasEffect(contamination)) {
                 MobEffectInstance cont = pLivingEntity.getEffect(contamination);
                 amplifier = cont.getAmplifier() + 1;
@@ -29,7 +31,7 @@ public class EntoriumPill extends Item {
                 }
             }
 
-            player.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getHolder().get(), (amplifier + 1) * 10 * 20, amplifier));
+            player.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (amplifier + 1) * 10 * 20, amplifier));
             player.removeEffect(MobEffects.POISON);
 
         }

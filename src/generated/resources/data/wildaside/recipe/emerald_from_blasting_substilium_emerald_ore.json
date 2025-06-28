@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 1.1,
+  "group": "emerald",
+  "ingredient": {
+    "item": "wildaside:substilium_emerald_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:emerald"
+  }
+}

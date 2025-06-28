@@ -1,5 +1,6 @@
 package net.farkas.wildaside.item.custom;
 
+import net.farkas.wildaside.util.ContaminationHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;

@@ -1,6 +1,9 @@
 package net.farkas.wildaside.item;
 
 import net.farkas.wildaside.WildAside;
+import net.farkas.wildaside.block.ModBlocks;
+import net.farkas.wildaside.entity.ModEntities;
+import net.farkas.wildaside.entity.custom.ModBoatEntity;
 import net.farkas.wildaside.item.custom.*;
 import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.world.item.HangingSignItem;

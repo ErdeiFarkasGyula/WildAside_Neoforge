@@ -1,6 +1,10 @@
 package net.farkas.wildaside.datagen;
 
 import net.farkas.wildaside.WildAside;
+import net.farkas.wildaside.enchantment.ModEnchantments;
+import net.farkas.wildaside.worldgen.ModConfiguredFeatures;
+import net.farkas.wildaside.worldgen.ModPlacedFeatures;
+import net.farkas.wildaside.worldgen.biome.ModBiomes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -20,7 +24,6 @@ public class ModDatapackEntries extends DatapackBuiltinEntriesProvider {
 
             .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
-            .add(Registries.BIOME, ModBiomes::boostrap)
-            .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap);
+            .add(Registries.BIOME, ModBiomes::boostrap);
 
 }

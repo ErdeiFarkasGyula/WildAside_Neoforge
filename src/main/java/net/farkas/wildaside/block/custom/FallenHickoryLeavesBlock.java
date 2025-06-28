@@ -5,6 +5,7 @@ import net.farkas.wildaside.item.custom.HickoryLeafItem;
 import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -32,7 +33,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Math;
 
 import java.util.Collections;
@@ -107,7 +107,7 @@ public class FallenHickoryLeavesBlock extends Block {
 
             pPlayer.swing(pHand);
             pPlayer.addItem(new ItemStack(ModItems.LEAF_ITEMS.get(pState.getValue(FallenHickoryLeavesBlock.COLOUR)).get()));
-            pLevel.playSound(null, pPos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("block.big_dripleaf.place")), SoundSource.BLOCKS, 1, 0.8f);
+            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("block.big_dripleaf.place")), SoundSource.BLOCKS, 1, 0.8f);
             if (!pPlayer.isCreative()) {
                 playerItem.shrink(1);
             }
@@ -118,7 +118,7 @@ public class FallenHickoryLeavesBlock extends Block {
             if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
                 if (pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
                 pLevel.setBlock(pPos, pState.setValue(FallenHickoryLeavesBlock.FIXED_LIGHTING, true), 3);
-                pLevel.playSound(null, pPos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
+                pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
 
                 if (!pPlayer.isCreative()) {
                     playerItem.shrink(1);

@@ -1,10 +1,10 @@
 package net.farkas.wildaside.event;
 
 import net.farkas.wildaside.WildAside;
+import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.item.ModItems;
-import net.farkas.wildaside.potion.BetterBrewingRecipe;
 import net.farkas.wildaside.potion.ModPotions;
 import net.farkas.wildaside.util.AdvancementHandler;
 import net.farkas.wildaside.util.ContaminationHandler;
@@ -18,43 +18,37 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.brewing.BrewingRecipeRegisterEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
+import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = WildAside.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = WildAside.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class ModEvents {
-    @SubscribeEvent
-    public static void attach(AttachCapabilitiesEvent<Entity> event) {
-        final ContaminationAttacher.ContaminationProvider provider = new ContaminationAttacher.ContaminationProvider();
-        event.addCapability(ContaminationAttacher.ContaminationProvider.IDENTIFIER, provider);
-    }
-
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
@@ -70,7 +64,9 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void brewingRecipesEvent(BrewingRecipeRegisterEvent event) {
+    public static void brewingRecipesEvent(RegisterBrewingRecipesEvent event) {
+        PotionBrewing.Builder builder = event.getBuilder();
+
 //        event.addRecipe(new BetterBrewingRecipe(Potions.AWKWARD, ModItems.VIBRION.get(), ModPotions.CONTAMINATION_POTION.get()));
 //        event.addRecipe(new BetterBrewingRecipe(ModPotions.CONTAMINATION_POTION.get(), Items.REDSTONE, ModPotions.CONTAMINATION_POTION_2.get()));
 //        event.addRecipe(new BetterBrewingRecipe(ModPotions.IMMUNITY_POTION.get(), Items.FERMENTED_SPIDER_EYE, ModPotions.IMMUNITY_POTION.get()));
@@ -80,8 +76,8 @@ public class ModEvents {
 //        event.addRecipe(new BetterBrewingRecipe(ModPotions.IMMUNITY_POTION.get(), Items.REDSTONE, ModPotions.IMMUNITY_POTION_2.get()));
 //        event.addRecipe(new BetterBrewingRecipe(ModPotions.CONTAMINATION_POTION_2.get(), Items.FERMENTED_SPIDER_EYE, ModPotions.IMMUNITY_POTION_2.get()));
 
-        event.addRecipe(new BetterBrewingRecipe(Potions.AWKWARD.get(), ModItems.MUCELLITH_JAW.get(), ModPotions.LIFESTEAL_POTION.get()));
-        event.addRecipe(new BetterBrewingRecipe(ModPotions.LIFESTEAL_POTION.get(), Items.REDSTONE, ModPotions.LIFESTEAL_POTION_2.get()));
+        builder.addMix(Potions.AWKWARD, ModItems.MUCELLITH_JAW.get(), ModPotions.LIFESTEAL_POTION);
+        builder.addMix(ModPotions.LIFESTEAL_POTION, Items.REDSTONE, ModPotions.LIFESTEAL_POTION_2);
     }
 
     @SubscribeEvent
@@ -130,7 +126,7 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    public static void onPlayerTick(PlayerTickEvent.Pre event) {
         glowUpAdvancement(event);
         itsShearingTimeAdvancement(event);
         bacteriaBarrierAdvancement(event);
@@ -138,9 +134,9 @@ public class ModEvents {
 
     private static final ResourceLocation GLOWING_FOREST = ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "glowing_hickory_forest");
 
-    private static void glowUpAdvancement(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !event.player.level().isClientSide) {
-            ServerPlayer player = (ServerPlayer) event.player;
+    private static void glowUpAdvancement(PlayerTickEvent.Pre event) {
+        if (!event.getEntity().level().isClientSide) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
             ServerLevel world = player.serverLevel();
 
             long time = world.getDayTime();
@@ -156,9 +152,9 @@ public class ModEvents {
         }
     }
 
-    private static void itsShearingTimeAdvancement(TickEvent.PlayerTickEvent event) {
-        if (!event.player.level().isClientSide) {
-            ServerPlayer player = (ServerPlayer) event.player;
+    private static void itsShearingTimeAdvancement(PlayerTickEvent event) {
+        if (!event.getEntity().level().isClientSide) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
             ServerLevel level = player.serverLevel();
 
             ClipContext clipContext = new ClipContext(player.getEyePosition(1f),
@@ -175,9 +171,9 @@ public class ModEvents {
         }
     }
 
-    private static void bacteriaBarrierAdvancement(TickEvent.PlayerTickEvent event) {
-        if (!event.player.level().isClientSide) {
-            ServerPlayer player = (ServerPlayer) event.player;
+    private static void bacteriaBarrierAdvancement(PlayerTickEvent event) {
+        if (!event.getEntity().level().isClientSide) {
+            ServerPlayer player = (ServerPlayer) event.getEntity();
             ServerLevel level = player.serverLevel();
 
             ClipContext clipContext = new ClipContext(player.getEyePosition(1f),
@@ -207,38 +203,33 @@ public class ModEvents {
         LivingEntity entity = event.getEntity();
         if (entity instanceof Player) {
             MobEffectInstance mobEffectInstance = event.getEffectInstance();
-            if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.get()) {
-                entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getHolder().get(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
+            if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
+                entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
             }
         }
     }
 
     @SubscribeEvent
     public static void playerDoesCriticalStrike(CriticalHitEvent event) {
-        if (event.isCanceled()) return;
+        if (!event.isCriticalHit()) return;
 
-        ModMobEffects.CONTAMINATION.getHolder().ifPresent(contamEffect -> {
-            Player attacker = event.getEntity();
-            if (attacker == null) return;
-            if (attacker.hasEffect(contamEffect)) {
-                RandomSource random = attacker.getRandom();
-                if ((float)attacker.getEffect(contamEffect).getAmplifier() / 5 > random.nextFloat()) {
-                    if (event.getTarget() instanceof LivingEntity target) {
-                        attacker.getCapability(ContaminationCapability.INSTANCE).ifPresent(data -> {
-                            ContaminationHandler.giveContaminationDose(target, data.getDose() / 5);
-                        });
-                    }
+        Holder<MobEffect> contamEffect = ModMobEffects.CONTAMINATION.getDelegate();
+
+        Player attacker = event.getEntity();
+        if (attacker.hasEffect(contamEffect)) {
+            RandomSource random = attacker.getRandom();
+            if ((float) attacker.getEffect(contamEffect).getAmplifier() / 5 > random.nextFloat()) {
+                if (event.getTarget() instanceof LivingEntity target) {
+                    int dose = attacker.getData(ModAttachments.CONTAMINATION).getDose();
+                    ContaminationHandler.giveContaminationDose(target, dose / 5);
                 }
             }
-        });
+        };
     }
 
     @SubscribeEvent
-    public static void livingEntityTick(LivingEvent.LivingTickEvent event) {
+    public static void livingEntityTick(LivingBreatheEvent event) {
         LivingEntity entity = event.getEntity();
-
-        entity.getCapability(ContaminationCapability.INSTANCE).ifPresent(data -> {
-            data.addDose(-10);
-        });
+        entity.getData(ModAttachments.CONTAMINATION).addDose(-10);
     }
 }

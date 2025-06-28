@@ -8,7 +8,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.Nullable;
 public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
     public ModFlammableRotatedPillarBlock(Properties pProperties) {
@@ -31,24 +31,24 @@ public class ModFlammableRotatedPillarBlock extends RotatedPillarBlock {
     }
 
     @Override
-    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
+    public @Nullable BlockState getToolModifiedState(BlockState state, UseOnContext context, ItemAbility itemAbility, boolean simulate) {
         if (context.getItemInHand().getItem() instanceof AxeItem) {
             if (state.is(ModBlocks.SUBSTILIUM_STEM.get())) {
                 return ModBlocks.STRIPPED_SUBSTILIUM_STEM.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
             }
             else
-            if (state.is(ModBlocks.SUBSTILIUM_WOOD.get())) {
-                return ModBlocks.STRIPPED_SUBSTILIUM_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-            }
-            else
-            if (state.is(ModBlocks.HICKORY_LOG.get())) {
-                return ModBlocks.STRIPPED_HICKORY_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-            }
-            else
-            if (state.is(ModBlocks.HICKORY_WOOD.get())) {
-                return ModBlocks.STRIPPED_HICKORY_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-            }
+                if (state.is(ModBlocks.SUBSTILIUM_WOOD.get())) {
+                    return ModBlocks.STRIPPED_SUBSTILIUM_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+                }
+                else
+                    if (state.is(ModBlocks.HICKORY_LOG.get())) {
+                        return ModBlocks.STRIPPED_HICKORY_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+                    }
+                    else
+                        if (state.is(ModBlocks.HICKORY_WOOD.get())) {
+                            return ModBlocks.STRIPPED_HICKORY_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
+                        }
         }
-        return super.getToolModifiedState(state, context, toolAction, simulate);
+        return super.getToolModifiedState(state, context, itemAbility, simulate);
     }
 }

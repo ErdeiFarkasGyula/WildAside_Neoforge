@@ -1,8 +1,11 @@
 package net.farkas.wildaside.item.custom;
 
+import net.farkas.wildaside.block.ModBlocks;
+import net.farkas.wildaside.block.custom.FallenHickoryLeavesBlock;
 import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -78,7 +81,7 @@ public class HickoryLeafItem extends FuelItem {
     private void onSuccesfullPlacement(Level level, BlockPos pos, Player player, InteractionHand hand) {
         var item = player.getItemInHand(hand);
 
-        level.playSound(null, pos, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.withDefaultNamespace("block.big_dripleaf.place")), SoundSource.BLOCKS, 1, 1.1f);
+        level.playSound(null, pos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("block.big_dripleaf.place")), SoundSource.BLOCKS, 1, 1.1f);
         if (!player.isCreative()) {
             item.shrink(1);
         }

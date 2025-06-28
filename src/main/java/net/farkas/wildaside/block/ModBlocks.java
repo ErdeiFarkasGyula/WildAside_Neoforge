@@ -11,6 +11,8 @@ import net.farkas.wildaside.block.custom.vibrion.hanging_vines.HangingVibrionVin
 import net.farkas.wildaside.block.custom.vibrion.hanging_vines.HangingVibrionVinesPlant;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.util.HickoryColour;
+import net.farkas.wildaside.util.ModWoodTypes;
+import net.farkas.wildaside.worldgen.feature.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
@@ -27,10 +29,12 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.EnumMap;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -179,8 +183,8 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .strength(2, 12)) {
                 @Override
-                public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
-                    return true;
+                public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+                    return TriState.TRUE;
                 }
             });
 
@@ -263,8 +267,8 @@ public class ModBlocks {
             () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_FENCE_GATE = registerBlock("substilium_fence_gate",
-            () -> new FenceGateBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()),
-                    SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(Optional.of(ModWoodTypes.SUBSTILIUM), BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()),
+                    Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_DOOR = registerBlock("substilium_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
@@ -325,8 +329,8 @@ public class ModBlocks {
             () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_FENCE_GATE = registerBlock("hickory_fence_gate",
-            () -> new FenceGateBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()),
-                    SoundEvents.FENCE_GATE_OPEN, SoundEvents.FENCE_GATE_CLOSE));
+            () -> new FenceGateBlock(Optional.of(ModWoodTypes.HICKORY), BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()),
+                    Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> HICKORY_DOOR = registerBlock("hickory_door",
             () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
