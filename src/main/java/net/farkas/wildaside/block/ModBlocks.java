@@ -396,6 +396,15 @@ public class ModBlocks {
     public static final DeferredBlock<Block> GREEN_GLOWING_HICKORY_SAPLING = registerBlock("green_glowing_hickory_sapling",
             () -> new GlowingSaplingBlock(ModTreeGrowers.GREEN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(RED_GLOWING_HICKORY_SAPLING.get())));
 
+    public static final EnumMap<HickoryColour, DeferredBlock<Block>> HICKORY_SAPLINGS = new EnumMap<>(HickoryColour.class);
+    static {
+        HICKORY_SAPLINGS.put(HickoryColour.HICKORY, HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.RED_GLOWING, RED_GLOWING_HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.BROWN_GLOWING, BROWN_GLOWING_HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.YELLOW_GLOWING, YELLOW_GLOWING_HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.GREEN_GLOWING, GREEN_GLOWING_HICKORY_SAPLING);
+    }
+
     public static final DeferredBlock<Block> HICKORY_ROOT_BUSH = registerBlock("hickory_root_bush",
             () -> new RootBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).strength(0.5f)));
 

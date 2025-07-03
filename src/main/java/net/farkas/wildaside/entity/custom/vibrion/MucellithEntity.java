@@ -1,5 +1,6 @@
 package net.farkas.wildaside.entity.custom.vibrion;
 
+import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.entity.ai.mucellith.MucellithAttackGoal;
 import net.farkas.wildaside.entity.ai.mucellith.MucellithLookAtPlayerGoal;
 import net.farkas.wildaside.entity.ai.mucellith.MucellithRandomLookAroundGoal;
@@ -55,22 +56,17 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
         this.goalSelector.addGoal(4, new MucellithRandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, (entity) -> {
-            if (entity instanceof Player player) {
-                return !(player.isCreative() || player.isSpectator());
-            }
-            else {
-                return true;
-            }
-        }));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
+                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate())));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true,
+                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate())));
 
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return PathfinderMob.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 30)
-                .add(Attributes.FOLLOW_RANGE, 20)
+                .add(Attributes.MAX_HEALTH, 40)
+                .add(Attributes.FOLLOW_RANGE, 32)
                 .add(Attributes.MOVEMENT_SPEED, 0)
                 .add(Attributes.JUMP_STRENGTH, 0)
                 .add(Attributes.FLYING_SPEED, 0)

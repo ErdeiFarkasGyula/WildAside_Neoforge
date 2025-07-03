@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.*;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -79,6 +80,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLOWING_HICKORY_BUSH = registerKey("glowing_hickory_bush");
     public static final ResourceKey<ConfiguredFeature<?, ?>> FALLEN_HICKORY_TREE = registerKey("fallen_hickory_tree");
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PODZOL_VEIN = registerKey("podzol_vein");
+
 
     public static final EnumMap<HickoryColour, ResourceKey<ConfiguredFeature<?, ?>>> HICKORY_TREES = new EnumMap<>(HickoryColour.class);
     static {
@@ -89,22 +92,49 @@ public class ModConfiguredFeatures {
         HICKORY_TREES.put(HickoryColour.GREEN_GLOWING, GREEN_GLOWING_HICKORY_TREE);
     }
 
+    public static final EnumMap<HickoryColour, ResourceKey<ConfiguredFeature<?, ?>>> HICKORY_SAPLINGS = new EnumMap<>(HickoryColour.class);
+    static {
+        HICKORY_SAPLINGS.put(HickoryColour.HICKORY, HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.RED_GLOWING, RED_GLOWING_HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.BROWN_GLOWING, BROWN_GLOWING_HICKORY_SAPLING );
+        HICKORY_SAPLINGS.put(HickoryColour.YELLOW_GLOWING, YELLOW_GLOWING_HICKORY_SAPLING);
+        HICKORY_SAPLINGS.put(HickoryColour.GREEN_GLOWING, GREEN_GLOWING_HICKORY_SAPLING);
+    }
+
+
+    static BeehiveDecorator glowingBeehive = new BeehiveDecorator(0.015f);
+    static List hickoryDecorator = List.of(new BeehiveDecorator(0.01f), new FallenLeavesDecorator(0.075f, HickoryColour.HICKORY));
+    static List redGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.RED_GLOWING));
+    static List brownGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.BROWN_GLOWING));
+    static List yellowGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.YELLOW_GLOWING));
+    static List greenGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.GREEN_GLOWING));
+
+    public static final EnumMap<HickoryColour, List> DECORATORS = new EnumMap<>(HickoryColour.class);
+    static {
+        DECORATORS.put(HickoryColour.HICKORY, hickoryDecorator);
+        DECORATORS.put(HickoryColour.RED_GLOWING, redGlowingHickoryDecorator);
+        DECORATORS.put(HickoryColour.BROWN_GLOWING, brownGlowingHickoryDecorator);
+        DECORATORS.put(HickoryColour.YELLOW_GLOWING, yellowGlowingHickoryDecorator);
+        DECORATORS.put(HickoryColour.GREEN_GLOWING, greenGlowingHickoryDecorator);
+    }
+
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-        RuleTest overgrown_entorium_ore_replaceables = new BlockMatchTest(ModBlocks.SUBSTILIUM_SOIL.get());
-        RuleTest compressed_substilium_soil_replaceables = new BlockMatchTest(ModBlocks.SUBSTILIUM_SOIL.get());
-        RuleTest substilium_ore_replaceables = new BlockMatchTest(ModBlocks.SUBSTILIUM_SOIL.get());
+        RuleTest substilium_soil_replace = new BlockMatchTest(ModBlocks.SUBSTILIUM_SOIL.get());
+        RuleTest grass_replace = new BlockMatchTest(Blocks.GRASS_BLOCK);
 
-        List<OreConfiguration.TargetBlockState> overgrown_entorium_ore = List.of(OreConfiguration.target(overgrown_entorium_ore_replaceables, ModBlocks.OVERGROWN_ENTORIUM_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> compressed_substilium_soil = List.of(OreConfiguration.target(compressed_substilium_soil_replaceables, ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> overgrown_entorium_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.OVERGROWN_ENTORIUM_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> compressed_substilium_soil = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get().defaultBlockState()));
 
-        List<OreConfiguration.TargetBlockState> substilium_coal_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_COAL_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_copper_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_COPPER_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_lapis_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_LAPIS_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_iron_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_IRON_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_gold_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_GOLD_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_redstone_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_REDSTONE_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_diamond_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_DIAMOND_ORE.get().defaultBlockState()));
-        List<OreConfiguration.TargetBlockState> substilium_emerald_ore = List.of(OreConfiguration.target(substilium_ore_replaceables, ModBlocks.SUBSTILIUM_EMERALD_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_coal_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_COAL_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_copper_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_COPPER_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_lapis_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_LAPIS_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_iron_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_IRON_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_gold_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_GOLD_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_redstone_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_REDSTONE_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_diamond_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_DIAMOND_ORE.get().defaultBlockState()));
+        List<OreConfiguration.TargetBlockState> substilium_emerald_ore = List.of(OreConfiguration.target(substilium_soil_replace, ModBlocks.SUBSTILIUM_EMERALD_ORE.get().defaultBlockState()));
+
+        List<OreConfiguration.TargetBlockState> podzol_vein = List.of(OreConfiguration.target(grass_replace, Blocks.PODZOL.defaultBlockState()));
 
         register(context, OVERGROWN_ENTORIUM_ORE, Feature.ORE, new OreConfiguration(overgrown_entorium_ore, 16));
 
@@ -168,64 +198,34 @@ public class ModConfiguredFeatures {
                 new RandomPatchConfiguration(32, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
                         new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.PINKSTER_FLOWER.get())))));
 
-        BeehiveDecorator glowingBeehive = new BeehiveDecorator(0.015f);
-        List hickoryDecorator = List.of(new BeehiveDecorator(0.01f), new FallenLeavesDecorator(0.075f, HickoryColour.HICKORY));
-        List redGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.RED_GLOWING));
-        List brownGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.BROWN_GLOWING));
-        List yellowGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.YELLOW_GLOWING));
-        List greenGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.GREEN_GLOWING));
-
-        register(context, HICKORY_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
-                new StraightTrunkPlacer(18, 0, 6),
-                BlockStateProvider.simple(ModBlocks.HICKORY_LEAVES.get()),
-                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
-                new TwoLayersFeatureSize(1, 0, 2)).decorators(hickoryDecorator).build());
-
-        register(context, RED_GLOWING_HICKORY_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
-                new StraightTrunkPlacer(18, 0, 6),
-                BlockStateProvider.simple(ModBlocks.RED_GLOWING_HICKORY_LEAVES.get()),
-                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
-                new TwoLayersFeatureSize(1, 0, 2)).decorators(redGlowingHickoryDecorator).build());
-        register(context, BROWN_GLOWING_HICKORY_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
-                new StraightTrunkPlacer(18, 0, 6),
-                BlockStateProvider.simple(ModBlocks.BROWN_GLOWING_HICKORY_LEAVES.get()),
-                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
-                new TwoLayersFeatureSize(1, 0, 2)).decorators(brownGlowingHickoryDecorator).build());
-        register(context, YELLOW_GLOWING_HICKORY_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
-                new StraightTrunkPlacer(18, 0, 6),
-                BlockStateProvider.simple(ModBlocks.YELLOW_GLOWING_HICKORY_LEAVES.get()),
-                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
-                new TwoLayersFeatureSize(1, 0, 2)).decorators(yellowGlowingHickoryDecorator).build());
-        register(context, GREEN_GLOWING_HICKORY_TREE, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
-                new StraightTrunkPlacer(18, 0, 6),
-                BlockStateProvider.simple(ModBlocks.GREEN_GLOWING_HICKORY_LEAVES.get()),
-                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
-                new TwoLayersFeatureSize(1, 0, 2)).decorators(greenGlowingHickoryDecorator).build());
-
-        register(context, HICKORY_SAPLING, Feature.FLOWER,
-                new RandomPatchConfiguration(32, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.HICKORY_SAPLING.get())))));
-        register(context, RED_GLOWING_HICKORY_SAPLING, Feature.FLOWER,
-                new RandomPatchConfiguration(16, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())))));
-        register(context, BROWN_GLOWING_HICKORY_SAPLING, Feature.FLOWER,
-                new RandomPatchConfiguration(16, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BROWN_GLOWING_HICKORY_SAPLING.get())))));
-        register(context, YELLOW_GLOWING_HICKORY_SAPLING, Feature.FLOWER,
-                new RandomPatchConfiguration(16, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.YELLOW_GLOWING_HICKORY_SAPLING.get())))));
-        register(context, GREEN_GLOWING_HICKORY_SAPLING, Feature.FLOWER,
-                new RandomPatchConfiguration(16, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.GREEN_GLOWING_HICKORY_SAPLING.get())))));
+        for (HickoryColour colour : HickoryColour.values()) {
+            registerHickoryTree(context, colour);
+            registerHickorySapling(context, colour);
+        }
 
         register(context, HICKORY_BUSH, ModFeatures.HICKORY_BUSH.get(), new NoneFeatureConfiguration());
         register(context, GLOWING_HICKORY_BUSH, ModFeatures.GLOWING_HICKORY_BUSH.get(), new NoneFeatureConfiguration());
         register(context, FALLEN_HICKORY_TREE, ModFeatures.FALLEN_HICKORY_TREE.get(), new NoneFeatureConfiguration());
+
+        register(context, PODZOL_VEIN, Feature.ORE, new OreConfiguration(podzol_vein, 32));
+    }
+
+    private static void registerHickoryTree(BootstrapContext<ConfiguredFeature<?, ?>> context, HickoryColour colour) {
+        register(context, HICKORY_TREES.get(colour),Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.HICKORY_LOG.get()),
+                new StraightTrunkPlacer(18, 0, 6),
+                BlockStateProvider.simple(ModBlocks.HICKORY_LEAVES_BLOCKS.get(colour).get()),
+                new HickoryTreeFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 14),
+                new TwoLayersFeatureSize(1, 0, 2))
+                .decorators(DECORATORS.get(colour)).build()
+        );
+    }
+
+    private static void registerHickorySapling(BootstrapContext<ConfiguredFeature<?, ?>> context, HickoryColour colour) {
+        int count = colour == HickoryColour.HICKORY ? 32 : 16;
+        register(context, HICKORY_SAPLINGS.get(colour), Feature.FLOWER,
+                new RandomPatchConfiguration(count, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.HICKORY_SAPLINGS.get(colour).get())))));
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
