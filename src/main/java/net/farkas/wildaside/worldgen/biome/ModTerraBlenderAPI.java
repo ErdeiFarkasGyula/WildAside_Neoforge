@@ -1,6 +1,6 @@
 package net.farkas.wildaside.worldgen.biome;
 
-import net.farkas.wildaside.Config;
+import net.farkas.wildaside.config.Config;
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.worldgen.biome.region.GlowingHickoryForestRegion;
 import net.farkas.wildaside.worldgen.biome.region.VibrionHiveRegion;
