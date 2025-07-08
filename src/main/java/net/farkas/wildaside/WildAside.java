@@ -13,6 +13,7 @@ import net.farkas.wildaside.entity.client.vibrion.MucellithRenderer;
 import net.farkas.wildaside.entity.custom.vibrion.SporeArrowEntity;
 import net.farkas.wildaside.item.ModCreativeModeTabs;
 import net.farkas.wildaside.item.ModItems;
+import net.farkas.wildaside.item.VanillaCreativeTabs;
 import net.farkas.wildaside.particle.ModParticles;
 import net.farkas.wildaside.particle.custom.*;
 import net.farkas.wildaside.potion.ModPotions;
@@ -66,44 +67,34 @@ public class WildAside {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public WildAside(IEventBus modEventBus, ModContainer modContainer) {
-        modEventBus.addListener(this::commonSetup);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         ModCreativeModeTabs.register(modEventBus);
-
         ModAttachments.register(modEventBus);
-
         ModSounds.register(modEventBus);
-
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-
         ModEntities.register(modEventBus);
         ModBlockEntities.register(modEventBus);
-
         ModMenuTypes.register(modEventBus);
         ModRecipes.register(modEventBus);
-
         ModMobEffects.register(modEventBus);
         ModPotions.register(modEventBus);
-
         ModParticles.register(modEventBus);
-
         ModTreeDecorators.register(modEventBus);
         ModFeatures.register(modEventBus);
-        ModTerraBlenderAPI.registerRegions();
-
         ModFoliagePlacers.register(modEventBus);
-
         ModEnchantmentEffects.register(modEventBus);
 
+        NeoForge.EVENT_BUS.register(this);
 
         modEventBus.addListener(this::commonSetup);
-        NeoForge.EVENT_BUS.register(this);
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modEventBus.addListener(VanillaCreativeTabs::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            ModTerraBlenderAPI.registerRegions();
             ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant(ModBlocks.VIBRION_GROWTH.getId(), ModBlocks.POTTED_VIBRION_GROWTH);
         });
 

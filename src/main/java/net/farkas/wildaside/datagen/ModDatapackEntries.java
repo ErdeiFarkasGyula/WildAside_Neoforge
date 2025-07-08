@@ -24,6 +24,6 @@ public class ModDatapackEntries extends DatapackBuiltinEntriesProvider {
 
             .add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
-            .add(Registries.BIOME, ModBiomes::boostrap);
+            .add(Registries.BIOME, ModBiomes::bootstrap);
 
 }
