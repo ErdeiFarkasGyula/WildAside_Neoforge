@@ -56,9 +56,9 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
-                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate())));
+                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate()) && !(entity instanceof MucellithEntity)));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true,
-                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate())));
+                (entity) -> entity.hasEffect(ModMobEffects.CONTAMINATION.getDelegate()) && !(entity instanceof MucellithEntity)));
 
     }
 
