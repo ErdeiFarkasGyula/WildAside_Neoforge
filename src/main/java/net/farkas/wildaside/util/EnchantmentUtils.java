@@ -20,6 +20,11 @@ public class EnchantmentUtils {
         return registrylookup.getOrThrow(resourceKey).getDelegate();
     }
 
+    public static Holder<Enchantment> getEnchtantmentHolder(HolderLookup.Provider level, ResourceKey<Enchantment> resourceKey) {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = level.lookupOrThrow(Registries.ENCHANTMENT);
+        return registrylookup.getOrThrow(resourceKey).getDelegate();
+    }
+
     public static Enchantment getEnchantment(Level level, ResourceKey<Enchantment> resourceKey) {
         HolderLookup.RegistryLookup<Enchantment> registrylookup = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
         return registrylookup.getOrThrow(resourceKey).value();
@@ -27,6 +32,11 @@ public class EnchantmentUtils {
 
     public static Enchantment getEnchantment(LevelAccessor level, ResourceKey<Enchantment> resourceKey) {
         HolderLookup.RegistryLookup<Enchantment> registrylookup = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+        return registrylookup.getOrThrow(resourceKey).value();
+    }
+
+    public static Enchantment getEnchantment(HolderLookup.Provider level, ResourceKey<Enchantment> resourceKey) {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = level.lookupOrThrow(Registries.ENCHANTMENT);
         return registrylookup.getOrThrow(resourceKey).value();
     }
 }
