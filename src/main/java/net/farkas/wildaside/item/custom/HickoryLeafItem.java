@@ -82,7 +82,7 @@ public class HickoryLeafItem extends FuelItem {
         var item = player.getItemInHand(hand);
 
         level.playSound(null, pos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("block.big_dripleaf.place")), SoundSource.BLOCKS, 1, 1.1f);
-        if (!player.isCreative()) {
+        if (!player.isInvulnerable()) {
             item.shrink(1);
         }
     }

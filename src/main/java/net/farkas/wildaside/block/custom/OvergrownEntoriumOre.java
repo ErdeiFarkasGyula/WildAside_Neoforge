@@ -40,7 +40,7 @@ public class OvergrownEntoriumOre extends EntoriumOre {
             pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("entity.mooshroom.shear")), SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
-            if (!pPlayer.isCreative()) {
+            if (!pPlayer.isInvulnerable()) {
                 playerItem.hurtAndBreak(1, pPlayer, pStack.getEquipmentSlot());
             }
 

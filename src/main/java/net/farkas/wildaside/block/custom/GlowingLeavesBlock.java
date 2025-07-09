@@ -70,7 +70,7 @@ public class GlowingLeavesBlock extends LeavesBlock {
             pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
-            if (!pPlayer.isCreative()) {
+            if (!pPlayer.isInvulnerable()) {
                 playerItem.shrink(1);
             }
 
