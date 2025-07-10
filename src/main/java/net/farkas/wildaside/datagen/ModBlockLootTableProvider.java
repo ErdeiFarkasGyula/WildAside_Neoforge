@@ -47,25 +47,26 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         this.add(ModBlocks.VIBRION_SPOREHOLDER.get(),
                 block -> createSilktouchedFortuneDrops(ModBlocks.VIBRION_SPOREHOLDER.get(), ModItems.VIBRION.get(), 1, 2));
         this.add(ModBlocks.VIBRION_GLASS.get(),
-                block -> createSingleItemTableWithSilkTouch(ModBlocks.VIBRION_GLASS.get(), ModItems.VIBRION.get()));
+                block -> createSilkTouchOnlyTable(ModBlocks.VIBRION_GLASS.get()));
         this.add(ModBlocks.LIT_VIBRION_GLASS.get(),
-                block -> createSingleItemTableWithSilkTouch(ModBlocks.LIT_VIBRION_GLASS.get(), ModItems.VIBRION.get()));
+                block -> createSilkTouchOnlyTable(ModBlocks.LIT_VIBRION_GLASS.get()));
         this.add(ModBlocks.VIBRION_GLASS_PANE.get(),
-                block -> createSingleItemTableWithSilkTouch(ModBlocks.VIBRION_GLASS_PANE.get(), ModItems.VIBRION.get()));
+                block -> createSilkTouchOnlyTable(ModBlocks.VIBRION_GLASS_PANE.get()));
         this.add(ModBlocks.LIT_VIBRION_GLASS_PANE.get(),
-                block -> createSingleItemTableWithSilkTouch(ModBlocks.LIT_VIBRION_GLASS_PANE.get(), ModItems.VIBRION.get()));
+                block -> createSilkTouchOnlyTable(ModBlocks.LIT_VIBRION_GLASS_PANE.get()));
 
         this.add(ModBlocks.NATURAL_SPORE_BLASTER.get(),
-                block -> createSingleItemTableWithSilkTouch(ModBlocks.NATURAL_SPORE_BLASTER.get(), Items.AIR));
+                block -> createSilkTouchOnlyTable(ModBlocks.NATURAL_SPORE_BLASTER.get()));
         this.dropSelf(ModBlocks.SPORE_BLASTER.get());
         this.dropSelf(ModBlocks.POTION_BLASTER.get());
         this.dropSelf(ModBlocks.BIOENGINEERING_WORKSTATION.get());
 
         //ENTORIUM
         this.dropSelf(ModBlocks.ENTORIUM_SHROOM.get());
+        this.add(ModBlocks.OVERGROWN_ENTORIUM_ORE.get(),
+                block -> createSilkTouchOnlyTable(ModBlocks.OVERGROWN_ENTORIUM_ORE.get()));
         this.add(ModBlocks.ENTORIUM_ORE.get(),
                 block -> createOreDrop(ModBlocks.ENTORIUM_ORE.get(), ModItems.ENTORIUM.get()));
-        this.add(ModBlocks.OVERGROWN_ENTORIUM_ORE.get(), block -> createSingleItemTableWithSilkTouch(ModBlocks.OVERGROWN_ENTORIUM_ORE.get(), Blocks.AIR.asItem()));
 
 
         //SUBSTILIUM
