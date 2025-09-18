@@ -36,7 +36,7 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
-@EventBusSubscriber(modid = WildAside.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = WildAside.MOD_ID, value = Dist.CLIENT)
 public class ModClientEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
