@@ -45,11 +45,9 @@ public class ModEntities {
     public static final Supplier<EntityType<HickoryTreantEntity>> HICKORY_TREANT =
             ENTITIES.register("hickory_treant", () -> EntityType.Builder.<HickoryTreantEntity>of(HickoryTreantEntity::new, MobCategory.MONSTER)
                     .sized(1f, 3f).build("hickory_treant"));
-    public static final Supplier<EntityType<HickoryLeafProjectile>> HICKORY_LEAF_PROJECTILE = ENTITIES.register(
-            "hickory_leaf_projectile",
-            () -> EntityType.Builder.<HickoryLeafProjectile>of(HickoryLeafProjectile::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f).build("hickory_leaf_projectile")
-    );
+    public static final Supplier<EntityType<HickoryLeafProjectile>> HICKORY_LEAF_PROJECTILE =
+            ENTITIES.register("hickory_leaf_projectile", () -> EntityType.Builder.<HickoryLeafProjectile>of(HickoryLeafProjectile::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f).build("hickory_leaf_projectile"));
 
     public static void register(IEventBus eventBus) {
         ENTITIES.register(eventBus);
