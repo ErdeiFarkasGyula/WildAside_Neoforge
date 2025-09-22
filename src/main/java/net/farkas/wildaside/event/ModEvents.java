@@ -224,7 +224,7 @@ public class ModEvents {
                     ContaminationHandler.giveContaminationDose(target, dose / 5);
                 }
             }
-        };
+        }
     }
 
     @SubscribeEvent

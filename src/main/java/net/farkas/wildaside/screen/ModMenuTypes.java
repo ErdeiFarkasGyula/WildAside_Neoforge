@@ -3,7 +3,6 @@ package net.farkas.wildaside.screen;
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.screen.bioengineering_workstation.BioengineeringWorkstationMenu;
 import net.farkas.wildaside.screen.potion_blaster.PotionBlasterMenu;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;

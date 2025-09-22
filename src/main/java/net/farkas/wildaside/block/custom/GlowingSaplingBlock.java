@@ -1,10 +1,10 @@
 package net.farkas.wildaside.block.custom;
 
 import net.farkas.wildaside.item.ModItems;
+import net.farkas.wildaside.util.GlowingHickoryLightUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -29,10 +29,10 @@ public class GlowingSaplingBlock extends SaplingBlock {
     protected static final float AABB_OFFSET = 6.0F;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
 
-    private static final int minLight = 0;
-    private static final int maxLight = 7;
-    public static final IntegerProperty LIGHT = IntegerProperty.create("light", minLight, maxLight);
-    public static BooleanProperty FIXED_LIGHTING = BooleanProperty.create("fixed_lighting");
+    private static final int MIN_LIGHT = 0;
+    private static final int MAX_LIGHT = 7;
+    public static final IntegerProperty LIGHT = IntegerProperty.create("light", MIN_LIGHT, MAX_LIGHT);
+    public static final BooleanProperty FIXED_LIGHTING = BooleanProperty.create("fixed_lighting");
 
     public GlowingSaplingBlock(TreeGrower pTreeGrower, Properties pProperties) {
         super(pTreeGrower, pProperties.lightLevel(s -> s.getValue(LIGHT)));
@@ -56,15 +56,14 @@ public class GlowingSaplingBlock extends SaplingBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (pHand == InteractionHand.OFF_HAND) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         var playerItem = pPlayer.getItemInHand(pHand);
 
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
             if (pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             pLevel.setBlock(pPos, pState.setValue(GlowingSaplingBlock.FIXED_LIGHTING, true), 3);
-            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
+            pLevel.playSound(null, pPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
             if (!pPlayer.isInvulnerable()) {
@@ -84,20 +83,7 @@ public class GlowingSaplingBlock extends SaplingBlock {
 
         int time = (int)pLevel.dayTime();
         int currentLight = pLevel.getBlockState(pPos).getValue(LIGHT);
-        int newLight = 0;
-
-        if (time > 22000) {
-            newLight = Math.round(maxLight - (maxLight * ((time - 22000f) / 2000f)));
-        } else
-            if (time > 12000 && time < 14000) {
-                newLight = Math.round(maxLight * ((time - 12000f) / 2000f));
-            } else
-                if (time > 14000) {
-                    newLight = maxLight;
-                } else
-                    if (time < 12000) {
-                        newLight = minLight;
-                    }
+        int newLight = GlowingHickoryLightUtil.getLight(time, MIN_LIGHT, MAX_LIGHT);
 
         newLight = Math.min(Math.max(0, newLight), 7);
 

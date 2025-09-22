@@ -1,8 +1,6 @@
 package net.farkas.wildaside.block.custom;
 
 import com.mojang.serialization.MapCodec;
-import net.farkas.wildaside.attachments.ModAttachments;
-import net.farkas.wildaside.attachments.contamination.IContamination;
 import net.farkas.wildaside.block.entity.BioengineeringWorkstationBlockEntity;
 import net.farkas.wildaside.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;

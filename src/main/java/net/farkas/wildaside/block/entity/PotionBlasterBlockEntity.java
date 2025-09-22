@@ -3,6 +3,7 @@ package net.farkas.wildaside.block.entity;
 import net.farkas.wildaside.block.custom.vibrion.PotionBlaster;
 import net.farkas.wildaside.screen.potion_blaster.PotionBlasterMenu;
 import net.farkas.wildaside.util.AdvancementHandler;
+import net.farkas.wildaside.util.BlasterUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -35,9 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -185,7 +184,7 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
 
                     if (!open) {
                         if (facing.getAxis() == Direction.Axis.X) {
-                            if (axisToDirection(axis, direction.getStepX()) == facing) {
+                            if (BlasterUtils.axisToDirection(axis, direction.getStepX()) == facing) {
                                 break;
                             } else {
                                 shouldBreakNext = true;
@@ -193,7 +192,7 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
                         }
                     } else {
                         if (facing.getAxis() != Direction.Axis.X) {
-                            if (doorDirectionCheck(axis, direction.getStepX(), facing)) {
+                            if (BlasterUtils.doorDirectionCheck(axis, direction.getStepX(), facing)) {
                                 if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.LEFT) {
                                     break;
                                 }
@@ -242,7 +241,7 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
                         }
                     } else {
                         if (facing.getAxis() != Direction.Axis.Z) {
-                            if (doorDirectionCheck(axis, direction.getStepZ(), facing)) {
+                            if (BlasterUtils.doorDirectionCheck(axis, direction.getStepZ(), facing)) {
                                 if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT) {
                                     break;
                                 }
@@ -421,31 +420,4 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
             }
         }
     }
-    private Direction axisToDirection(Direction.Axis axis, int offset) {
-        if (axis.equals(Direction.Axis.X)) {
-            if (offset == 1) return Direction.EAST;
-            else return Direction.WEST;
-        }
-        if (axis.equals(Direction.Axis.Y)) {
-            if (offset == 1) return Direction.UP;
-            else return Direction.DOWN;
-        }
-        if (axis.equals(Direction.Axis.Z)) {
-            if (offset == 1) return Direction.SOUTH;
-            else return Direction.NORTH;
-        }
-
-        return Direction.UP;
-    }
-
-    private Boolean doorDirectionCheck(Direction.Axis axis, int offset, Direction facing) {
-        if (axis.equals(Direction.Axis.X)) {
-            return axisToDirection(Direction.Axis.Z, -offset) == facing;
-        }
-        if (axis.equals(Direction.Axis.Z)) {
-            return axisToDirection(Direction.Axis.X, -offset) == facing;
-        }
-        return false;
-    }
-
 }

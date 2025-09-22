@@ -1,10 +1,8 @@
 package net.farkas.wildaside.block.custom;
 
-import net.farkas.wildaside.enchantment.ModEnchantments;
 import net.farkas.wildaside.util.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

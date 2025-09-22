@@ -8,7 +8,6 @@ import net.farkas.wildaside.util.WeightedFlowerChoice;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -33,7 +32,7 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
     private final float charge;
     private final LivingEntity thrower;
 
-    List<WeightedFlowerChoice.WeightedFlower> flowerList = new ArrayList<>(List.of(
+    final List<WeightedFlowerChoice.WeightedFlower> flowerList = new ArrayList<>(List.of(
             new WeightedFlowerChoice.WeightedFlower(5, Blocks.DANDELION),
             new WeightedFlowerChoice.WeightedFlower(5, Blocks.POPPY),
             new WeightedFlowerChoice.WeightedFlower(3, Blocks.BLUE_ORCHID),
@@ -46,7 +45,7 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
             new WeightedFlowerChoice.WeightedFlower(2, Blocks.CORNFLOWER),
             new WeightedFlowerChoice.WeightedFlower(1, Blocks.AZURE_BLUET)
     ));
-    WeightedFlowerChoice flowerChoice = new WeightedFlowerChoice(flowerList);
+    final WeightedFlowerChoice flowerChoice = new WeightedFlowerChoice(flowerList);
 
     public FertiliserBombEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -78,14 +77,12 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
 
     private void applyAreaEffect(ServerLevel level, BlockPos center, float charge) {
         int radius = Mth.ceil(2 + charge * 2);
-        int radiusSq = radius * radius;
         int verticalRange = 1;
+        int radiusSq = radius * radius;
         RandomSource random = level.getRandom();
 
         Holder<Biome> biomeHolder = level.getBiome(center);
-        String biomePath = biomeHolder.unwrapKey()
-                .map((ResourceKey<Biome> key) -> key.location().getPath())
-                .orElse("");
+        String biomePath = biomeHolder.unwrapKey().map(key -> key.location().getPath()).orElse("");
 
         if (biomePath.contains("hickory")) {
             AdvancementHandler.givePlayerAdvancement((ServerPlayer)thrower, "fertile_forest");
@@ -98,59 +95,59 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
                 if (dx * dx + dz * dz > radiusSq) continue;
                 for (int dy = -verticalRange; dy <= verticalRange; dy++) {
                     BlockPos pos = center.offset(dx, dy, dz);
-                    BlockState state = level.getBlockState(pos);
-
-                    if (state.getBlock() instanceof FarmBlock) {
-                        if (random.nextFloat() < charge * 0.5f) {
-                            int currentMoisture = state.getValue(FarmBlock.MOISTURE);
-                            if (currentMoisture < 7) {
-                                BlockState hydratedState = state.setValue(FarmBlock.MOISTURE, 7);
-                                level.setBlock(pos, hydratedState, 3);
-                                level.sendParticles(ParticleTypes.SPLASH,
-                                        pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
-                                        5, 0.2, 0.2, 0.2, 0.05);
-                            }
-                            continue;
-                        }
-                    }
-
-                    if (state.isAir() && level.getBlockState(pos.below()).is(BlockTags.DIRT)) {
-                        if (random.nextFloat() < charge * 0.3f) {
-                            BlockState flower = flowerChoice.selectFlower(random);
-                            level.setBlock(pos, flower, 3);
-                            level.sendParticles(ParticleTypes.HAPPY_VILLAGER,
-                                    pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
-                                    10, 0.2, 0.2, 0.2, 0.05);
-                            continue;
-                        }
-                    }
-
-                    if (state.getBlock() instanceof BonemealableBlock bonemealBlock) {
-                        if (bonemealBlock.isValidBonemealTarget(level, pos, state)) {
-                            if (random.nextFloat() < charge * 0.3f) {
-                                bonemealBlock.performBonemeal(level, random, pos, state);
-                                level.levelEvent(2005, pos, 0);
-                                level.sendParticles(ParticleTypes.SPLASH,
-                                        pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
-                                        5, 0.2, 0.2, 0.2, 0.05);
-                            }
-                        }
-                    } else if (state.isAir()) {
-                        BlockPos belowPos = pos.below();
-                        BlockState belowState = level.getBlockState(belowPos);
-                        if (belowState.getBlock() instanceof BonemealableBlock bonemealBlockBelow &&
-                                bonemealBlockBelow.isValidBonemealTarget(level, belowPos, belowState)) {
-                            if (random.nextFloat() < charge * 0.2f) {
-                                bonemealBlockBelow.performBonemeal(level, random, belowPos, belowState);
-                                level.levelEvent(2005, belowPos, 0);
-                                level.sendParticles(ParticleTypes.SPLASH,
-                                        pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
-                                        5, 0.2, 0.2, 0.2, 0.05);
-                            }
-                        }
-                    }
+                    applyEffectAt(level, pos, random, charge);
                 }
             }
         }
+    }
+
+    private void applyEffectAt(ServerLevel level, BlockPos pos, RandomSource random, float charge) {
+        BlockState state = level.getBlockState(pos);
+        if (state.getBlock() instanceof FarmBlock farm && chance(random, charge * 0.5f)) {
+            int moisture = state.getValue(FarmBlock.MOISTURE);
+            if (moisture < 7) {
+                level.setBlock(pos, state.setValue(FarmBlock.MOISTURE, 7), 3);
+                spawnSplash(level, pos);
+            }
+            return;
+        }
+
+        if (state.isAir() && level.getBlockState(pos.below()).is(BlockTags.DIRT) && chance(random, charge * 0.3f)) {
+            BlockState flower = flowerChoice.selectFlower(random);
+            level.setBlock(pos, flower, 3);
+            spawnHappy(level, pos);
+            return;
+        }
+
+        if (state.getBlock() instanceof BonemealableBlock bonemealBlock && bonemealBlock.isValidBonemealTarget(level, pos, state) && chance(random, charge * 0.3f)) {
+            bonemealBlock.performBonemeal(level, random, pos, state);
+            level.levelEvent(2005, pos, 0);
+            spawnSplash(level, pos);
+            return;
+        }
+
+        if (state.isAir()) {
+            BlockPos below = pos.below();
+            BlockState belowState = level.getBlockState(below);
+            if (belowState.getBlock() instanceof BonemealableBlock bonemealBlockBelow && bonemealBlockBelow.isValidBonemealTarget(level, below, belowState) && chance(random, charge * 0.2f)) {
+                bonemealBlockBelow.performBonemeal(level, random, below, belowState);
+                level.levelEvent(2005, below, 0);
+                spawnSplash(level, pos);
+            }
+        }
+    }
+
+    private boolean chance(RandomSource random, float factor) {
+        return random.nextFloat() < factor;
+    }
+
+    private void spawnSplash(Level level, BlockPos pos) {
+        level.addParticle(ParticleTypes.SPLASH, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5,
+                5, 0.2, 0.2);
+    }
+
+    private void spawnHappy(Level level, BlockPos pos) {
+        level.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+                10, 0.2, 0.2);
     }
 }

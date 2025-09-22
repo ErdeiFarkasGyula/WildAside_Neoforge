@@ -2,7 +2,6 @@ package net.farkas.wildaside.attachments.contamination;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.UnknownNullability;
 
 public class ContaminationImplementation implements IContamination{

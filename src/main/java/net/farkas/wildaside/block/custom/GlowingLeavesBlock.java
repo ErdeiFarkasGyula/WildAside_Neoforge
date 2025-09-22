@@ -3,14 +3,14 @@ package net.farkas.wildaside.block.custom;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.particle.ModParticles;
+import net.farkas.wildaside.util.GlowingHickoryLightUtil;
 import net.farkas.wildaside.util.HickoryColour;
 import net.farkas.wildaside.util.ParticleUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -25,13 +25,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import org.joml.Math;
 
 public class GlowingLeavesBlock extends LeavesBlock {
-    private static final int minLight = 0;
-    private static final int maxLight = 7;
-    public static final IntegerProperty LIGHT = IntegerProperty.create("light", minLight, maxLight);
-    public static BooleanProperty FIXED_LIGHTING = BooleanProperty.create("fixed_lighting");
+    private static final int MIN_LIGHT = 0;
+    private static final int MAX_LIGHT = 7;
+    public static final IntegerProperty LIGHT = IntegerProperty.create("light", MIN_LIGHT, MAX_LIGHT);
+    public static final BooleanProperty FIXED_LIGHTING = BooleanProperty.create("fixed_lighting");
     private final HickoryColour colour;
 
     public GlowingLeavesBlock(Properties pProperties, HickoryColour colour) {
@@ -59,15 +58,14 @@ public class GlowingLeavesBlock extends LeavesBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (pHand == InteractionHand.OFF_HAND) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND || pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING))
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        var playerItem = pPlayer.getItemInHand(pHand);
+        ItemStack playerItem = pPlayer.getItemInHand(pHand);
 
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
             pLevel.setBlock(pPos, pState.setValue(GlowingLeavesBlock.FIXED_LIGHTING, true), 3);
-            pLevel.playSound(null, pPos, BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.withDefaultNamespace("item.honeycomb.wax_on")), SoundSource.BLOCKS, 1, 1);
+            pLevel.playSound(null, pPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);
 
             if (!pPlayer.isInvulnerable()) {
@@ -87,22 +85,7 @@ public class GlowingLeavesBlock extends LeavesBlock {
 
         int time = (int)pLevel.dayTime();
         int currentLight = pState.getValue(LIGHT);
-        int newLight = 0;
-
-        if (time > 22000) {
-            newLight = Math.round(maxLight - (maxLight * ((time - 22000f) / 2000f)));
-        } else
-        if (time > 12000 && time < 14000) {
-            newLight = Math.round(maxLight * ((time - 12000f) / 2000f));
-        } else
-        if (time > 14000) {
-            newLight = maxLight;
-        } else
-        if (time < 12000) {
-            newLight = minLight;
-        }
-
-        newLight = Math.min(Math.max(0, newLight), 7);
+        int newLight = GlowingHickoryLightUtil.getLight(time, MIN_LIGHT, MAX_LIGHT);
 
         if (newLight != currentLight) {
             pLevel.setBlockAndUpdate(pPos, pState.setValue(LIGHT, newLight));

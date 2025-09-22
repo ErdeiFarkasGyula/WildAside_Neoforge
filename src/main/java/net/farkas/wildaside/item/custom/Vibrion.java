@@ -65,10 +65,9 @@ public class Vibrion extends Item {
         }
     }
 
-    /** @deprecated */
     @Deprecated
     public static boolean growCrop(ItemStack stack, Level level, BlockPos pos) {
-        return level instanceof ServerLevel ? applyBonemeal(stack, level, pos, (Player)null) : false;
+        return level instanceof ServerLevel && applyBonemeal(stack, level, pos, (Player) null);
     }
 
     public static boolean applyBonemeal(ItemStack p_40628_, Level p_40629_, BlockPos p_40630_, @Nullable Player player) {
@@ -99,17 +98,15 @@ public class Vibrion extends Item {
 
     public static boolean growWaterPlant(ItemStack stack, Level level, BlockPos pos, @Nullable Direction clickedSide) {
         if (level.getBlockState(pos).is(Blocks.WATER) && level.getFluidState(pos).getAmount() == 8) {
-            if (!(level instanceof ServerLevel)) {
-                return true;
-            } else {
+            if (level instanceof ServerLevel) {
                 RandomSource randomsource = level.getRandom();
 
                 label77:
-                for(int i = 0; i < 128; ++i) {
+                for (int i = 0; i < 128; ++i) {
                     BlockPos blockpos = pos;
                     BlockState blockstate = Blocks.SEAGRASS.defaultBlockState();
 
-                    for(int j = 0; j < i / 16; ++j) {
+                    for (int j = 0; j < i / 16; ++j) {
                         blockpos = blockpos.offset(randomsource.nextInt(3) - 1, (randomsource.nextInt(3) - 1) * randomsource.nextInt(3) / 2, randomsource.nextInt(3) - 1);
                         if (level.getBlockState(blockpos).isCollisionShapeFullBlock(level, blockpos)) {
                             continue label77;
@@ -119,18 +116,18 @@ public class Vibrion extends Item {
                     Holder<Biome> holder = level.getBiome(blockpos);
                     if (holder.is(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL)) {
                         if (i == 0 && clickedSide != null && clickedSide.getAxis().isHorizontal()) {
-                            blockstate = (BlockState)BuiltInRegistries.BLOCK.getRandomElementOf(BlockTags.WALL_CORALS, level.random).map((p_204100_) -> ((Block)p_204100_.value()).defaultBlockState()).orElse(blockstate);
+                            blockstate = (BlockState) BuiltInRegistries.BLOCK.getRandomElementOf(BlockTags.WALL_CORALS, level.random).map((p_204100_) -> ((Block) p_204100_.value()).defaultBlockState()).orElse(blockstate);
                             if (blockstate.hasProperty(BaseCoralWallFanBlock.FACING)) {
-                                blockstate = (BlockState)blockstate.setValue(BaseCoralWallFanBlock.FACING, clickedSide);
+                                blockstate = (BlockState) blockstate.setValue(BaseCoralWallFanBlock.FACING, clickedSide);
                             }
                         } else if (randomsource.nextInt(4) == 0) {
-                            blockstate = (BlockState)BuiltInRegistries.BLOCK.getRandomElementOf(BlockTags.UNDERWATER_BONEMEALS, level.random).map((p_204095_) -> ((Block)p_204095_.value()).defaultBlockState()).orElse(blockstate);
+                            blockstate = (BlockState) BuiltInRegistries.BLOCK.getRandomElementOf(BlockTags.UNDERWATER_BONEMEALS, level.random).map((p_204095_) -> ((Block) p_204095_.value()).defaultBlockState()).orElse(blockstate);
                         }
                     }
 
                     if (blockstate.is(BlockTags.WALL_CORALS, (p_204093_) -> p_204093_.hasProperty(BaseCoralWallFanBlock.FACING))) {
-                        for(int k = 0; !blockstate.canSurvive(level, blockpos) && k < 4; ++k) {
-                            blockstate = (BlockState)blockstate.setValue(BaseCoralWallFanBlock.FACING, Direction.Plane.HORIZONTAL.getRandomDirection(randomsource));
+                        for (int k = 0; !blockstate.canSurvive(level, blockpos) && k < 4; ++k) {
+                            blockstate = (BlockState) blockstate.setValue(BaseCoralWallFanBlock.FACING, Direction.Plane.HORIZONTAL.getRandomDirection(randomsource));
                         }
                     }
 
@@ -139,14 +136,14 @@ public class Vibrion extends Item {
                         if (blockstate1.is(Blocks.WATER) && level.getFluidState(blockpos).getAmount() == 8) {
                             level.setBlock(blockpos, blockstate, 3);
                         } else if (blockstate1.is(Blocks.SEAGRASS) && randomsource.nextInt(10) == 0) {
-                            ((BonemealableBlock)Blocks.SEAGRASS).performBonemeal((ServerLevel)level, randomsource, blockpos, blockstate1);
+                            ((BonemealableBlock) Blocks.SEAGRASS).performBonemeal((ServerLevel) level, randomsource, blockpos, blockstate1);
                         }
                     }
                 }
 
                 stack.shrink(1);
-                return true;
             }
+            return true;
         } else {
             return false;
         }

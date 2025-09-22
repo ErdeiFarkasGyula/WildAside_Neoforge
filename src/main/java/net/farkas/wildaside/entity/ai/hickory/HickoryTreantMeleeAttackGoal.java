@@ -9,7 +9,6 @@ import java.util.EnumSet;
 
 public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
     private final HickoryTreantEntity entity;
-    private LivingEntity target;
     private static final int maxRange = 3;
 
     public HickoryTreantMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
@@ -20,7 +19,7 @@ public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        target = entity.getTarget();
+        LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         double distance = entity.distanceTo(target);
 //        return distance >= 0 && distance <= maxRange;

@@ -11,14 +11,11 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
-
-import java.util.function.Function;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -150,12 +147,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
                     ModelFile chosen = models[ci][cnt - 1];
 
-                    ConfiguredModel[] model = ConfiguredModel.builder()
+                    return ConfiguredModel.builder()
                             .modelFile(chosen)
                             .rotationY(yRot)
                             .build();
-
-                    return model;
                 },
 
                 FallenHickoryLeavesBlock.LIGHT,

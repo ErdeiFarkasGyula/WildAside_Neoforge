@@ -102,12 +102,12 @@ public class ModConfiguredFeatures {
     }
 
 
-    static BeehiveDecorator glowingBeehive = new BeehiveDecorator(0.015f);
-    static List hickoryDecorator = List.of(new BeehiveDecorator(0.01f), new FallenLeavesDecorator(0.075f, HickoryColour.HICKORY));
-    static List redGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.RED_GLOWING));
-    static List brownGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.BROWN_GLOWING));
-    static List yellowGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.YELLOW_GLOWING));
-    static List greenGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.GREEN_GLOWING));
+    static final BeehiveDecorator glowingBeehive = new BeehiveDecorator(0.015f);
+    static final List hickoryDecorator = List.of(new BeehiveDecorator(0.01f), new FallenLeavesDecorator(0.075f, HickoryColour.HICKORY));
+    static final List redGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.RED_GLOWING));
+    static final List brownGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.BROWN_GLOWING));
+    static final List yellowGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.YELLOW_GLOWING));
+    static final List greenGlowingHickoryDecorator = List.of(glowingBeehive, new FallenLeavesDecorator(0.075f, HickoryColour.GREEN_GLOWING));
 
     public static final EnumMap<HickoryColour, List> DECORATORS = new EnumMap<>(HickoryColour.class);
     static {

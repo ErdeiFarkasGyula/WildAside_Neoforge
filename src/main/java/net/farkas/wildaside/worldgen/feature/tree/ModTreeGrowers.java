@@ -10,9 +10,9 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import java.util.Optional;
 
 public class ModTreeGrowers {
-    static RandomSource random = RandomSource.create();
+    static final RandomSource random = RandomSource.create();
 
-    private static ResourceKey<ConfiguredFeature<?, ?>> substiliumMushroom = random.nextBoolean() ? ModConfiguredFeatures.REDLIKE_SUBSTILIUM_MUSHROOM : ModConfiguredFeatures.BROWNLIKE_SUBSTILIUM_MUSHROOM;
+    private static final ResourceKey<ConfiguredFeature<?, ?>> substiliumMushroom = random.nextBoolean() ? ModConfiguredFeatures.REDLIKE_SUBSTILIUM_MUSHROOM : ModConfiguredFeatures.BROWNLIKE_SUBSTILIUM_MUSHROOM;
 
     public static final TreeGrower SUBSTILIUM_MUSHROOM = new TreeGrower(WildAside.MOD_ID + ":substilium_mushroom",
             Optional.empty(), Optional.of(substiliumMushroom), Optional.empty());
