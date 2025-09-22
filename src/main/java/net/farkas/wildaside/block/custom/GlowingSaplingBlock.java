@@ -85,8 +85,6 @@ public class GlowingSaplingBlock extends SaplingBlock {
         int currentLight = pLevel.getBlockState(pPos).getValue(LIGHT);
         int newLight = GlowingHickoryLightUtil.getLight(time, MIN_LIGHT, MAX_LIGHT);
 
-        newLight = Math.min(Math.max(0, newLight), 7);
-
         if (newLight != currentLight) {
             pLevel.setBlockAndUpdate(pPos, pLevel.getBlockState(pPos).setValue(LIGHT, newLight));
         }

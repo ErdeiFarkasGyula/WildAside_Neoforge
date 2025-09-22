@@ -147,8 +147,6 @@ public class FallenHickoryLeavesBlock extends Block {
         int currentLight = pState.getValue(LIGHT);
         int newLight = GlowingHickoryLightUtil.getLight(time, MIN_LIGHT, MAX_LIGHT);
 
-        newLight = Math.min(Math.max(0, newLight), 7);
-
         if (newLight != currentLight) {
             pLevel.setBlockAndUpdate(pPos, pState.setValue(LIGHT, newLight));
         }
