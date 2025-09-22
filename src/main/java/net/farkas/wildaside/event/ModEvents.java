@@ -47,7 +47,7 @@ import net.neoforged.neoforge.event.village.WandererTradesEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = WildAside.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = WildAside.MOD_ID)
 public class ModEvents {
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

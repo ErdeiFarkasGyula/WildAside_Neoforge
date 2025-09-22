@@ -17,6 +17,8 @@ public class ModParticles {
 
     public static final Supplier<SimpleParticleType> VIBRION_PARTICLE =
             PARTICLES.register("vibrion_particle", () -> new SimpleParticleType(true));
+    public static final Supplier<SimpleParticleType> VIBRION_DRIP_PARTICLE =
+            PARTICLES.register("vibrion_drip_particle", () -> new SimpleParticleType(true));
     public static final Supplier<SimpleParticleType> ENTORIUM_PARTICLE =
             PARTICLES.register("entorium_particle", () -> new SimpleParticleType(true));
     public static final Supplier<SimpleParticleType> SUBSTILIUM_PARTICLE =

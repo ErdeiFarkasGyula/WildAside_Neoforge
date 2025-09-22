@@ -44,20 +44,6 @@ public class OvergrownEntoriumOre extends EntoriumOre {
                 playerItem.hurtAndBreak(1, pPlayer, pStack.getEquipmentSlot());
             }
 
-            if (EnchantmentHelper.getItemEnchantmentLevel(EnchantmentUtils.getEnchtantmentHolder(pLevel, ModEnchantments.EXTENSIVE_RESEARCH), pStack) > 0) {
-                AdvancementHandler.givePlayerAdvancement((ServerPlayer) pPlayer, "extensive_research");
-                for (int i = -1; i <= 1; i++) {
-                    for (int j = -1; j <= 1; j++) {
-                        for (int k = -1; k <= 1; k++) {
-                            BlockPos newPos = pPos.offset(i, j, k);
-                            if (pLevel.getBlockState(newPos).is(ModBlocks.OVERGROWN_ENTORIUM_ORE.get())) {
-                                pLevel.setBlock(newPos, newBlock, 2);
-                            }
-                        }
-                    }
-                }
-            }
-
             return ItemInteractionResult.SUCCESS;
         }
 

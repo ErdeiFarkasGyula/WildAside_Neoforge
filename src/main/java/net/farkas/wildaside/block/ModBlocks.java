@@ -49,7 +49,7 @@ public class ModBlocks {
                     .lightLevel(l -> 9)));
 
     public static final DeferredBlock<Block> COMPRESSED_VIBRION_BLOCK = registerBlock("compressed_vibrion_block",
-            () -> new DropExperienceBlock(UniformInt.of(0, 0), BlockBehaviour.Properties.ofFullCopy(VIBRION_BLOCK.get())
+            () -> new DropExperienceBlock(UniformInt.of(0, 0), BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_BLOCK.get())
                     .lightLevel(s -> 15)));
 
     public static final DeferredBlock<Block> VIBRION_GEL = registerBlock("vibrion_gel",
@@ -65,7 +65,7 @@ public class ModBlocks {
                     .noOcclusion()));
 
     public static final DeferredBlock<Block> LIT_VIBRION_GEL = registerBlock("lit_vibrion_gel",
-            () -> new VibrionGel(BlockBehaviour.Properties.ofFullCopy(VIBRION_GEL.get()).lightLevel(s -> 5)));
+            () -> new VibrionGel(BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GEL.get()).lightLevel(s -> 5)));
 
     public static final DeferredBlock<Block> VIBRION_GLASS = registerBlock("vibrion_glass",
             () -> new VibrionGlass(BlockBehaviour.Properties.of()
@@ -77,13 +77,13 @@ public class ModBlocks {
                     .instrument(NoteBlockInstrument.HAT)));
 
     public static final DeferredBlock<Block> LIT_VIBRION_GLASS = registerBlock("lit_vibrion_glass",
-            () -> new VibrionGlass(BlockBehaviour.Properties.ofFullCopy(VIBRION_GLASS.get()).lightLevel(s -> 5)));
+            () -> new VibrionGlass(BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GLASS.get()).lightLevel(s -> 5)));
 
     public static final DeferredBlock<Block> VIBRION_GLASS_PANE = registerBlock("vibrion_glass_pane",
-            () -> new IronBarsBlock(BlockBehaviour.Properties.ofFullCopy(VIBRION_GLASS.get())));
+            () -> new IronBarsBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GLASS.get())));
 
     public static final DeferredBlock<Block> LIT_VIBRION_GLASS_PANE = registerBlock("lit_vibrion_glass_pane",
-            () -> new IronBarsBlock(BlockBehaviour.Properties.ofFullCopy(VIBRION_GLASS_PANE.get()).lightLevel(s -> 5)));
+            () -> new IronBarsBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GLASS_PANE.get()).lightLevel(s -> 5)));
 
     public static final DeferredBlock<Block> VIBRION_GROWTH = registerBlock("vibrion_growth",
             () -> new FlowerBlock(MobEffects.POISON, 5, BlockBehaviour.Properties.of()
@@ -201,23 +201,23 @@ public class ModBlocks {
 
 
     public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL = registerBlock("smooth_substilium_soil",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(COMPRESSED_SUBSTILIUM_SOIL.get())));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));
 
     public static final DeferredBlock<Block> CHISELED_SUBSTILIUM_SOIL = registerBlock("chiseled_substilium_soil",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(COMPRESSED_SUBSTILIUM_SOIL.get())));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILES = registerBlock("substilium_tiles",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(COMPRESSED_SUBSTILIUM_SOIL.get())));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));
 
     public static final DeferredBlock<Block> CRACKED_SUBSTILIUM_TILES = registerBlock("cracked_substilium_tiles",
-            () -> new Block(BlockBehaviour.Properties.ofFullCopy(COMPRESSED_SUBSTILIUM_SOIL.get())));
+            () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_STAIRS = registerBlock("substilium_tile_stairs",
             () -> new StairBlock(ModBlocks.SUBSTILIUM_TILES.get().defaultBlockState(),
-                    BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_TILES.get())));
+                    BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_TILES.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_SLAB = registerBlock("substilium_tile_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_TILES.get())));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_TILES.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_BUTTON = registerBlock("substilium_tile_button",
             () -> new ButtonBlock(BlockSetType.STONE, 30, BlockBehaviour.Properties.of()
@@ -226,10 +226,10 @@ public class ModBlocks {
                     .strength(1, 12)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_PRESSURE_PLATE = registerBlock("substilium_tile_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.STONE, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_TILE_BUTTON.get())));
+            () -> new PressurePlateBlock(BlockSetType.STONE, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_TILE_BUTTON.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_WALLS = registerBlock("substilium_tile_walls",
-            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_TILES.get())));
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_TILES.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_STEM = registerBlock("substilium_stem",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.of()
@@ -243,52 +243,52 @@ public class ModBlocks {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_STEM.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_WOOD = registerBlock("substilium_wood",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_STEM.get())));
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_STEM.get())));
 
     public static final DeferredBlock<Block> STRIPPED_SUBSTILIUM_WOOD = registerBlock("stripped_substilium_wood",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_WOOD.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_PLANKS = registerBlock("substilium_planks",
-            () -> new ModFlammableBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_STEM.get()).sound(SoundType.WOOD), 10, 5));
+            () -> new ModFlammableBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_STEM.get()).sound(SoundType.WOOD), 10, 5));
 
     public static final DeferredBlock<Block> SUBSTILIUM_STAIRS = registerBlock("substilium_stairs",
             () -> new StairBlock(ModBlocks.SUBSTILIUM_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
+                    BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_SLAB = registerBlock("substilium_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_BUTTON = registerBlock("substilium_button",
-            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).strength(1, 1)));
+            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1, 1)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_PRESSURE_PLATE = registerBlock("substilium_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_BUTTON.get())));
+            () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_BUTTON.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_FENCE = registerBlock("substilium_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_FENCE_GATE = registerBlock("substilium_fence_gate",
-            () -> new FenceGateBlock(Optional.of(ModWoodTypes.SUBSTILIUM), BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()),
+            () -> new FenceGateBlock(Optional.of(ModWoodTypes.SUBSTILIUM), BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()),
                     Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_DOOR = registerBlock("substilium_door",
-            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get())));
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TRAPDOOR = registerBlock("substilium_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).noOcclusion()));
+            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_SIGN = BLOCKS.register("substilium_sign",
-            () -> new ModStandingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModStandingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
     public static final DeferredBlock<Block> SUBSTILIUM_WALL_SIGN = BLOCKS.register("substilium_wall_sign",
-            () -> new ModWallSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_HANGING_SIGN = BLOCKS.register("substilium_hanging_sign",
-            () -> new ModHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
     public static final DeferredBlock<Block> SUBSTILIUM_WALL_HANGING_SIGN = BLOCKS.register("substilium_hanging_wall_sign",
-            () -> new ModWallHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_SPROUTS = registerBlock("substilium_sprouts",
-            () -> new FlowerBlock(MobEffects.CONFUSION, 5, BlockBehaviour.Properties.ofFullCopy(VIBRION_GROWTH.get())
+            () -> new FlowerBlock(MobEffects.CONFUSION, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GROWTH.get())
                     .mapColor(MapColor.COLOR_CYAN)
                     .lightLevel(l -> 0)));
 
@@ -303,7 +303,7 @@ public class ModBlocks {
                     .strength(2.5f, 4)));
 
     public static final DeferredBlock<Block> HICKORY_WOOD = registerBlock("hickory_wood",
-            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(HICKORY_LOG.get())));
+            () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_LOG.get())));
 
     public static final DeferredBlock<Block> STRIPPED_HICKORY_LOG = registerBlock("stripped_hickory_log",
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_LOG.get())));
@@ -312,42 +312,42 @@ public class ModBlocks {
             () -> new ModFlammableRotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_LOG.get())));
 
     public static final DeferredBlock<Block> HICKORY_PLANKS = registerBlock("hickory_planks",
-            () -> new ModFlammableBlock(BlockBehaviour.Properties.ofFullCopy(HICKORY_LOG.get()), 10, 5));
+            () -> new ModFlammableBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_LOG.get()), 10, 5));
 
     public static final DeferredBlock<Block> HICKORY_STAIRS = registerBlock("hickory_stairs",
-            () -> new StairBlock(ModBlocks.HICKORY_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
+            () -> new StairBlock(ModBlocks.HICKORY_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_SLAB = registerBlock("hickory_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
+            () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_BUTTON = registerBlock("hickory_button",
-            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).strength(1, 1)));
+            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1, 1)));
 
     public static final DeferredBlock<Block> HICKORY_PRESSURE_PLATE = registerBlock("hickory_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(HICKORY_BUTTON.get())));
+            () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_BUTTON.get())));
 
     public static final DeferredBlock<Block> HICKORY_FENCE = registerBlock("hickory_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
+            () -> new FenceBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_FENCE_GATE = registerBlock("hickory_fence_gate",
-            () -> new FenceGateBlock(Optional.of(ModWoodTypes.HICKORY), BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()),
+            () -> new FenceGateBlock(Optional.of(ModWoodTypes.HICKORY), BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()),
                     Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> HICKORY_DOOR = registerBlock("hickory_door",
-            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get())));
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_TRAPDOOR = registerBlock("hickory_trapdoor",
-            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).noOcclusion()));
+            () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> HICKORY_SIGN = BLOCKS.register("hickory_sign",
-            () -> new ModStandingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModStandingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
     public static final DeferredBlock<Block> HICKORY_WALL_SIGN = BLOCKS.register("hickory_wall_sign",
-            () -> new ModWallSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
 
     public static final DeferredBlock<Block> HICKORY_HANGING_SIGN = BLOCKS.register("hickory_hanging_sign",
-            () -> new ModHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
     public static final DeferredBlock<Block> HICKORY_WALL_HANGING_SIGN = BLOCKS.register("hickory_hanging_wall_sign",
-            () -> new ModWallHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
 
     public static final DeferredBlock<Block> SPOTTED_WINTERGREEN = registerBlock("spotted_wintergreen",
             () -> new FlowerBlock(MobEffects.MOVEMENT_SPEED, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
@@ -390,11 +390,11 @@ public class ModBlocks {
     public static final DeferredBlock<Block> RED_GLOWING_HICKORY_SAPLING = registerBlock("red_glowing_hickory_sapling",
             () -> new GlowingSaplingBlock(ModTreeGrowers.RED_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
     public static final DeferredBlock<Block> BROWN_GLOWING_HICKORY_SAPLING = registerBlock("brown_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.BROWN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingSaplingBlock(ModTreeGrowers.BROWN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
     public static final DeferredBlock<Block> YELLOW_GLOWING_HICKORY_SAPLING = registerBlock("yellow_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.YELLOW_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingSaplingBlock(ModTreeGrowers.YELLOW_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
     public static final DeferredBlock<Block> GREEN_GLOWING_HICKORY_SAPLING = registerBlock("green_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.GREEN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingSaplingBlock(ModTreeGrowers.GREEN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
 
     public static final EnumMap<HickoryColour, DeferredBlock<Block>> HICKORY_SAPLINGS = new EnumMap<>(HickoryColour.class);
     static {
