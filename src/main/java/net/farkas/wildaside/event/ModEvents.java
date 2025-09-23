@@ -1,8 +1,10 @@
 package net.farkas.wildaside.event;
 
+import com.mojang.brigadier.CommandDispatcher;
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.block.ModBlocks;
+import net.farkas.wildaside.command.ContaminationCommand;
 import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.potion.ModPotions;
@@ -11,6 +13,7 @@ import net.farkas.wildaside.util.ContaminationHandler;
 import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -35,6 +38,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -61,6 +65,12 @@ public class ModEvents {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void registerCommands(RegisterCommandsEvent event) {
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        ContaminationCommand.register(dispatcher);
     }
 
     @SubscribeEvent
@@ -221,7 +231,7 @@ public class ModEvents {
             if ((float) attacker.getEffect(contamEffect).getAmplifier() / 5 > random.nextFloat()) {
                 if (event.getTarget() instanceof LivingEntity target) {
                     int dose = attacker.getData(ModAttachments.CONTAMINATION).getDose();
-                    ContaminationHandler.giveContaminationDose(target, dose / 5);
+                    ContaminationHandler.addDose(target, dose / 5);
                 }
             }
         }

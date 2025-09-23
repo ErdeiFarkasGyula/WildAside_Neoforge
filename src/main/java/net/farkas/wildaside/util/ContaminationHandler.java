@@ -13,13 +13,21 @@ import net.minecraft.world.entity.LivingEntity;
 public class ContaminationHandler {
     private static final int maxAmplifier = 5;
 
-    public static void giveContaminationDose(Entity entity, int dose) {
+    public static void addDose(Entity entity, int dose) {
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
         var data = livingEntity.getData(ModAttachments.CONTAMINATION);
         data.addDose(dose);
         applyContamination(livingEntity, data.getDose());
 
+    }
+
+    public static void setDose(Entity entity, int dose) {
+        if (!(entity instanceof LivingEntity livingEntity)) return;
+
+        var data = livingEntity.getData(ModAttachments.CONTAMINATION);
+        data.setDose(dose);
+        applyContamination(livingEntity, data.getDose());
     }
 
     public static void applyContamination(LivingEntity entity, int dose) {

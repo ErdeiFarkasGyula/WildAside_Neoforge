@@ -152,7 +152,7 @@ public class Vibrion extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity) {
         if (!pLevel.isClientSide) {
-            ContaminationHandler.giveContaminationDose(pLivingEntity, pLevel.random.nextInt(250, 750));
+            ContaminationHandler.addDose(pLivingEntity, pLevel.random.nextInt(250, 750));
         }
 
         return super.finishUsingItem(pStack, pLevel, pLivingEntity);
