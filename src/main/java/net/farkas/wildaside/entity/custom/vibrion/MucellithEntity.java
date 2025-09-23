@@ -2,6 +2,7 @@ package net.farkas.wildaside.entity.custom.vibrion;
 
 import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.entity.ai.mucellith.MucellithAttackGoal;
+import net.farkas.wildaside.entity.ai.mucellith.MucellithLookAtPlayerGoal;
 import net.farkas.wildaside.entity.ai.mucellith.MucellithRandomLookAroundGoal;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -50,6 +51,7 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new MucellithAttackGoal(this, 60, 8f));
+        this.goalSelector.addGoal(2, new MucellithLookAtPlayerGoal(this, Player.class, 64));
         this.goalSelector.addGoal(4, new MucellithRandomLookAroundGoal(this));
 
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
