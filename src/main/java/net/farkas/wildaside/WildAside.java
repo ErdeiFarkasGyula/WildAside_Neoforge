@@ -8,6 +8,7 @@ import net.farkas.wildaside.config.Config;
 import net.farkas.wildaside.effect.ModMobEffects;
 import net.farkas.wildaside.enchantment.ModEnchantmentEffects;
 import net.farkas.wildaside.entity.ModEntities;
+import net.farkas.wildaside.entity.ModEntitySpawns;
 import net.farkas.wildaside.item.ModCreativeModeTabs;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.item.VanillaCreativeTabs;

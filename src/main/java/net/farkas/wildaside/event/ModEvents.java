@@ -6,6 +6,7 @@ import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.command.ContaminationCommand;
 import net.farkas.wildaside.effect.ModMobEffects;
+import net.farkas.wildaside.entity.ModEntitySpawns;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.potion.ModPotions;
 import net.farkas.wildaside.util.AdvancementHandler;
@@ -40,6 +41,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
@@ -58,6 +60,11 @@ public class ModEvents {
         if (event.getEntity() instanceof ServerPlayer player) {
             AdvancementHandler.givePlayerAdvancement(player, "wild_wilder_wildest");
         }
+    }
+
+    @SubscribeEvent
+    public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        ModEntitySpawns.registerSpawnPlacements(event);
     }
 
     @SubscribeEvent
