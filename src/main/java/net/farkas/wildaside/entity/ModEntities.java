@@ -40,7 +40,7 @@ public class ModEntities {
 
     public static final Supplier<EntityType<MucellithEntity>> MUCELLITH =
             ENTITIES.register("mucellith", () -> EntityType.Builder.<MucellithEntity>of(MucellithEntity::new, MobCategory.MONSTER)
-                    .sized(0.75f, 2.2f).build("mucellith"));
+                    .sized(0.75f, 2f).build("mucellith"));
 
     public static final Supplier<EntityType<HickoryTreantEntity>> HICKORY_TREANT =
             ENTITIES.register("hickory_treant", () -> EntityType.Builder.<HickoryTreantEntity>of(HickoryTreantEntity::new, MobCategory.MONSTER)

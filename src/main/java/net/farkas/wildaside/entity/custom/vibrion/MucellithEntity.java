@@ -85,6 +85,8 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
     @Override
     public void aiStep() {
         super.aiStep();
+        System.out.println("Is defending: " + isDefending());
+        System.out.println("Has defended: " + hasDefended());
 
         if (belowHealthThreshold(0.25f) && !hasDefended()) {
             setDefending(true);
@@ -102,11 +104,13 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
 
             if (!belowHealthThreshold(0.5f)) {
                 this.playSound(SoundEvents.WARDEN_ANGRY, 1f, 1.5f);
-                this.removeEffect(MobEffects.DAMAGE_RESISTANCE);
-                this.removeEffect(MobEffects.REGENERATION);
                 setHasDefended(true);
                 setDefending(false);
             }
+        }
+        else {
+            this.removeEffect(MobEffects.DAMAGE_RESISTANCE);
+            this.removeEffect(MobEffects.REGENERATION);
         }
     }
 
@@ -225,30 +229,16 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
 
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        SoundEvent[] sounds = new SoundEvent[]{
-                ModSounds.MUCELLITH_AMBIENT_1.get(),
-                ModSounds.MUCELLITH_AMBIENT_2.get(),
-                ModSounds.MUCELLITH_AMBIENT_3.get(),
-                ModSounds.MUCELLITH_AMBIENT_4.get()
-        };
-        return sounds[this.random.nextInt(sounds.length)];
+        return ModSounds.MUCELLITH_AMBIENT.get();
     }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource pDamageSource) {
-        SoundEvent[] sounds = new SoundEvent[]{
-                ModSounds.MUCELLITH_HURT_1.get(),
-                ModSounds.MUCELLITH_HURT_2.get(),
-                ModSounds.MUCELLITH_HURT_3.get(),
-        };
-        return sounds[this.random.nextInt(sounds.length)];
+        return ModSounds.MUCELLITH_HURT.get();
     }
 
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        SoundEvent[] sounds = new SoundEvent[]{
-                ModSounds.MUCELLITH_DEATH.get()
-        };
-        return sounds[this.random.nextInt(sounds.length)];
+        return ModSounds.MUCELLITH_DEATH.get();
     }
 }
