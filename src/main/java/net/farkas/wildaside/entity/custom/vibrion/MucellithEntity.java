@@ -22,6 +22,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 
 public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
@@ -85,8 +86,6 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
     @Override
     public void aiStep() {
         super.aiStep();
-        System.out.println("Is defending: " + isDefending());
-        System.out.println("Has defended: " + hasDefended());
 
         if (belowHealthThreshold(0.25f) && !hasDefended()) {
             setDefending(true);
