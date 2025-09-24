@@ -14,6 +14,17 @@ public class ModSounds {
 
     public static final Supplier<SoundEvent> VIBRION_HIVE_MUSIC = registerSoundEvent("music.vibrion_hive");
 
+    public static final Supplier<SoundEvent> MUCELLITH_AMBIENT_1 = registerSoundEvent("mucellith.ambient_1");
+    public static final Supplier<SoundEvent> MUCELLITH_AMBIENT_2 = registerSoundEvent("mucellith.ambient_2");
+    public static final Supplier<SoundEvent> MUCELLITH_AMBIENT_3 = registerSoundEvent("mucellith.ambient_3");
+    public static final Supplier<SoundEvent> MUCELLITH_AMBIENT_4 = registerSoundEvent("mucellith.ambient_4");
+
+    public static final Supplier<SoundEvent> MUCELLITH_HURT_1 = registerSoundEvent("mucellith.hurt_1");
+    public static final Supplier<SoundEvent> MUCELLITH_HURT_2 = registerSoundEvent("mucellith.hurt_2");
+    public static final Supplier<SoundEvent> MUCELLITH_HURT_3 = registerSoundEvent("mucellith.hurt_3");
+
+    public static final Supplier<SoundEvent> MUCELLITH_DEATH = registerSoundEvent("mucellith.death");
+
     private static Supplier<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, name);
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
