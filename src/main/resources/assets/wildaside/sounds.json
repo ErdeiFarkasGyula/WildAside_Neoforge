@@ -29,13 +29,10 @@
     ]
   },
   "entity.mucellith.death": {
-    "subtitles": "sounds.wildaside.mucellith.death",
+    "subtitles": "sounds.wildaside.entity.mucellith.death",
     "category": "hostile",
     "sounds": [
-      {
-        "name": "wildaside:entity/mucellith/mucellith_death",
-        "stream": true
-      }
+      "wildaside:entity/mucellith/mucellith_death"
     ]
   }
 }
