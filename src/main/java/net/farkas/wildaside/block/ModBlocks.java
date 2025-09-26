@@ -220,7 +220,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_TILES.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TILE_BUTTON = registerBlock("substilium_tile_button",
-            () -> new ButtonBlock(BlockSetType.STONE, 30, BlockBehaviour.Properties.of()
+            () -> new ButtonBlock(BlockSetType.STONE, 20, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_CYAN)
                     .sound(SoundType.DEEPSLATE)
                     .strength(1, 12)));
@@ -259,7 +259,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
 
     public static final DeferredBlock<Block> SUBSTILIUM_BUTTON = registerBlock("substilium_button",
-            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1, 1)));
+            () -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1, 1)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_PRESSURE_PLATE = registerBlock("substilium_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_BUTTON.get())));
@@ -321,7 +321,7 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
 
     public static final DeferredBlock<Block> HICKORY_BUTTON = registerBlock("hickory_button",
-            () -> new ButtonBlock(BlockSetType.OAK, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1, 1)));
+            () -> new ButtonBlock(BlockSetType.OAK, 30, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1, 1)));
 
     public static final DeferredBlock<Block> HICKORY_PRESSURE_PLATE = registerBlock("hickory_pressure_plate",
             () -> new PressurePlateBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_BUTTON.get())));
