@@ -2,10 +2,11 @@ package net.farkas.wildaside.worldgen.feature.custom;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -28,17 +29,46 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
 
+        if (!areChunksLoaded(level, origin, 2)) {
+            return false;
+        }
+
         BlockPos wallPos = findWall(level, origin, 20, 10, random);
         if (wallPos == null) return false;
 
-        placeSaggingLine(level, origin, wallPos, stringBlock.getState(random, context.origin()), (float) random.nextInt(2, 11) / 10);
+        placeSaggingLine(level, origin, wallPos,
+                stringBlock.getState(random, context.origin()),
+                (float) random.nextInt(2, 11) / 10);
 
         return true;
     }
 
-    private BlockPos findWall(LevelAccessor world, BlockPos origin, int maxHoriztonal, int maxVertical, RandomSource random) {
-        int dx = random.nextInt(maxHoriztonal * 2 + 1) - maxHoriztonal;
-        int dz = random.nextInt(maxHoriztonal * 2 + 1) - maxHoriztonal;
+    private boolean areChunksLoaded(LevelAccessor level, BlockPos pos, int radius) {
+        if (level instanceof ServerLevel serverLevel) {
+            int chunkX = pos.getX() >> 4;
+            int chunkZ = pos.getZ() >> 4;
+
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    if (!serverLevel.hasChunk(chunkX + dx, chunkZ + dz)) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private BlockPos findWall(LevelAccessor world, BlockPos origin, int maxHorizontal, int maxVertical, RandomSource random) {
+        int dx = Mth.clamp(
+                random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal,
+                -8, 8
+        );
+        int dz = Mth.clamp(
+                random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal,
+                -8, 8
+        );
 
         for (int y = origin.getY() - maxVertical; y < origin.getY() + maxVertical; y++) {
             BlockPos pos = new BlockPos(origin.getX() + dx, y, origin.getZ() + dz);
