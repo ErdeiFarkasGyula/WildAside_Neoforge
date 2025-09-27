@@ -74,29 +74,25 @@ public class ModEvents {
     @SubscribeEvent
     public static void addPackFinders(AddPackFindersEvent event) {
         ModContainer mod = ModList.get().getModContainerById(WildAside.MOD_ID).orElse(null);
-        if (mod == null) return;
+        if (mod == null || event.getPackType() == PackType.CLIENT_RESOURCES) return;
 
-        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
-            String id = "wildaside_ce";
+        String id = "wildaside_ce";
 
-            Pack.ResourcesSupplier supplier;
-            supplier = new PathPackResources.PathResourcesSupplier(
-                    mod.getModInfo().getOwningFile().getFile().findResource("resourcepacks/" + id)
-            );
+        Pack.ResourcesSupplier supplier;
+        supplier = new PathPackResources.PathResourcesSupplier(
+                mod.getModInfo().getOwningFile().getFile().findResource("resourcepacks/" + id));
 
-            PackLocationInfo location = new PackLocationInfo(
-                    id,
-                    Component.literal("Wild Aside CEntertain"),
-                    PackSource.DEFAULT,
-                    Optional.empty()
-            );
+        PackLocationInfo location = new PackLocationInfo(
+                id,
+                Component.literal("Wild Aside CEntertain"),
+                PackSource.DEFAULT,
+                Optional.empty());
 
-            PackSelectionConfig config = new PackSelectionConfig(false, Pack.Position.TOP, false);
+        PackSelectionConfig config = new PackSelectionConfig(false, Pack.Position.TOP, false);
 
-            Pack pack = Pack.readMetaAndCreate(location, supplier, PackType.CLIENT_RESOURCES, config);
-            if (pack != null) {
-                event.addRepositorySource(consumer -> consumer.accept(pack));
-            }
+        Pack pack = Pack.readMetaAndCreate(location, supplier, PackType.CLIENT_RESOURCES, config);
+        if (pack != null) {
+            event.addRepositorySource(consumer -> consumer.accept(pack));
         }
     }
 
