@@ -15,10 +15,18 @@ import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.PackLocationInfo;
+import net.minecraft.server.packs.PackSelectionConfig;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.PathPackResources;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackCompatibility;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -36,7 +44,10 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -48,8 +59,13 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
+import net.neoforged.neoforge.resource.ResourcePackLoader;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @EventBusSubscriber(modid = WildAside.MOD_ID)
 public class ModEvents {
@@ -57,6 +73,35 @@ public class ModEvents {
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             AdvancementHandler.givePlayerAdvancement(player, "wild_wilder_wildest");
+        }
+    }
+
+    @SubscribeEvent
+    public static void addPackFinders(AddPackFindersEvent event) {
+        ModContainer mod = ModList.get().getModContainerById(WildAside.MOD_ID).orElse(null);
+        if (mod == null) return;
+
+        if (event.getPackType() == PackType.CLIENT_RESOURCES) {
+            String id = "wildaside_ce";
+
+            Pack.ResourcesSupplier supplier;
+            supplier = new PathPackResources.PathResourcesSupplier(
+                    mod.getModInfo().getOwningFile().getFile().findResource("resourcepacks/" + id)
+            );
+
+            PackLocationInfo location = new PackLocationInfo(
+                    id,
+                    Component.literal("Wild Aside CEntertain"),
+                    PackSource.DEFAULT,
+                    Optional.empty()
+            );
+
+            PackSelectionConfig config = new PackSelectionConfig(false, Pack.Position.TOP, false);
+
+            Pack pack = Pack.readMetaAndCreate(location, supplier, PackType.CLIENT_RESOURCES, config);
+            if (pack != null) {
+                event.addRepositorySource(consumer -> consumer.accept(pack));
+            }
         }
     }
 
