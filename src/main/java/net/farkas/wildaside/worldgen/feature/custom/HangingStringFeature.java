@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -61,14 +60,8 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
     }
 
     private BlockPos findWall(LevelAccessor world, BlockPos origin, int maxHorizontal, int maxVertical, RandomSource random) {
-        int dx = Mth.clamp(
-                random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal,
-                -8, 8
-        );
-        int dz = Mth.clamp(
-                random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal,
-                -8, 8
-        );
+        int dx = Mth.clamp(random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal, -8, 8);
+        int dz = Mth.clamp(random.nextInt(maxHorizontal * 2 + 1) - maxHorizontal, -8, 8);
 
         for (int y = origin.getY() - maxVertical; y < origin.getY() + maxVertical; y++) {
             BlockPos pos = new BlockPos(origin.getX() + dx, y, origin.getZ() + dz);
