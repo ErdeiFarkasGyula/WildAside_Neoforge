@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -27,13 +28,13 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
 
-        BlockPos ceiling = findCeiling(level, origin, 20);
-        if (ceiling == null) return false;
+        BlockPos ceilingPos = findCeiling(level, origin, 20);
+        if (ceilingPos == null) return false;
 
-        BlockPos wall = findWall(level, origin, 20, 10, random);
-        if (wall == null) return false;
+        BlockPos wallPos = findWall(level, origin, 20, 10, random);
+        if (wallPos == null) return false;
 
-        placeSaggingLine(level, ceiling, wall, stringBlock.getState(random, context.origin()), (float) random.nextInt(2, 11) / 10);
+        placeSaggingLine(level, ceilingPos, wallPos, stringBlock.getState(random, context.origin()), (float) random.nextInt(2, 11) / 10);
 
         return true;
     }
@@ -67,7 +68,7 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
 
         double length = startVec.distance(endVec);
         int steps = (int)(length * 3);
-
+        
         for (int i = 0; i <= steps; i++) {
             double t = i / (double) steps;
 
