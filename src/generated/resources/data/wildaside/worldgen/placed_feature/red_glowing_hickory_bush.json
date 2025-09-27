@@ -1,5 +1,5 @@
 {
-  "feature": "wildaside:hickory_tree",
+  "feature": "wildaside:red_glowing_hickory_bush",
   "placement": [
     {
       "type": "minecraft:count",
@@ -7,11 +7,11 @@
         "type": "minecraft:weighted_list",
         "distribution": [
           {
-            "data": 32,
-            "weight": 3
+            "data": 8,
+            "weight": 1
           },
           {
-            "data": 48,
+            "data": 12,
             "weight": 1
           }
         ]
@@ -32,16 +32,10 @@
       "type": "minecraft:biome"
     },
     {
-      "type": "minecraft:block_predicate_filter",
-      "predicate": {
-        "type": "minecraft:would_survive",
-        "state": {
-          "Name": "wildaside:hickory_sapling",
-          "Properties": {
-            "stage": "0"
-          }
-        }
-      }
+      "type": "wildaside:large_patch_noise",
+      "max": -0.45,
+      "min": -1.0,
+      "scale": 0.01
     }
   ]
 }

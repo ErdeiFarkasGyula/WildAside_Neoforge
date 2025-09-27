@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class LargePatchNoiseModifier extends PlacementModifier {
-    private static final PerlinSimplexNoise NOISE = new PerlinSimplexNoise(RandomSource.create(1234), List.of(0));
+    private static final PerlinSimplexNoise NOISE = new PerlinSimplexNoise(RandomSource.create(1984), List.of(0));
 
     private final double scale;
     private final float min;

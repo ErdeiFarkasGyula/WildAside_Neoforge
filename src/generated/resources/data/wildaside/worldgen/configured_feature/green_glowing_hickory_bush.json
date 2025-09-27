@@ -4,9 +4,11 @@
     "to_place": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "wildaside:hickory_leaves",
+        "Name": "wildaside:green_glowing_hickory_leaves",
         "Properties": {
           "distance": "7",
+          "fixed_lighting": "false",
+          "light": "0",
           "persistent": "false",
           "waterlogged": "false"
         }

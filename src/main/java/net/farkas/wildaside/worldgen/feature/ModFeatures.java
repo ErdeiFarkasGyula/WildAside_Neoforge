@@ -31,9 +31,7 @@ public class ModFeatures {
             () -> new HangingStringFeature(SimpleBlockConfiguration.CODEC));
 
     public static final Supplier<HickoryBushFeature> HICKORY_BUSH = FEATURES.register("hickory_bush",
-            () -> new HickoryBushFeature(NoneFeatureConfiguration.CODEC));
-    public static final Supplier<GlowingHickoryBushFeature> GLOWING_HICKORY_BUSH = FEATURES.register("glowing_hickory_bush",
-            () -> new GlowingHickoryBushFeature(NoneFeatureConfiguration.CODEC));
+            () -> new HickoryBushFeature(SimpleBlockConfiguration.CODEC));
     public static final Supplier<FallenHickoryTreeFeature> FALLEN_HICKORY_TREE = FEATURES.register("fallen_hickory_tree",
             () -> new FallenHickoryTreeFeature(NoneFeatureConfiguration.CODEC));
 
