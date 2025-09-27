@@ -28,25 +28,12 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
 
-        BlockPos ceilingPos = findCeiling(level, origin, 20);
-        if (ceilingPos == null) return false;
-
         BlockPos wallPos = findWall(level, origin, 20, 10, random);
         if (wallPos == null) return false;
 
-        placeSaggingLine(level, ceilingPos, wallPos, stringBlock.getState(random, context.origin()), (float) random.nextInt(2, 11) / 10);
+        placeSaggingLine(level, origin, wallPos, stringBlock.getState(random, context.origin()), (float) random.nextInt(2, 11) / 10);
 
         return true;
-    }
-
-    private BlockPos findCeiling(LevelAccessor world, BlockPos origin, int maxSearch) {
-        for (int y = origin.getY(); y < origin.getY() + maxSearch; y++) {
-            BlockPos pos = new BlockPos(origin.getX(), y, origin.getZ());
-            if (!world.getBlockState(pos).isAir()) {
-                return pos.above();
-            }
-        }
-        return null;
     }
 
     private BlockPos findWall(LevelAccessor world, BlockPos origin, int maxHoriztonal, int maxVertical, RandomSource random) {
