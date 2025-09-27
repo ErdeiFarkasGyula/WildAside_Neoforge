@@ -21,6 +21,7 @@ import net.farkas.wildaside.worldgen.biome.surface.ModSurfaceRules;
 import net.farkas.wildaside.worldgen.feature.ModFeatures;
 import net.farkas.wildaside.worldgen.feature.ModFoliagePlacers;
 import net.farkas.wildaside.worldgen.feature.decorator.ModTreeDecorators;
+import net.farkas.wildaside.worldgen.modifier.ModPlacementModifiers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.bus.api.IEventBus;
@@ -54,6 +55,7 @@ public class WildAside {
         ModMobEffects.register(modEventBus);
         ModPotions.register(modEventBus);
         ModParticles.register(modEventBus);
+        ModPlacementModifiers.register(modEventBus);
         ModTreeDecorators.register(modEventBus);
         ModFeatures.register(modEventBus);
         ModFoliagePlacers.register(modEventBus);

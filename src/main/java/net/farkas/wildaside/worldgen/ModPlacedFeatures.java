@@ -3,6 +3,7 @@ package net.farkas.wildaside.worldgen;
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.util.HickoryColour;
+import net.farkas.wildaside.worldgen.modifier.LargePatchNoiseModifier;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.EnumMap;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> REDLIKE_SUBSTILIUM_MUSHROOM = registerKey("redlike_substilium_mushroom");
@@ -165,8 +168,15 @@ public class ModPlacedFeatures {
         register(context, NATURAL_SPORE_BLASTER, configuredFeatures.getOrThrow(ModConfiguredFeatures.NATURAL_SPORE_BLASTER),
                 ModOrePlacement.commonOrePlacement(256, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
+        register(context, HICKORY_TREE, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREE),
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(8, 0.1f, 2), ModBlocks.HICKORY_SAPLING.get()));
+
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.RED_GLOWING,   0.008, -1.0f, -0.2f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.GREEN_GLOWING, 0.008, -0.3f, 0.1f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.YELLOW_GLOWING,0.008, 0.0f, 0.4f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.BROWN_GLOWING, 0.008, 0.3f, 1.0f);
+
         for (HickoryColour colour : HickoryColour.values()) {
-            registerHickoryTree(context, configuredFeatures, colour);
             registerHickorySapling(context, configuredFeatures, colour);
         }
 
@@ -186,10 +196,14 @@ public class ModPlacedFeatures {
                 ModOrePlacement.commonOrePlacement(16, HeightRangePlacement.triangle(VerticalAnchor.absolute(50), VerticalAnchor.absolute(100))));
     }
 
-    private static void registerHickoryTree(BootstrapContext<PlacedFeature> context, HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures, HickoryColour colour) {
-        int count = colour == HickoryColour.HICKORY ? 8 : 2;
-        register(context, HICKORY_TREES.get(colour), configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREES.get(colour)),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(count, 0.1f, 2), ModBlocks.HICKORY_SAPLINGS.get(colour).get()));
+    private static void registerGlowingHickoryTree(BootstrapContext<PlacedFeature> context, HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures, HickoryColour colour, double scale, float minNoise, float maxNoise) {
+        int count = 24;
+        List<PlacementModifier> treeMods = VegetationPlacements.treePlacement(PlacementUtils.countExtra(count, 0.5f, 4), ModBlocks.HICKORY_SAPLINGS.get(colour).get());
+        List<PlacementModifier> patchMods = List.of(new LargePatchNoiseModifier(scale, minNoise, maxNoise));
+
+        List<PlacementModifier> allMods = Stream.concat(treeMods.stream(), patchMods.stream()).collect(Collectors.toList());
+
+        register(context, HICKORY_TREES.get(colour), configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREES.get(colour)), allMods);
     }
 
     private static void registerHickorySapling(BootstrapContext<PlacedFeature> context, HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures, HickoryColour colour) {
