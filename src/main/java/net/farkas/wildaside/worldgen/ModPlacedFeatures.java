@@ -171,10 +171,11 @@ public class ModPlacedFeatures {
         register(context, HICKORY_TREE, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREE),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(8, 0.1f, 2), ModBlocks.HICKORY_SAPLING.get()));
 
-        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.RED_GLOWING,   0.008, -1.0f, -0.2f);
-        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.GREEN_GLOWING, 0.008, -0.3f, 0.1f);
-        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.YELLOW_GLOWING,0.008, 0.0f, 0.4f);
-        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.BROWN_GLOWING, 0.008, 0.3f, 1.0f);
+        double noiseScale = 0.010;
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.RED_GLOWING,   noiseScale, -1.0f, -0.45f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.GREEN_GLOWING, noiseScale, -0.5f, 0.0f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.YELLOW_GLOWING,noiseScale, -0.05f, 0.45f);
+        registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.BROWN_GLOWING, noiseScale, 0.4f, 1.0f);
 
         for (HickoryColour colour : HickoryColour.values()) {
             registerHickorySapling(context, configuredFeatures, colour);
@@ -197,8 +198,8 @@ public class ModPlacedFeatures {
     }
 
     private static void registerGlowingHickoryTree(BootstrapContext<PlacedFeature> context, HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures, HickoryColour colour, double scale, float minNoise, float maxNoise) {
-        int count = 24;
-        List<PlacementModifier> treeMods = VegetationPlacements.treePlacement(PlacementUtils.countExtra(count, 0.5f, 4), ModBlocks.HICKORY_SAPLINGS.get(colour).get());
+        int count = 16;
+        List<PlacementModifier> treeMods = VegetationPlacements.treePlacement(PlacementUtils.countExtra(count, 0.25f, 8), ModBlocks.HICKORY_SAPLINGS.get(colour).get());
         List<PlacementModifier> patchMods = List.of(new LargePatchNoiseModifier(scale, minNoise, maxNoise));
 
         List<PlacementModifier> allMods = Stream.concat(treeMods.stream(), patchMods.stream()).collect(Collectors.toList());

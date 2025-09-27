@@ -7,11 +7,11 @@
         "type": "minecraft:weighted_list",
         "distribution": [
           {
-            "data": 24,
-            "weight": 1
+            "data": 16,
+            "weight": 3
           },
           {
-            "data": 28,
+            "data": 24,
             "weight": 1
           }
         ]
@@ -48,8 +48,8 @@
     {
       "type": "wildaside:large_patch_noise",
       "max": 1.0,
-      "min": 0.3,
-      "scale": 0.008
+      "min": 0.4,
+      "scale": 0.01
     }
   ]
 }
