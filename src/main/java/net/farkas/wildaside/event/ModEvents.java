@@ -74,7 +74,7 @@ public class ModEvents {
     @SubscribeEvent
     public static void addPackFinders(AddPackFindersEvent event) {
         ModContainer mod = ModList.get().getModContainerById(WildAside.MOD_ID).orElse(null);
-        if (mod == null || event.getPackType() == PackType.CLIENT_RESOURCES) return;
+        if (mod == null || !(event.getPackType() == PackType.CLIENT_RESOURCES)) return;
 
         String id = "wildaside_ce";
 
