@@ -1,4 +1,4 @@
-// 1.21.1	2025-09-27T18:15:35.9287989	Registries
+// 1.21.1	2025-09-27T18:24:44.2725414	Registries
 d8c5e198c668a68af0e09197cd62a626b11d55e6 data/wildaside/worldgen/biome/glowing_hickory_forest.json
 b9af2c44b6de1f9f4d298fa50bbb1928174c5790 data/wildaside/worldgen/biome/hickory_forest.json
 fd33743b4ce7fe7c42538831653dbcb29c13c16c data/wildaside/worldgen/biome/vibrion_hive.json
@@ -56,7 +56,7 @@ c96b1cc43adbfbd216c62f4d7c8a3761f90ba46c data/wildaside/worldgen/placed_feature/
 321aac5693db3be2a1940bad2a7c3f84cd7b300f data/wildaside/worldgen/placed_feature/hanging_vibrion_vines.json
 1328baa607cbab7762f19013e328e04765371d93 data/wildaside/worldgen/placed_feature/hickory_bush.json
 9c8d9ab1103214c8fed8d570436bfb5f31ca9f20 data/wildaside/worldgen/placed_feature/hickory_sapling.json
-5c687f87944aa54148be5821e56144b9040ef762 data/wildaside/worldgen/placed_feature/hickory_tree.json
+662d2bb584a1ca13f1653b02ec74d4c19122b861 data/wildaside/worldgen/placed_feature/hickory_tree.json
 b1fadef2a8eb24e22143c2986f0827c34ab87b8c data/wildaside/worldgen/placed_feature/natural_spore_blaster.json
 a5be93f3e60520a57a1eee5e39337af40a4ffb04 data/wildaside/worldgen/placed_feature/overgrown_entorium_ore.json
 a90043392c7d4f869f4c1b5f248289edcb13f615 data/wildaside/worldgen/placed_feature/pinkster_flower.json

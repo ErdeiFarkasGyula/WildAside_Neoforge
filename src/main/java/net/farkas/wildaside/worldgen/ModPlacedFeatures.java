@@ -169,7 +169,7 @@ public class ModPlacedFeatures {
                 ModOrePlacement.commonOrePlacement(256, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
         register(context, HICKORY_TREE, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREE),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(8, 0.1f, 2), ModBlocks.HICKORY_SAPLING.get()));
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(64, 0.25f, 32), ModBlocks.HICKORY_SAPLING.get()));
 
         double noiseScale = 0.010;
         registerGlowingHickoryTree(context, configuredFeatures, HickoryColour.RED_GLOWING,   noiseScale, -1.0f, -0.45f);
