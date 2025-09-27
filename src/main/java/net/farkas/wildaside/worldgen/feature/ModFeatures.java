@@ -8,6 +8,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.HugeMushroomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.ReplaceBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -25,6 +26,9 @@ public class ModFeatures {
             () -> new RedlikeSubstiliumMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
     public static final Supplier<BrownlikeSubstiliumMushroomFeature> BROWNLIKE_SUBSTILIUM_MUSHROOM = FEATURES.register("brownlike_substilium_mushroom",
             () -> new BrownlikeSubstiliumMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
+
+    public static final Supplier<HangingStringFeature> HANGING_STRING = FEATURES.register("hanging_string",
+            () -> new HangingStringFeature(SimpleBlockConfiguration.CODEC));
 
     public static final Supplier<HickoryBushFeature> HICKORY_BUSH = FEATURES.register("hickory_bush",
             () -> new HickoryBushFeature(NoneFeatureConfiguration.CODEC));
