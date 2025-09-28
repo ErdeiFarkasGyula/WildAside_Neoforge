@@ -13,15 +13,15 @@ public class ModPotions {
     public static final DeferredRegister<Potion> POTIONS =
             DeferredRegister.create(BuiltInRegistries.POTION, WildAside.MOD_ID);
 
-    public static final Holder<Potion> CONTAMINATION_POTION = POTIONS.register("contamination_potion",
-            () -> new Potion(new MobEffectInstance(ModMobEffects.CONTAMINATION.getDelegate(), 400, 0)));
-    public static final Holder<Potion> CONTAMINATION_POTION_2 = POTIONS.register("contamination_potion_2",
-            () -> new Potion(new MobEffectInstance(ModMobEffects.CONTAMINATION.getDelegate(), 400, 1)));
-
-    public static final Holder<Potion> IMMUNITY_POTION = POTIONS.register("immunity_potion",
-            () -> new Potion(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), 400, 0)));
-    public static final Holder<Potion> IMMUNITY_POTION_2 = POTIONS.register("immunity_potion_2",
-            () -> new Potion(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), 400, 1)));
+//    public static final Holder<Potion> CONTAMINATION_POTION = POTIONS.register("contamination_potion",
+//            () -> new Potion(new MobEffectInstance(ModMobEffects.CONTAMINATION.getDelegate(), 400, 0)));
+//    public static final Holder<Potion> CONTAMINATION_POTION_2 = POTIONS.register("contamination_potion_2",
+//            () -> new Potion(new MobEffectInstance(ModMobEffects.CONTAMINATION.getDelegate(), 400, 1)));
+//
+//    public static final Holder<Potion> IMMUNITY_POTION = POTIONS.register("immunity_potion",
+//            () -> new Potion(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), 400, 0)));
+//    public static final Holder<Potion> IMMUNITY_POTION_2 = POTIONS.register("immunity_potion_2",
+//            () -> new Potion(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), 400, 1)));
 
     public static final Holder<Potion> LIFESTEAL_POTION = POTIONS.register("lifesteal_potion",
             () -> new Potion(new MobEffectInstance(ModMobEffects.LIFESTEAL.getDelegate(), 1800, 0)));
