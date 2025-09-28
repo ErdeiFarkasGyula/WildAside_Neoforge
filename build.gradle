@@ -83,6 +83,9 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
+    compileOnly("vazkii.patchouli:Patchouli:${minecraft_version}-92-NEOFORGE")
+    runtimeOnly("vazkii.patchouli:Patchouli:${minecraft_version}-92-NEOFORGE")
+
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
     implementation("com.github.glitchfiend:TerraBlender-neoforge:${minecraft_version}-${terrablender_version}")
 }

@@ -19,6 +19,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -288,19 +289,16 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
     }
 
     public void consumePotionBottle() {
-        if (lastUsedSlot >= 0 && lastUsedSlot < 9) {
-            ItemStack stack = itemHandler.getStackInSlot(lastUsedSlot);
-            if (!stack.isEmpty()) {
-                itemHandler.setStackInSlot(lastUsedSlot, stack);
-            }
-        }
-
         activePotion = ItemStack.EMPTY;
         potionTicksLeft = 0;
-
+        maxPotionTicks = 200;
         lastUsedSlot = -1;
+        shouldSelectNewPotion = true;
 
         setChanged();
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
     }
 
     public void selectNewPotion() {
@@ -309,41 +307,51 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
         List<Integer> validSlots = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             ItemStack stack = itemHandler.getStackInSlot(i);
-            if (i != lastUsedSlot && stack.getItem() instanceof PotionItem && !stack.isEmpty()) {
+            if (!stack.isEmpty() && stack.getItem() instanceof PotionItem) {
                 validSlots.add(i);
             }
         }
 
         if (validSlots.isEmpty()) {
             activePotion = ItemStack.EMPTY;
+            lastUsedSlot = -1;
+            shouldSelectNewPotion = true;
             return;
         }
 
         int slot = validSlots.get(level.random.nextInt(validSlots.size()));
-        ItemStack potionStack = itemHandler.getStackInSlot(slot);
 
-        itemHandler.insertItem(OUTPUT_1, new ItemStack(Items.GLASS_BOTTLE), false);
+        ItemStack extracted = itemHandler.extractItem(slot, 1, false);
+        if (extracted.isEmpty()) {
+            shouldSelectNewPotion = true;
+            lastUsedSlot = -1;
+            activePotion = ItemStack.EMPTY;
+            return;
+        }
 
-        activePotion = potionStack.copy();
-        setChanged();
+        ItemStack remainder = itemHandler.insertItem(OUTPUT_1, new ItemStack(Items.GLASS_BOTTLE), false);
+        if (!remainder.isEmpty() && level instanceof ServerLevel serverLevel) {
+            serverLevel.addFreshEntity(new ItemEntity(serverLevel,
+                    worldPosition.getX() + 0.5,
+                    worldPosition.getY() + 1.0,
+                    worldPosition.getZ() + 0.5,
+                    remainder));
+        }
+
+        activePotion = extracted.copy();
+        lastUsedSlot = slot;
+        shouldSelectNewPotion = false;
 
         Iterable<MobEffectInstance> effectInstances = activePotion.get(DataComponents.POTION_CONTENTS).getAllEffects();
         List<MobEffectInstance> effects = StreamSupport.stream(effectInstances.spliterator(), false).toList();
-
-        if (effects.isEmpty()) {
-            maxPotionTicks = 200;
-        } else {
-            maxPotionTicks = effects.stream().mapToInt(MobEffectInstance::getDuration).max().orElse(200);
-        }
-        setChanged();
+        maxPotionTicks = effects.isEmpty() ? 200 : effects.stream().mapToInt(MobEffectInstance::getDuration).max().orElse(200);
 
         potionTicksLeft = maxPotionTicks;
 
-        potionStack.shrink(1);
-        itemHandler.setStackInSlot(slot, potionStack);
-
-        lastUsedSlot = slot;
-
+        setChanged();
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
     }
 
     @Override
