@@ -2,7 +2,6 @@
   "name": "Spore Blaster",
   "icon": "wildaside:spore_blaster",
   "category": "wildaside:blocks",
-  "sortnum": 3,
   "pages": [
     {
       "type": "patchouli:spotlight",
