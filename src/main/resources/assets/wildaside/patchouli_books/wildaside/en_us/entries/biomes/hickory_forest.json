@@ -2,7 +2,7 @@
   "name": "Hickory Forest",
   "icon": "wildaside:hickory_log",
   "category": "wildaside:biomes",
-  "advancement": "wildaside:hickory_forest_enter",
+  "advancement": "wildaside:hickory_forest",
   "sortnum": 2,
   "pages": [
     {
