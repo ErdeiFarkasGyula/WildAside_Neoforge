@@ -83,25 +83,29 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
-    compileOnly("vazkii.patchouli:Patchouli:${minecraft_version}-92-NEOFORGE")
-    runtimeOnly("vazkii.patchouli:Patchouli:${minecraft_version}-92-NEOFORGE")
+    compileOnly("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE")
+    runtimeOnly("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}-NEOFORGE")
 
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
     implementation("com.github.glitchfiend:TerraBlender-neoforge:${minecraft_version}-${terrablender_version}")
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [minecraft_version      : minecraft_version,
-                             minecraft_version_range: minecraft_version_range,
-                             neo_version            : neo_version,
-                             neo_version_range      : neo_version_range,
-                             loader_version_range   : loader_version_range,
-                             mod_id                 : mod_id,
-                             mod_name               : mod_name,
-                             mod_license            : mod_license,
-                             mod_version            : mod_version,
-                             mod_authors            : mod_authors,
-                             mod_description        : mod_description]
+    var replaceProperties = [minecraft_version          : minecraft_version,
+                             minecraft_version_range    : minecraft_version_range,
+                             neo_version                : neo_version,
+                             neo_version_range          : neo_version_range,
+                             loader_version_range       : loader_version_range,
+                             jei_version                : jei_version,
+                             terrablender_version       : terrablender_version,
+                             terrablender_version_range : terrablender_version_range,
+                             patchouli_version          : patchouli_version,
+                             mod_id                     : mod_id,
+                             mod_name                   : mod_name,
+                             mod_license                : mod_license,
+                             mod_version                : mod_version,
+                             mod_authors                : mod_authors,
+                             mod_description            : mod_description]
     inputs.properties replaceProperties
     expand replaceProperties
     from "src/main/templates"
