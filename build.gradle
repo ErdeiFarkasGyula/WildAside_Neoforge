@@ -138,5 +138,5 @@ idea {
 tasks.jar {
     archiveBaseName.set("wildaside")
     archiveVersion.set(mod_version)
-    archiveClassifier.set("neoforge-mc${minecraft_version}")
+    archiveClassifier.set("neoforge-${minecraft_version}")
 }
