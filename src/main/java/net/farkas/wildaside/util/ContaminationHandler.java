@@ -30,7 +30,16 @@ public class ContaminationHandler {
         applyContamination(livingEntity, data.getDose());
     }
 
+    public static int getDose(Entity entity) {
+        if (!(entity instanceof LivingEntity livingEntity)) return 0;
+
+        var data = livingEntity.getData(ModAttachments.CONTAMINATION);
+        return data.getDose();
+    }
+
     public static void applyContamination(LivingEntity entity, int dose) {
+        if (dose == 0) return;
+
         if (entity instanceof MucellithEntity) return;
 
         Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
@@ -52,7 +61,10 @@ public class ContaminationHandler {
 
         entity.addEffect(new MobEffectInstance(contamination, (amplifier + 1) * 10 * 20, amplifier));
         if (amplifier >= 4) {
-            entity.addEffect(new MobEffectInstance(MobEffects.POISON, (amplifier + 1) * 5 * 20, amplifier - 4));
+            entity.addEffect(new MobEffectInstance(MobEffects.POISON, (amplifier + 1) * 3 * 20, amplifier - 3, true, false));
+            if (amplifier >= 5) {
+                entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, (amplifier + 1) * 5 * 20, amplifier - 4, true, false));
+            }
         }
     }
 }
