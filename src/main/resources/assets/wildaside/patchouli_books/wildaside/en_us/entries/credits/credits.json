@@ -1,7 +1,7 @@
 {
   "name": "Credits",
-  "icon": "wildaside:paper",
-  "category": "minecraft:credits",
+  "icon": "minecraft:paper",
+  "category": "wildaside:credits",
   "pages": [
     {
       "type": "patchouli:text",
