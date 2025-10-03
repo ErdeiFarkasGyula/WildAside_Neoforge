@@ -60,7 +60,7 @@ public class GlowingSaplingBlock extends SaplingBlock {
         var playerItem = pPlayer.getItemInHand(pHand);
 
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
-            if (pState.getValue(GlowingLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if (pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             pLevel.setBlock(pPos, pState.setValue(GlowingSaplingBlock.FIXED_LIGHTING, true), 3);
             pLevel.playSound(null, pPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
             pPlayer.swing(pHand);

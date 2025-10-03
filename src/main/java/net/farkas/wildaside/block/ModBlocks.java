@@ -358,13 +358,13 @@ public class ModBlocks {
             () -> new HickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
 
     public static final DeferredBlock<Block> RED_GLOWING_HICKORY_LEAVES = registerBlock("red_glowing_hickory_leaves",
-            () -> new GlowingLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.RED_GLOWING));
+            () -> new GlowingHickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.RED_GLOWING));
     public static final DeferredBlock<Block> BROWN_GLOWING_HICKORY_LEAVES = registerBlock("brown_glowing_hickory_leaves",
-            () -> new GlowingLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.BROWN_GLOWING));
+            () -> new GlowingHickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.BROWN_GLOWING));
     public static final DeferredBlock<Block> YELLOW_GLOWING_HICKORY_LEAVES = registerBlock("yellow_glowing_hickory_leaves",
-            () -> new GlowingLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.YELLOW_GLOWING));
+            () -> new GlowingHickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.YELLOW_GLOWING));
     public static final DeferredBlock<Block> GREEN_GLOWING_HICKORY_LEAVES = registerBlock("green_glowing_hickory_leaves",
-            () -> new GlowingLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.GREEN_GLOWING));
+            () -> new GlowingHickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES), HickoryColour.GREEN_GLOWING));
 
     public static final EnumMap<HickoryColour, DeferredBlock<Block>> HICKORY_LEAVES_BLOCKS = new EnumMap<>(HickoryColour.class);
 
