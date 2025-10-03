@@ -270,7 +270,6 @@ public class ModEvents {
         }
     }
 
-
     @SubscribeEvent
     public static void onLivingBreathing(LivingBreatheEvent event) {
         if (event.getEntity().level().isClientSide) return;
