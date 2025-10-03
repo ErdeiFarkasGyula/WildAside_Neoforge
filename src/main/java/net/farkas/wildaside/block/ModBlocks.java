@@ -387,13 +387,13 @@ public class ModBlocks {
     public static final DeferredBlock<Block> HICKORY_SAPLING = registerBlock("hickory_sapling",
             () -> new SaplingBlock(ModTreeGrowers.HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
     public static final DeferredBlock<Block> RED_GLOWING_HICKORY_SAPLING = registerBlock("red_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.RED_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
+            () -> new GlowingHickorySaplingBlock(ModTreeGrowers.RED_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)));
     public static final DeferredBlock<Block> BROWN_GLOWING_HICKORY_SAPLING = registerBlock("brown_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.BROWN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingHickorySaplingBlock(ModTreeGrowers.BROWN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
     public static final DeferredBlock<Block> YELLOW_GLOWING_HICKORY_SAPLING = registerBlock("yellow_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.YELLOW_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingHickorySaplingBlock(ModTreeGrowers.YELLOW_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
     public static final DeferredBlock<Block> GREEN_GLOWING_HICKORY_SAPLING = registerBlock("green_glowing_hickory_sapling",
-            () -> new GlowingSaplingBlock(ModTreeGrowers.GREEN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
+            () -> new GlowingHickorySaplingBlock(ModTreeGrowers.GREEN_GLOWING_HICKORY_TREE_GROWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get())));
 
     public static final EnumMap<HickoryColour, DeferredBlock<Block>> HICKORY_SAPLINGS = new EnumMap<>(HickoryColour.class);
     static {

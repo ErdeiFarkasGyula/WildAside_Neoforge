@@ -241,11 +241,9 @@ public class ModEvents {
 
     public static void onContaminationEffectExpired(MobEffectEvent.Expired event) {
         LivingEntity entity = event.getEntity();
-        if (entity instanceof Player) {
-            MobEffectInstance mobEffectInstance = event.getEffectInstance();
-            if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
-                entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
-            }
+        MobEffectInstance mobEffectInstance = event.getEffectInstance();
+        if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
+            entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
         }
     }
 

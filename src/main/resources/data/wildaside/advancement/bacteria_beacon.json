@@ -15,7 +15,7 @@
     "hidden": false
   },
   "criteria": {
-    "barrier_of_bacteria": {
+    "bacteria_beacon": {
       "trigger": "minecraft:impossible"
     }
   },
