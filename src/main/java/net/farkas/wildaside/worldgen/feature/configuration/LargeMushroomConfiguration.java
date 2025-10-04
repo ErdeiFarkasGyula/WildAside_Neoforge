@@ -16,7 +16,8 @@ public class LargeMushroomConfiguration implements FeatureConfiguration {
                     BlockStateProvider.CODEC.fieldOf("capBlock").forGetter(cfg -> cfg.capBlock),
                     BlockStateProvider.CODEC.fieldOf("stemBlock").forGetter(cfg -> cfg.stemBlock),
                     BlockStateProvider.CODEC.fieldOf("woodBlock").forGetter(cfg -> cfg.woodBlock),
-                    BlockStateProvider.CODEC.listOf().fieldOf("baseTag").forGetter(cfg -> cfg.validBaseBlocks)
+                    BlockStateProvider.CODEC.listOf().fieldOf("validBaseBlocks").forGetter(cfg -> cfg.validBaseBlocks),
+                    BlockStateProvider.CODEC.listOf().fieldOf("decoratorBlocks").forGetter(cfg -> cfg.decoratorBlocks)
             ).apply(instance, LargeMushroomConfiguration::new)
     );
 
@@ -27,10 +28,11 @@ public class LargeMushroomConfiguration implements FeatureConfiguration {
     public final BlockStateProvider stemBlock;
     public final BlockStateProvider woodBlock;
     public final List<BlockStateProvider> validBaseBlocks;
+    public final List<BlockStateProvider> decoratorBlocks;
 
     public LargeMushroomConfiguration(int minHeight, int maxHeight, int maxBranches,
                                       BlockStateProvider capBlock, BlockStateProvider stemBlock, BlockStateProvider woodBlock,
-                                      List<BlockStateProvider> validBaseBlocks) {
+                                      List<BlockStateProvider> validBaseBlocks, List<BlockStateProvider> decoratorBlocks) {
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
         this.capBlock = capBlock;
@@ -38,5 +40,6 @@ public class LargeMushroomConfiguration implements FeatureConfiguration {
         this.woodBlock = woodBlock;
         this.maxBranches = maxBranches;
         this.validBaseBlocks = validBaseBlocks;
+        this.decoratorBlocks = decoratorBlocks;
     }
 }
