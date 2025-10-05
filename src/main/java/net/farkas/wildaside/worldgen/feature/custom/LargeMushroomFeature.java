@@ -11,7 +11,7 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<LargeMushroomConfiguration> featurePlaceContext) {
+    public boolean place(FeaturePlaceContext<LargeMushroomConfiguration> config) {
         return false;
     }
 }
