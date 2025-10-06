@@ -1,6 +1,7 @@
 package net.farkas.wildaside.worldgen.feature;
 
 import net.farkas.wildaside.WildAside;
+import net.farkas.wildaside.worldgen.feature.configuration.LargeMushroomConfiguration;
 import net.farkas.wildaside.worldgen.feature.custom.*;
 
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,8 +23,8 @@ public class ModFeatures {
     public static final Supplier<NaturalSporeBlasterFeature> NATURAL_SPORE_BLASTER_FEATURE = FEATURES.register("natural_spore_blaster_feature",
             () -> new NaturalSporeBlasterFeature(ReplaceBlockConfiguration.CODEC));
 
-    public static final Supplier<RedlikeSubstiliumMushroomFeature> REDLIKE_SUBSTILIUM_MUSHROOM = FEATURES.register("redlike_substilium_mushroom",
-            () -> new RedlikeSubstiliumMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
+    public static final Supplier<LargeMushroomFeature> REDLIKE_SUBSTILIUM_MUSHROOM = FEATURES.register("redlike_substilium_mushroom",
+            () -> new LargeMushroomFeature(LargeMushroomConfiguration.CODEC));
     public static final Supplier<BrownlikeSubstiliumMushroomFeature> BROWNLIKE_SUBSTILIUM_MUSHROOM = FEATURES.register("brownlike_substilium_mushroom",
             () -> new BrownlikeSubstiliumMushroomFeature(HugeMushroomFeatureConfiguration.CODEC));
 

@@ -3,12 +3,15 @@ package net.farkas.wildaside.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import net.farkas.wildaside.util.CaveCeilingAnalyzer;
 import net.farkas.wildaside.util.ContaminationHandler;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -35,6 +38,15 @@ public class ContaminationCommand {
                                 })
                         )
                 )
+        );
+
+        dispatcher.register(Commands.literal("debug_ceiling")
+                .executes(ctx -> {
+                    ServerLevel level = ctx.getSource().getLevel();
+                    BlockPos pos = BlockPos.containing(ctx.getSource().getPosition());
+                    CaveCeilingAnalyzer.visualizeCeilingSpace(level, pos, 5);
+                    return 1;
+                })
         );
     }
 

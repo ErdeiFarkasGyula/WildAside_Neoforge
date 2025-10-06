@@ -89,10 +89,7 @@
       "wildaside:redlike_substilium_mushroom",
       "wildaside:brownlike_substilium_mushroom"
     ],
-    [
-      "minecraft:spring_water",
-      "minecraft:spring_lava"
-    ],
+    [],
     [
       "minecraft:glow_lichen"
     ]
