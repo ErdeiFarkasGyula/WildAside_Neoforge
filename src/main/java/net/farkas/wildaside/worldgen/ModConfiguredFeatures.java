@@ -196,7 +196,7 @@ public class ModConfiguredFeatures {
         register(context, HANGING_LIT_VIBRION_GEL, ModFeatures.HANGING_STRING.get(),
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.LIT_VIBRION_GEL.get())));
 
-        register(context, LARGE_SUBSTILIUM_MUSHROOM, ModFeatures.REDLIKE_SUBSTILIUM_MUSHROOM.get(), new LargeMushroomConfiguration(
+        register(context, LARGE_SUBSTILIUM_MUSHROOM, ModFeatures.LARGE_SUBSTILIUM_MUSHROOM.get(), new LargeMushroomConfiguration(
                 6, 18, 3,
                 BlockStateProvider.simple(ModBlocks.ENTORIUM_SHROOM.get()),
                 BlockStateProvider.simple(ModBlocks.SUBSTILIUM_STEM.get()),

@@ -1,5 +1,5 @@
 {
-  "type": "wildaside:redlike_substilium_mushroom",
+  "type": "wildaside:large_substilium_mushroom",
   "config": {
     "capBlock": {
       "type": "minecraft:simple_state_provider",
