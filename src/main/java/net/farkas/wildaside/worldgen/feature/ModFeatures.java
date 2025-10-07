@@ -20,12 +20,11 @@ public class ModFeatures {
 
     public static final Supplier<UpdateReplaceSingleBlockFeature> TICK_REPLACE_SINGLE_BLOCK = FEATURES.register("tick_replace_single_block",
             () -> new UpdateReplaceSingleBlockFeature(ReplaceBlockConfiguration.CODEC));
+
     public static final Supplier<NaturalSporeBlasterFeature> NATURAL_SPORE_BLASTER_FEATURE = FEATURES.register("natural_spore_blaster_feature",
             () -> new NaturalSporeBlasterFeature(ReplaceBlockConfiguration.CODEC));
-
     public static final Supplier<LargeMushroomFeature> LARGE_SUBSTILIUM_MUSHROOM = FEATURES.register("large_substilium_mushroom",
             () -> new LargeMushroomFeature(LargeMushroomConfiguration.CODEC));
-
     public static final Supplier<HangingStringFeature> HANGING_STRING = FEATURES.register("hanging_string",
             () -> new HangingStringFeature(SimpleBlockConfiguration.CODEC));
 
