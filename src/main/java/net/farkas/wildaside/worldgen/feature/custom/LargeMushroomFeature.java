@@ -12,11 +12,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.phys.Vec3;
+import org.joml.SimplexNoise;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
     public LargeMushroomFeature(Codec<LargeMushroomConfiguration> codec) {
@@ -153,10 +152,11 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
     }
 
     private void generateCap(LevelAccessor level, BlockPos top, Vec3 leanDir, LargeMushroomConfiguration cfg, RandomSource random, int stemHeight, LargeMushroomCapShape shape) {
-        int radius = 3 + random.nextInt(2) + stemHeight / 4;
         Vec3 capOffset = leanDir.scale(1.1);
         BlockPos center = top.offset((int) capOffset.x, 0, (int) capOffset.z);
         BlockState capBlock = cfg.capBlock().getState(random, center);
+
+        int radius = computeCapRadius(level, center, stemHeight, 6);
 
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
@@ -191,6 +191,45 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
                 }
             }
         }
+    }
+
+    private int measureHeadroom(LevelAccessor level, BlockPos basePos, int maxSearch) {
+        for (int dy = 1; dy < maxSearch; dy++) {
+            BlockPos checkPos = basePos.above(dy);
+            if (!level.getBlockState(checkPos).isAir()) {
+                return dy - 1;
+            }
+        }
+        return maxSearch;
+    }
+
+    private double measureLateralOpenness(LevelAccessor level, BlockPos basePos, int maxRadius) {
+        int openDirs = 0;
+        int totalDirs = 0;
+
+        for (int dx = -maxRadius; dx <= maxRadius; dx += maxRadius / 2) {
+            for (int dz = -maxRadius; dz <= maxRadius; dz += maxRadius / 2) {
+                if (dx == 0 && dz == 0) continue;
+                totalDirs++;
+                BlockPos check = basePos.offset(dx, 1, dz);
+                if (level.getBlockState(check).isAir()) openDirs++;
+            }
+        }
+
+        return (double)openDirs / totalDirs;
+    }
+
+    private int computeCapRadius(LevelAccessor level, BlockPos basePos, int trunkHeight, int maxRadius) {
+        int headroom = measureHeadroom(level, basePos, 12);
+        double openness = measureLateralOpenness(level, basePos, 6);
+
+        double heightFactor = 1.0 - Math.exp(-trunkHeight / 5.0);
+        double spaceFactor = Math.min(1.0, (headroom / (double)trunkHeight) * 0.8 + openness * 0.2);
+
+        double variation = (SimplexNoise.noise((float) (basePos.getX() * 0.2), (float) (basePos.getZ() * 0.2)) + 1) * 0.1 + 0.9;
+
+        int radius = (int)(maxRadius * heightFactor * spaceFactor * variation);
+        return Mth.clamp(radius, 2, maxRadius);
     }
 
     private int computeCapHeight(LargeMushroomCapShape shape, double dist, int radius) {
