@@ -58,6 +58,7 @@
   "item.wildaside.hickory_treant_spawn_egg": "Hickory Treant Spawn Egg",
 
   "item.wildaside.entorium_pill.tooltip": "Grants immunity to the current amplifier of Contamination.",
+  "item.wildaside.spore_bomb.tooltip": "Contaminates targets in a radius.",
   "item.wildaside.fertiliser_bomb.tooltip": "Acts as a throwable bonemeal with larger radius.",
   "item.wildaside.hickory_nut_trail_mix.tooltip": "Gives different effects based on the colour of the leaves.",
 
