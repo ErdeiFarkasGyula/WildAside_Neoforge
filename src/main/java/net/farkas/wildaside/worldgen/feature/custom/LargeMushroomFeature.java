@@ -126,13 +126,27 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
 
     private void generateStem(LevelAccessor level, BlockPos base, int height, Vec3 leanDir, LargeMushroomConfiguration cfg, RandomSource random) {
         BlockState stem = cfg.stemBlock().getState(random, base);
+        BlockState wood = cfg.woodBlock().getState(random, base);
+
         level.setBlock(base.below(), stem, 2);
+
+        BlockPos lastPos = base;
         for (int i = 0; i < height; i++) {
             Vec3 offset = leanDir.scale(i / (float) height * 1.2);
             BlockPos pos = base.offset((int) offset.x, i, (int) offset.z);
+
             if (level.isEmptyBlock(pos)) {
                 level.setBlock(pos, stem, 2);
             }
+
+            if ((pos.getX() != lastPos.getX() || pos.getZ() != lastPos.getZ()) && i > 0) {
+                if (level.getBlockState(lastPos).is(stem.getBlock()))
+                    level.setBlock(lastPos, wood, 2);
+                if (level.getBlockState(pos).is(stem.getBlock()))
+                    level.setBlock(pos, wood, 2);
+            }
+
+            lastPos = pos;
         }
     }
 
