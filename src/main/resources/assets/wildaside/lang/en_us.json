@@ -7,7 +7,7 @@
   "item.wildaside.entorium_pill": "Entorium Pill",
   "item.wildaside.spore_arrow": "Spore Arrow",
   "item.wildaside.spore_bomb": "Spore Bomb",
-  "item.wildaside.fertilizer_bomb": "Fertilizer Bomb",
+  "item.wildaside.fertiliser_bomb": "Fertilizer Bomb",
   "item.wildaside.hickory_nut": "Hickory Nut",
 
   "item.wildaside.hickory_nut_trail_mix": "Hickory Nut Trail Mix",
@@ -58,8 +58,8 @@
   "item.wildaside.hickory_treant_spawn_egg": "Hickory Treant Spawn Egg",
 
   "item.wildaside.entorium_pill.tooltip": "Grants immunity to the current level of Contamination.",
-  "item.wildaside.spore_bomb.tooltip": "Contaminates targets in a radius.",
-  "item.wildaside.fertilizer_bomb.tooltip": "Acts as a throwable bonemeal with a larger radius.",
+  "item.wildaside.spore_bomb.tooltip": "Contaminates targets in a sphere.",
+  "item.wildaside.fertiliser_bomb.tooltip": "Acts as a throwable bonemeal with a larger radius.",
   "item.wildaside.hickory_nut_trail_mix.tooltip": "Gives different effects based on the color of the leaves.",
 
   "effect.wildaside.contamination": "Contamination",
@@ -180,7 +180,7 @@
   "entity.wildaside.mod_chest_boat": "Boat with Chest",
   "entity.wildaside.mucellith": "Mucellith",
   "entity.wildaside.contaminated_creeper": "Contaminated Creeper",
-  "entity.wildaside.fertilizer_bomb": "Fertilizer Bomb",
+  "entity.wildaside.fertiliser_bomb": "Fertilizer Bomb",
   "entity.wildaside.spore_arrow": "Spore Arrow",
   "entity.wildaside.spore_bomb": "Spore Bomb",
   "entity.wildaside.hickory_treant": "Hickory Treant",

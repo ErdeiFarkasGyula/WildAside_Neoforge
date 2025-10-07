@@ -22,7 +22,7 @@ public record LargeMushroomConfiguration(int minHeight, int maxHeight, int maxBr
                     BlockStateProvider.CODEC.fieldOf("capBlock").forGetter(cfg -> cfg.capBlock),
                     BlockStateProvider.CODEC.fieldOf("stemBlock").forGetter(cfg -> cfg.stemBlock),
                     BlockStateProvider.CODEC.fieldOf("woodBlock").forGetter(cfg -> cfg.woodBlock),
-                    BlockStateProvider.CODEC.fieldOf("woodBlock").forGetter(cfg -> cfg.hangingVinesBlock),
+                    BlockStateProvider.CODEC.fieldOf("hangingVinesBlock").forGetter(cfg -> cfg.hangingVinesBlock),
                     BlockStateProvider.CODEC.listOf().fieldOf("validBaseBlocks").forGetter(cfg -> cfg.validBaseBlocks),
                     BlockStateProvider.CODEC.listOf().fieldOf("decoratorBlocks").forGetter(cfg -> cfg.decoratorBlocks),
                     Codec.unboundedMap(LargeMushroomCapShape.CODEC, Codec.FLOAT).fieldOf("capShapeWeights").forGetter(cfg -> cfg.capShapeWeights)

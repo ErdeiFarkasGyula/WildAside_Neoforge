@@ -6,27 +6,25 @@ import net.minecraft.util.RandomSource;
 import java.util.Map;
 
 public enum LargeMushroomCapShape {
-    FLAT(true),
-    DOME(true),
-    VANILLA_LARGE(true),
-    BELL(true),
-    FLARED(true),
-    PARABOLIC(true),
-    CONCAVE(false),
-    CONE(false),
-    LOBED(true),
-    PILZ(false);
+    FLAT(false, 1),
+    DOME(true, -1);
 
     private final boolean canDecorate;
+    private final int yOffset;
 
     public static final Codec<LargeMushroomCapShape> CODEC = Codec.STRING.xmap(LargeMushroomCapShape::valueOf, LargeMushroomCapShape::name);
 
-    LargeMushroomCapShape(boolean canDecorate) {
+    LargeMushroomCapShape(boolean canDecorate, int yOffset) {
         this.canDecorate = canDecorate;
+        this.yOffset = yOffset;
     }
 
     public boolean canDecorate() {
         return canDecorate;
+    }
+
+    public int yOffset() {
+        return yOffset;
     }
 
     public static LargeMushroomCapShape pickWeightedShape(RandomSource random, Map<LargeMushroomCapShape, Float> weights) {

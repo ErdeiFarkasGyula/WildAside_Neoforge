@@ -152,25 +152,24 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
     }
 
     private void generateCap(LevelAccessor level, BlockPos top, Vec3 leanDir, LargeMushroomConfiguration cfg, RandomSource random, int stemHeight, LargeMushroomCapShape shape) {
-        Vec3 capOffset = leanDir.scale(1.1);
-        BlockPos center = top.offset((int) capOffset.x, 0, (int) capOffset.z);
+        Vec3 capOffset = leanDir.scale(1f);
+        BlockPos center = top.offset((int) capOffset.x, shape.yOffset(), (int) capOffset.z);
         BlockState capBlock = cfg.capBlock().getState(random, center);
 
         int radius = computeCapRadius(level, center, stemHeight, 6);
 
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
-                double dist = Math.sqrt(dx*dx + dz*dz);
+                double dist = Math.sqrt(dx * dx + dz * dz);
                 if (dist > radius + 0.3) continue;
 
-                int capHeight = computeCapHeight(shape, dist, radius);
+                int capHeight = computeCapShape(shape, dist, radius);
                 BlockPos pos = center.offset(dx, capHeight, dz);
 
                 if (level.isEmptyBlock(pos)) level.setBlock(pos, capBlock, 2);
 
                 double innerRadius = radius * 0.8f;
                 if (canDecorate(shape) && dist < innerRadius) {
-
                     if (random.nextFloat() < 0.35f && !cfg.decoratorBlocks().isEmpty()) {
                         BlockPos decoPos = pos.below();
                         if (level.isEmptyBlock(decoPos)) {
@@ -179,15 +178,15 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
                         }
                     }
 
-                    if (random.nextFloat() < 0.25f) {
-                        int length = 1 + random.nextInt(3);
-                        for (int l = 1; l <= length; l++) {
-                            BlockPos hangPos = pos.below(l);
-                            if (!level.isEmptyBlock(hangPos)) break;
-                            BlockState vine = cfg.hangingVinesBlock().getState(random, hangPos);
-                            level.setBlock(hangPos, vine, 3);
-                        }
-                    }
+//                    if (random.nextFloat() < 0.25f) {
+//                        int length = 1 + random.nextInt(3);
+//                        for (int l = 1; l <= length; l++) {
+//                            BlockPos hangPos = pos.below(l);
+//                            if (!level.isEmptyBlock(hangPos)) break;
+//                            BlockState vine = cfg.hangingVinesBlock().getState(random, hangPos);
+//                            level.setBlock(hangPos, vine, 3);
+//                        }
+//                    }
                 }
             }
         }
@@ -232,36 +231,36 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
         return Mth.clamp(radius, 2, maxRadius);
     }
 
-    private int computeCapHeight(LargeMushroomCapShape shape, double dist, int radius) {
+    private int computeCapShape(LargeMushroomCapShape shape, double dist, int radius) {
         return switch(shape) {
             case FLAT -> 0;
-            case CONCAVE -> (int) (-Math.cos(dist / radius * Math.PI) * 2 + 2);
-            case VANILLA_LARGE -> {
-                if (dist > radius) yield -1;
-                int height = (int) Math.ceil(Math.cos(dist / radius * Math.PI / 2) * 3);
-                yield Math.max(1, height);
-            }
-            case BELL -> {
-                double angle = dist / radius * Math.PI / 2;
-                yield (int) (Math.cos(angle) * 3 - (dist / radius) * 2);
-            }
-            case PARABOLIC -> (int) (-(dist * dist) / (radius * 0.8) + 3);
-            case CONE -> (int) (3 - (dist / radius) * 3);
-            case PILZ -> {
-                double ratio = dist / radius;
-                yield (int) (Math.sin(ratio * Math.PI) * 2 - (ratio > 0.7 ? -1 : 0));
-            }
-            case LOBED -> {
-                double lobes = 3.5;
-                double wave = Math.cos(dist / radius * Math.PI / 2);
-                double variation = Math.sin((dist / radius) * lobes * Math.PI) * 1.3;
-                yield (int) (wave * 2 + variation);
-            }
-            case FLARED -> {
-                double ratio = dist / radius;
-                if (ratio < 0.6) yield 1;
-                yield (int) (-Math.sin((ratio - 0.6) * Math.PI / 0.8) * 2);
-            }
+//            case CONCAVE -> (int) (-Math.cos(dist / radius * Math.PI) * 2 + 2);
+//            case VANILLA_LARGE -> {
+//                if (dist > radius) yield -1;
+//                int height = (int) Math.ceil(Math.cos(dist / radius * Math.PI / 2) * 3);
+//                yield Math.max(1, height);
+//            }
+//            case BELL -> {
+//                double angle = dist / radius * Math.PI / 2;
+//                yield (int) (Math.cos(angle) * 3 - (dist / radius) * 2);
+//            }
+//            case PARABOLIC -> (int) (-(dist * dist) / (radius * 0.8) + 3);
+//            case CONE -> (int) (3 - (dist / radius) * 3);
+//            case PILZ -> {
+//                double ratio = dist / radius;
+//                yield (int) (Math.sin(ratio * Math.PI) * 2 - (ratio > 0.7 ? -1 : 0));
+//            }
+//            case LOBED -> {
+//                double lobes = 3.5;
+//                double wave = Math.cos(dist / radius * Math.PI / 2);
+//                double variation = Math.sin((dist / radius) * lobes * Math.PI) * 1.3;
+//                yield (int) (wave * 2 + variation);
+//            }
+//            case FLARED -> {
+//                double ratio = dist / radius;
+//                if (ratio < 0.6) yield 1;
+//                yield (int) (-Math.sin((ratio - 0.6) * Math.PI / 0.8) * 2);
+//            }
             default -> (int) (Math.cos(dist / radius * Math.PI / 2) * 2);
         };
     }

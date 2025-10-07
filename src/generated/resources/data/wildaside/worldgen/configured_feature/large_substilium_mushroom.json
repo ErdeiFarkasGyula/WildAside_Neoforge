@@ -16,16 +16,8 @@
       }
     },
     "capShapeWeights": {
-      "BELL": 0.2,
-      "CONCAVE": 0.2,
-      "CONE": 0.2,
       "DOME": 0.4,
-      "FLARED": 0.2,
-      "FLAT": 0.3,
-      "LOBED": 0.2,
-      "PARABOLIC": 0.2,
-      "PILZ": 0.2,
-      "VANILLA_LARGE": 0.0
+      "FLAT": 0.3
     },
     "decoratorBlocks": [
       {
@@ -53,6 +45,15 @@
         }
       }
     ],
+    "hangingVinesBlock": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "wildaside:hanging_vibrion_vines",
+        "Properties": {
+          "age": "0"
+        }
+      }
+    },
     "maxBranches": 3,
     "maxHeight": 18,
     "minHeight": 6,
@@ -76,9 +77,9 @@
     "woodBlock": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "wildaside:hanging_vibrion_vines",
+        "Name": "wildaside:substilium_wood",
         "Properties": {
-          "age": "0"
+          "axis": "y"
         }
       }
     }

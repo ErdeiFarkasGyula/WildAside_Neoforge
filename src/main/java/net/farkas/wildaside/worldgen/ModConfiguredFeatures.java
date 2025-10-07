@@ -207,15 +207,16 @@ public class ModConfiguredFeatures {
                         BlockStateProvider.simple(ModBlocks.VIBRION_GEL.get()),
                         BlockStateProvider.simple(ModBlocks.LIT_VIBRION_GEL.get())),
                 Map.of(LargeMushroomCapShape.DOME, 0.4f,
-                        LargeMushroomCapShape.VANILLA_LARGE, 0f,
-                        LargeMushroomCapShape.FLAT, 0.3f,
-                        LargeMushroomCapShape.CONCAVE, 0.2f,
-                        LargeMushroomCapShape.BELL, 0.2f,
-                        LargeMushroomCapShape.FLARED, 0.2f,
-                        LargeMushroomCapShape.PARABOLIC, 0.2f,
-                        LargeMushroomCapShape.CONE, 0.2f,
-                        LargeMushroomCapShape.LOBED, 0.2f,
-                        LargeMushroomCapShape.PILZ, 0.2f)));
+                        LargeMushroomCapShape.FLAT, 0.3f
+//                        ,LargeMushroomCapShape.CONCAVE, 0f,
+//                        LargeMushroomCapShape.VANILLA_LARGE, 0f,
+//                        LargeMushroomCapShape.BELL, 0f,
+//                        LargeMushroomCapShape.FLARED, 0f,
+//                        LargeMushroomCapShape.PARABOLIC, 0f,
+//                        LargeMushroomCapShape.CONE, 0f,
+//                        LargeMushroomCapShape.LOBED, 0f,
+//                        LargeMushroomCapShape.PILZ, 0f)
+        )));
 
         register(context, SPOTTED_EVERGREEN, Feature.FLOWER,
                 new RandomPatchConfiguration(32, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
