@@ -2,7 +2,6 @@ package net.farkas.wildaside.worldgen;
 
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.block.ModBlocks;
-import net.farkas.wildaside.config.Config;
 import net.farkas.wildaside.util.HickoryColour;
 import net.farkas.wildaside.worldgen.modifier.LargePatchNoiseModifier;
 import net.minecraft.core.Direction;
