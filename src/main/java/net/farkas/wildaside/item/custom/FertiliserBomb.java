@@ -1,6 +1,7 @@
 package net.farkas.wildaside.item.custom;
 
 import net.farkas.wildaside.entity.custom.vibrion.FertiliserBombEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -10,8 +11,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 public class FertiliserBomb extends Item {
     public FertiliserBomb(Properties pProperties) {
@@ -51,5 +55,10 @@ public class FertiliserBomb extends Item {
             player.getCooldowns().addCooldown(this, 100);
             stack.shrink(1);
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("item.wildaside.fertiliser_bomb.tooltip"));
     }
 }

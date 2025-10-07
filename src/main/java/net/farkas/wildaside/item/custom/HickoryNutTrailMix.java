@@ -2,13 +2,17 @@ package net.farkas.wildaside.item.custom;
 
 import net.farkas.wildaside.util.HickoryColour;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 public class HickoryNutTrailMix extends Item {
     private final HickoryColour colour;
@@ -40,5 +44,10 @@ public class HickoryNutTrailMix extends Item {
 
     public HickoryColour getColour() {
         return this.colour;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        tooltipComponents.add(Component.translatable("item.wildaside.hickory_nut_trail_mix.tooltip"));
     }
 }
