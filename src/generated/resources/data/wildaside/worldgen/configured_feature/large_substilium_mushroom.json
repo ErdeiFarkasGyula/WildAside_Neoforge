@@ -16,9 +16,15 @@
       }
     },
     "capShapeWeights": {
+      "BELL": 0.2,
       "CONCAVE": 0.2,
+      "CONE": 0.2,
       "DOME": 0.4,
+      "FLARED": 0.2,
       "FLAT": 0.3,
+      "LOBED": 0.2,
+      "PARABOLIC": 0.2,
+      "PILZ": 0.2,
       "VANILLA_LARGE": 0.0
     },
     "decoratorBlocks": [

@@ -12,10 +12,8 @@ import java.util.Optional;
 public class ModTreeGrowers {
     static final RandomSource random = RandomSource.create();
 
-    private static final ResourceKey<ConfiguredFeature<?, ?>> substiliumMushroom = random.nextBoolean() ? ModConfiguredFeatures.REDLIKE_SUBSTILIUM_MUSHROOM : ModConfiguredFeatures.BROWNLIKE_SUBSTILIUM_MUSHROOM;
-
     public static final TreeGrower SUBSTILIUM_MUSHROOM = new TreeGrower(WildAside.MOD_ID + ":substilium_mushroom",
-            Optional.empty(), Optional.of(substiliumMushroom), Optional.empty());
+            Optional.empty(), Optional.of(ModConfiguredFeatures.LARGE_SUBSTILIUM_MUSHROOM), Optional.empty());
 
     public static final TreeGrower HICKORY_TREE_GROWER = new TreeGrower(WildAside.MOD_ID + ":hickory_tree_grower",
             Optional.empty(), Optional.of(ModConfiguredFeatures.HICKORY_TREE), Optional.empty());

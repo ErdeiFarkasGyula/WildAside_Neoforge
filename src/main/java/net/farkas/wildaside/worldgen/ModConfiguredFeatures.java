@@ -32,8 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ModConfiguredFeatures {
-    public static final ResourceKey<ConfiguredFeature<?, ?>> REDLIKE_SUBSTILIUM_MUSHROOM = registerKey("redlike_substilium_mushroom");
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BROWNLIKE_SUBSTILIUM_MUSHROOM = registerKey("brownlike_substilium_mushroom");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LARGE_SUBSTILIUM_MUSHROOM = registerKey("large_substilium_mushroom");
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> VIBRION_GROWTH = registerKey("vibrion_growth");
     public static final ResourceKey<ConfiguredFeature<?, ?>> VIBRION_SPOREHOLDER = registerKey("vibrion_sporeholder");
@@ -197,7 +196,7 @@ public class ModConfiguredFeatures {
         register(context, HANGING_LIT_VIBRION_GEL, ModFeatures.HANGING_STRING.get(),
                 new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.LIT_VIBRION_GEL.get())));
 
-        register(context, REDLIKE_SUBSTILIUM_MUSHROOM, ModFeatures.REDLIKE_SUBSTILIUM_MUSHROOM.get(), new LargeMushroomConfiguration(
+        register(context, LARGE_SUBSTILIUM_MUSHROOM, ModFeatures.REDLIKE_SUBSTILIUM_MUSHROOM.get(), new LargeMushroomConfiguration(
                 6, 18, 3,
                 BlockStateProvider.simple(ModBlocks.ENTORIUM_SHROOM.get()),
                 BlockStateProvider.simple(ModBlocks.SUBSTILIUM_STEM.get()),
@@ -210,11 +209,13 @@ public class ModConfiguredFeatures {
                 Map.of(LargeMushroomCapShape.DOME, 0.4f,
                         LargeMushroomCapShape.VANILLA_LARGE, 0f,
                         LargeMushroomCapShape.FLAT, 0.3f,
-                        LargeMushroomCapShape.CONCAVE, 0.2f)));
-
-
-        register(context, BROWNLIKE_SUBSTILIUM_MUSHROOM, ModFeatures.BROWNLIKE_SUBSTILIUM_MUSHROOM.get(), new HugeMushroomFeatureConfiguration(
-                BlockStateProvider.simple(ModBlocks.ENTORIUM_SHROOM.get()), BlockStateProvider.simple(ModBlocks.SUBSTILIUM_STEM.get()), 3));
+                        LargeMushroomCapShape.CONCAVE, 0.2f,
+                        LargeMushroomCapShape.BELL, 0.2f,
+                        LargeMushroomCapShape.FLARED, 0.2f,
+                        LargeMushroomCapShape.PARABOLIC, 0.2f,
+                        LargeMushroomCapShape.CONE, 0.2f,
+                        LargeMushroomCapShape.LOBED, 0.2f,
+                        LargeMushroomCapShape.PILZ, 0.2f)));
 
         register(context, SPOTTED_EVERGREEN, Feature.FLOWER,
                 new RandomPatchConfiguration(32, 16, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,

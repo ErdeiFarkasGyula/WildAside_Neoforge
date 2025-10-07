@@ -178,8 +178,7 @@ public class ModBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.HANGING_VIBRION_VINES);
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.HANGING_VIBRION_GEL);
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.HANGING_LIT_VIBRION_GEL);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.REDLIKE_SUBSTILIUM_MUSHROOM);
-        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.BROWNLIKE_SUBSTILIUM_MUSHROOM);
+        biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.LARGE_SUBSTILIUM_MUSHROOM);
 
         return new Biome.BiomeBuilder()
                 .hasPrecipitation(false)
