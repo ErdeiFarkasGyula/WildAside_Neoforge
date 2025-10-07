@@ -14,7 +14,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
     public LargeMushroomFeature(Codec<LargeMushroomConfiguration> codec) {
@@ -200,11 +202,32 @@ public class LargeMushroomFeature extends Feature<LargeMushroomConfiguration> {
                 int height = (int) Math.ceil(Math.cos(dist / radius * Math.PI / 2) * 3);
                 yield Math.max(1, height);
             }
+            case BELL -> {
+                double angle = dist / radius * Math.PI / 2;
+                yield (int) (Math.cos(angle) * 3 - (dist / radius) * 2);
+            }
+            case PARABOLIC -> (int) (-(dist * dist) / (radius * 0.8) + 3);
+            case CONE -> (int) (3 - (dist / radius) * 3);
+            case PILZ -> {
+                double ratio = dist / radius;
+                yield (int) (Math.sin(ratio * Math.PI) * 2 - (ratio > 0.7 ? -1 : 0));
+            }
+            case LOBED -> {
+                double lobes = 3.5;
+                double wave = Math.cos(dist / radius * Math.PI / 2);
+                double variation = Math.sin((dist / radius) * lobes * Math.PI) * 1.3;
+                yield (int) (wave * 2 + variation);
+            }
+            case FLARED -> {
+                double ratio = dist / radius;
+                if (ratio < 0.6) yield 1;
+                yield (int) (-Math.sin((ratio - 0.6) * Math.PI / 0.8) * 2);
+            }
             default -> (int) (Math.cos(dist / radius * Math.PI / 2) * 2);
         };
     }
 
     private boolean canDecorate(LargeMushroomCapShape shape) {
-        return shape == LargeMushroomCapShape.DOME || shape == LargeMushroomCapShape.VANILLA_LARGE;
+        return shape.canDecorate();
     }
 }
