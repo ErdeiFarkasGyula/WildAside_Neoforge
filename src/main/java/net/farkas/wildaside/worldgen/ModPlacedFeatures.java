@@ -188,13 +188,13 @@ public class ModPlacedFeatures {
         register(context, NATURAL_SPORE_BLASTER, configuredFeatures.getOrThrow(ModConfiguredFeatures.NATURAL_SPORE_BLASTER),
                 ModOrePlacement.commonOrePlacement(256, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(80))));
 
-
         register(context, HICKORY_TREE, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_TREE),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(48, 0.25f, 20), ModBlocks.HICKORY_SAPLING.get()));
         register(context, HICKORY_SAPLING, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_SAPLING),
                 List.of(RarityFilter.onAverageOnceEvery(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome()));
         register(context, HICKORY_BUSH, configuredFeatures.getOrThrow(ModConfiguredFeatures.HICKORY_BUSH),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(32, 0.5f, 20)));
+
         for (HickoryColour colour : HickoryColour.values()) {
             if (colour != HickoryColour.HICKORY) {
                 Vector2f noise = HICKORY_NOISES.get(colour);
