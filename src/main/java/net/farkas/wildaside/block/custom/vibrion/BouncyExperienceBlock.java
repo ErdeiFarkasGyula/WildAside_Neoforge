@@ -2,6 +2,7 @@ package net.farkas.wildaside.block.custom.vibrion;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.TriState;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.util.TriState;
 
 public class BouncyExperienceBlock extends DropExperienceBlock {
     public BouncyExperienceBlock(IntProvider p_221084_, Properties p_221083_) {
@@ -22,20 +22,21 @@ public class BouncyExperienceBlock extends DropExperienceBlock {
         return TriState.TRUE;
     }
 
-    public void fallOn(Level pLevel, BlockState pState, BlockPos pPos, Entity pEntity, float pFallDistance) {
-        if (pEntity.isSuppressingBounce()) {
-            super.fallOn(pLevel, pState, pPos, pEntity, pFallDistance);
+    @Override
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
+        if (entity.isSuppressingBounce()) {
+            super.fallOn(level, state, pos, entity, fallDistance);
         } else {
-            pEntity.causeFallDamage(pFallDistance, 0.0F, pLevel.damageSources().fall());
+            entity.causeFallDamage(fallDistance, 0.0F, level.damageSources().fall());
         }
-
     }
 
-    public void updateEntityAfterFallOn(BlockGetter pLevel, Entity pEntity) {
-        if (pEntity.isSuppressingBounce()) {
-            super.updateEntityAfterFallOn(pLevel, pEntity);
+    @Override
+    public void updateEntityMovementAfterFallOn(BlockGetter level, Entity entity) {
+        if (entity.isSuppressingBounce()) {
+            super.updateEntityMovementAfterFallOn(level, entity);
         } else {
-            this.bounceUp(pEntity);
+            this.bounceUp(entity);
         }
 
     }

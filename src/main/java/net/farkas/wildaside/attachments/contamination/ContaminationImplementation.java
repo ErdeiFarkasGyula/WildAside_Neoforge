@@ -2,6 +2,9 @@ package net.farkas.wildaside.attachments.contamination;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.jetbrains.annotations.UnknownNullability;
 
 public class ContaminationImplementation implements IContamination{
@@ -27,15 +30,17 @@ public class ContaminationImplementation implements IContamination{
         this.dose = Math.max(0, this.dose + value);
     }
 
+
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    public CompoundTag read(IAttachmentHolder iAttachmentHolder, ValueInput valueInput) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("contamination_dose", this.dose);
         return tag;
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag compoundTag) {
-        this.dose = compoundTag.getInt("contamination_dose");
+    public boolean write(CompoundTag tag, ValueOutput valueOutput) {
+        this.dose = tag.getInt("contamination_dose").get();
+        return false;
     }
 }

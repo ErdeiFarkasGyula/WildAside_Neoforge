@@ -7,7 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -21,26 +21,25 @@ public class OvergrownEntoriumOre extends EntoriumOre {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        if (pHand == InteractionHand.OFF_HAND) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide() || hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
 
-        var playerItem = pPlayer.getItemInHand(pHand);
+        var playerItem = player.getItemInHand(hand);
         if (playerItem.getItem() == Items.SHEARS) {
             BlockState newBlock = ModBlocks.ENTORIUM_ORE.get().defaultBlockState();
 
-            pLevel.setBlock(pPos, newBlock, 3);
-            pLevel.playSound(null, pPos, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1, 1);
-            pPlayer.swing(pHand);
+            level.setBlock(pos, newBlock, 3);
+            level.playSound(null, pos, SoundEvents.MOOSHROOM_SHEAR, SoundSource.BLOCKS, 1, 1);
+            player.swing(hand);
 
-            if (!pPlayer.isInvulnerable()) {
-                playerItem.hurtAndBreak(1, pPlayer, pStack.getEquipmentSlot());
+            if (!player.isInvulnerable()) {
+                playerItem.hurtAndBreak(1, player, stack.getEquipmentSlot());
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override

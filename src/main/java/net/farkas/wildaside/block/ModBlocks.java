@@ -16,6 +16,7 @@ import net.farkas.wildaside.worldgen.feature.tree.ModTreeGrowers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.TriState;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -57,7 +57,7 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .sound(SoundType.HONEY_BLOCK)
                     .strength(0.1F, 0F)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .isRedstoneConductor((bs, br, bp) -> false)
                     .speedFactor(0.2f)
@@ -90,7 +90,7 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .sound(SoundType.ROOTS)
                     .lightLevel(s -> 3)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .replaceable()
                     .instabreak()
@@ -107,7 +107,7 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .sound(SoundType.FUNGUS)
                     .lightLevel(l -> 5)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .strength(1.5f, 2f)
                     .offsetType(BlockBehaviour.OffsetType.XZ)
@@ -118,7 +118,7 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_YELLOW)
                     .sound(SoundType.WEEPING_VINES)
                     .lightLevel(l -> 5)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .replaceable()
                     .isRedstoneConductor((bs, br, bp) -> false)
@@ -277,17 +277,17 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_SIGN = BLOCKS.register("substilium_sign",
-            () -> new ModStandingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModStandingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
     public static final DeferredBlock<Block> SUBSTILIUM_WALL_SIGN = BLOCKS.register("substilium_wall_sign",
-            () -> new ModWallSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_HANGING_SIGN = BLOCKS.register("substilium_hanging_sign",
-            () -> new ModHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
     public static final DeferredBlock<Block> SUBSTILIUM_WALL_HANGING_SIGN = BLOCKS.register("substilium_hanging_wall_sign",
-            () -> new ModWallHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallHangingSignBlock(ModWoodTypes.SUBSTILIUM, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_SPROUTS = registerBlock("substilium_sprouts",
-            () -> new FlowerBlock(MobEffects.CONFUSION, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GROWTH.get())
+            () -> new FlowerBlock(MobEffects.NAUSEA, 5, BlockBehaviour.Properties.ofFullCopy(ModBlocks.VIBRION_GROWTH.get())
                     .mapColor(MapColor.COLOR_CYAN)
                     .lightLevel(l -> 0)));
 
@@ -339,19 +339,19 @@ public class ModBlocks {
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> HICKORY_SIGN = BLOCKS.register("hickory_sign",
-            () -> new ModStandingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModStandingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
     public static final DeferredBlock<Block> HICKORY_WALL_SIGN = BLOCKS.register("hickory_wall_sign",
-            () -> new ModWallSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
 
     public static final DeferredBlock<Block> HICKORY_HANGING_SIGN = BLOCKS.register("hickory_hanging_sign",
-            () -> new ModHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
     public static final DeferredBlock<Block> HICKORY_WALL_HANGING_SIGN = BLOCKS.register("hickory_hanging_wall_sign",
-            () -> new ModWallHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollission()));
+            () -> new ModWallHangingSignBlock(ModWoodTypes.HICKORY, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).strength(1).forceSolidOn().noCollision()));
 
     public static final DeferredBlock<Block> SPOTTED_WINTERGREEN = registerBlock("spotted_wintergreen",
-            () -> new FlowerBlock(MobEffects.MOVEMENT_SPEED, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
+            () -> new FlowerBlock(MobEffects.SPEED, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
     public static final DeferredBlock<Block> PINKSTER_FLOWER = registerBlock("pinkster_flower",
-            () -> new FlowerBlock(MobEffects.CONFUSION, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
+            () -> new FlowerBlock(MobEffects.NAUSEA, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
 
 
     public static final DeferredBlock<Block> HICKORY_LEAVES = registerBlock("hickory_leaves",
@@ -378,7 +378,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> FALLEN_HICKORY_LEAVES = registerBlock("fallen_hickory_leaves",
             () -> new FallenHickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
-                    .noCollission()
+                    .noCollision()
                     .noOcclusion()
                     .instabreak()
                     .replaceable()

@@ -1,5 +1,6 @@
 package net.farkas.wildaside.block.custom;
 
+import com.mojang.serialization.MapCodec;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.particle.ModParticles;
@@ -14,7 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -34,7 +35,7 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
     private final HickoryColour colour;
 
     public GlowingHickoryLeavesBlock(Properties pProperties, HickoryColour colour) {
-        super(pProperties.lightLevel(s -> s.getValue(LIGHT)));
+        super(0.2f, pProperties.lightLevel(s -> s.getValue(LIGHT)));
         this.colour = colour;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(DISTANCE, 7)
@@ -50,31 +51,31 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
 
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             pLevel.scheduleTick(pPos, this, 0);
         }
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND || pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING))
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide() || hand == InteractionHand.OFF_HAND || state.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING))
+            return InteractionResult.PASS;
 
-        ItemStack playerItem = pPlayer.getItemInHand(pHand);
+        ItemStack playerItem = player.getItemInHand(hand);
 
         if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
-            pLevel.setBlock(pPos, pState.setValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING, true), 3);
-            pLevel.playSound(null, pPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
-            pPlayer.swing(pHand);
+            level.setBlock(pos, state.setValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING, true), 3);
+            level.playSound(null, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
+            player.swing(hand);
 
-            if (!pPlayer.isInvulnerable()) {
+            if (!player.isInvulnerable()) {
                 playerItem.shrink(1);
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
@@ -108,6 +109,11 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
     }
 
     @Override
+    protected void spawnFallingLeavesParticle(Level level, BlockPos blockPos, RandomSource randomSource) {
+
+    }
+
+    @Override
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if (pRandom.nextFloat() < 0.025) {
             spawnNewFallenLeaves(pLevel, pPos, pRandom);
@@ -116,7 +122,7 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
     }
 
     private void spawnNewFallenLeaves(Level level, BlockPos pPos, RandomSource random) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
 
         int x = pPos.getX() + random.nextIntBetweenInclusive(-2, 2);
         int z = pPos.getZ() + random.nextIntBetweenInclusive(-2, 2);
@@ -157,6 +163,11 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
 
             level.setBlock(target, leafSt, 3);
         }
+    }
+
+    @Override
+    public MapCodec<? extends LeavesBlock> codec() {
+        return null;
     }
 
     @Override

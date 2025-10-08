@@ -3,31 +3,33 @@ package net.farkas.wildaside.block.custom.vibrion;
 import net.farkas.wildaside.particle.ModParticles;
 import net.farkas.wildaside.util.ContaminationHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.pathfinder.PathType;
 import org.jetbrains.annotations.Nullable;
 
 public class SporeAir extends AirBlock {
     private int AGE = 0;
-    public static final DirectionProperty FACING = DirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
 
     public SporeAir(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
-    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        ContaminationHandler.addDose(pEntity, 50);
-        super.entityInside(pState, pLevel, pPos, pEntity);
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean p_451772_) {
+        ContaminationHandler.addDose(entity, 50);
+        super.entityInside(state, level, pos, entity, effectApplier, p_451772_);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class SporeAir extends AirBlock {
 
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             pLevel.scheduleTick(pPos, this, 20);
         }
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);

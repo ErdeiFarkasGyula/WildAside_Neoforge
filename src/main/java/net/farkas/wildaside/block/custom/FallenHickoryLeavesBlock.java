@@ -11,21 +11,17 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -42,7 +38,7 @@ public class FallenHickoryLeavesBlock extends Block {
     public static final int MAX_COUNT = 3;
     public static final EnumProperty<HickoryColour> COLOUR = EnumProperty.create("colour", HickoryColour.class);
     public static final IntegerProperty COUNT = IntegerProperty.create("count", 1, MAX_COUNT);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
     private static final int MIN_LIGHT = 0;
     private static final int MAX_LIGHT = 3;
     public static final IntegerProperty LIGHT = IntegerProperty.create("light", MIN_LIGHT, MAX_LIGHT);
@@ -91,47 +87,47 @@ public class FallenHickoryLeavesBlock extends Block {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        ItemStack playerItem = pPlayer.getItemInHand(pHand);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide() || hand == InteractionHand.OFF_HAND) return InteractionResult.PASS;
+        ItemStack playerItem = player.getItemInHand(hand);
 
         if (playerItem.isEmpty()) {
-            int count = pState.getValue(FallenHickoryLeavesBlock.COUNT);
+            int count = state.getValue(FallenHickoryLeavesBlock.COUNT);
             if (count == 1) {
-                pLevel.removeBlock(pPos, false);
+                level.removeBlock(pos, false);
             } else {
-                pLevel.setBlock(pPos, pState.setValue(FallenHickoryLeavesBlock.COUNT, count - 1), 3);
+                level.setBlock(pos, state.setValue(FallenHickoryLeavesBlock.COUNT, count - 1), 3);
             }
 
-            pPlayer.swing(pHand);
-            pPlayer.addItem(new ItemStack(ModItems.LEAF_ITEMS.get(pState.getValue(FallenHickoryLeavesBlock.COLOUR)).get()));
-            pLevel.playSound(null, pPos, SoundEvents.BIG_DRIPLEAF_PLACE, SoundSource.BLOCKS, 1, 0.8f);
-            if (!pPlayer.isInvulnerable()) {
+            player.swing(hand);
+            player.addItem(new ItemStack(ModItems.LEAF_ITEMS.get(state.getValue(FallenHickoryLeavesBlock.COLOUR)).get()));
+            level.playSound(null, pos, SoundEvents.BIG_DRIPLEAF_PLACE, SoundSource.BLOCKS, 1, 0.8f);
+            if (!player.isInvulnerable()) {
                 playerItem.shrink(1);
             }
 
-            return ItemInteractionResult.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         else
             if (playerItem.getItem().equals(ModItems.VIBRION.get())) {
-                if (pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-                pLevel.setBlock(pPos, pState.setValue(FallenHickoryLeavesBlock.FIXED_LIGHTING, true), 3);
-                pLevel.playSound(null, pPos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
+                if (state.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return InteractionResult.PASS;
+                level.setBlock(pos, state.setValue(FallenHickoryLeavesBlock.FIXED_LIGHTING, true), 3);
+                level.playSound(null, pos, SoundEvents.HONEYCOMB_WAX_ON, SoundSource.BLOCKS, 1, 1);
 
-                if (!pPlayer.isInvulnerable()) {
+                if (!player.isInvulnerable()) {
                     playerItem.shrink(1);
                 }
 
-                return ItemInteractionResult.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
 
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     @Override
     public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-        if (!pLevel.isClientSide) {
+        if (!pLevel.isClientSide()) {
             pLevel.scheduleTick(pPos, this, 0);
         }
         super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
@@ -156,7 +152,7 @@ public class FallenHickoryLeavesBlock extends Block {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
         return new ItemStack(ModItems.LEAF_ITEMS.get(state.getValue(FallenHickoryLeavesBlock.COLOUR)).get());
     }
 
@@ -166,11 +162,10 @@ public class FallenHickoryLeavesBlock extends Block {
     }
 
     @Override
-    public BlockState updateShape(BlockState st, Direction side, BlockState nb, LevelAccessor w, BlockPos p, BlockPos np) {
-        if (side == Direction.DOWN && !this.canSurvive(st, w, p)) {
-            w.destroyBlock(p, true);
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+        if (direction == Direction.DOWN && !this.canSurvive(state, level, pos)) {
             return Blocks.AIR.defaultBlockState();
         }
-        return super.updateShape(st, side, nb, w, p, np);
+        return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 }
