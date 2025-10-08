@@ -38,9 +38,7 @@ public class ContaminationHandler {
     }
 
     public static void applyContamination(LivingEntity entity, int dose) {
-        if (dose == 0) return;
-
-        if (entity instanceof MucellithEntity) return;
+        if (dose == 0 || entity instanceof MucellithEntity) return;
 
         Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
         Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getDelegate();
