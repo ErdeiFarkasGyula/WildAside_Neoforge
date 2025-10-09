@@ -112,9 +112,7 @@ public class PotionBlaster extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        if (pLevel.isClientSide()) {
-            return null;
-        }
+        if (pLevel.isClientSide()) return null;
         return createTickerHelper(pBlockEntityType, ModBlockEntities.POTION_BLASTER.get(),
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }

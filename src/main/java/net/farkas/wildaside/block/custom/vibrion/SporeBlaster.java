@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import org.jetbrains.annotations.Nullable;
 
 public class SporeBlaster extends DirectionalBlock implements EntityBlock {
+    public static final MapCodec<SporeBlaster> CODEC = simpleCodec(SporeBlaster::new);
+
     public SporeBlaster(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
@@ -25,7 +27,7 @@ public class SporeBlaster extends DirectionalBlock implements EntityBlock {
 
     @Override
     protected MapCodec<? extends DirectionalBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override
