@@ -36,62 +36,33 @@ import java.util.List;
 import java.util.Set;
 
 public class WindBlasterBlockEntity extends BlockEntity {
-    public enum Mode { CONSTANT, BURST }
-
-    private int powerStored = 0;
-    private Mode mode = Mode.CONSTANT;
-    private int burstCooldown = 0;
 
     private static final int MAX_RANGE = 15;
     private static final double BASE_FORCE = 0.1D;
-    private static final double BURST_MULT = 2.5D;
-    private static final int BURST_COOLDOWN_TICKS = 40;
 
     public WindBlasterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.WIND_BLASTER.get(), pos, state);
     }
 
-    public void toggleMode() {
-        mode = (mode == Mode.CONSTANT) ? Mode.BURST : Mode.CONSTANT;
-    }
-
     @Override
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        if (tag.contains("Mode")) this.mode = Mode.valueOf(tag.getString("Mode"));
-        this.burstCooldown = tag.getInt("BurstCD");
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.putString("Mode", mode.name());
-        tag.putInt("BurstCD", burstCooldown);
     }
 
     public void tickServer(Level level, BlockPos origin, BlockState oldState) {
         if (!(level instanceof ServerLevel world)) return;
 
         int signal = world.getBestNeighborSignal(worldPosition);
-        if (signal <= 0) {
-            if (burstCooldown > 0) burstCooldown = Math.max(0, burstCooldown - 1);
-            return;
-        }
+        if (signal <= 0) return;
 
         Direction dir = getBlockState().getValue(WindBlaster.FACING);
         int range = Mth.clamp(signal, 1, MAX_RANGE);
-
-        double baseForce = BASE_FORCE * (signal / 15.0);
-        double force = baseForce;
-
-        if (mode == Mode.BURST) {
-            if (burstCooldown > 0) {
-                force *= 0.25D;
-            } else {
-                force *= BURST_MULT;
-                burstCooldown = BURST_COOLDOWN_TICKS;
-            }
-        }
+        double force = BASE_FORCE * (signal / 15.0);
 
         RandomSource rand = world.random;
         SimpleParticleType particle = ModParticles.LIFESTEAL_PARTICLE.get();
@@ -143,8 +114,6 @@ public class WindBlasterBlockEntity extends BlockEntity {
                 }
             }
         }
-
-        if (burstCooldown > 0) burstCooldown = Math.max(0, burstCooldown - 1);
     }
 
     private boolean isHeavyEntity(Entity e) {
@@ -154,7 +123,7 @@ public class WindBlasterBlockEntity extends BlockEntity {
     private void interactWithBlock(BlockState state, BlockPos pos, Direction windDir, ServerLevel world) {
         Block block = state.getBlock();
 
-        if (block instanceof DoorBlock door) {
+        if (block instanceof DoorBlock) {
             boolean open = state.getValue(DoorBlock.OPEN);
             Direction facing = state.getValue(DoorBlock.FACING);
 
@@ -164,8 +133,8 @@ public class WindBlasterBlockEntity extends BlockEntity {
                 world.setBlock(pos, state.setValue(DoorBlock.OPEN, false), 3);
             }
         }
-
-        if (block instanceof TrapDoorBlock trapdoor) {
+        else
+        if (block instanceof TrapDoorBlock) {
             boolean open = state.getValue(TrapDoorBlock.OPEN);
             Direction facing = state.getValue(TrapDoorBlock.FACING);
 
