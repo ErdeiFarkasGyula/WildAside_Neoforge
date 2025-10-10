@@ -2,9 +2,11 @@ package net.farkas.wildaside.block.entity;
 
 import net.farkas.wildaside.block.custom.vibrion.WindBlaster;
 import net.farkas.wildaside.particle.ModParticles;
+import net.farkas.wildaside.util.BlasterUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
@@ -18,16 +20,21 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
+import java.util.Vector;
 
-public class WindBlasterBlockEntity extends BlockEntity {
+public class WindBlasterBlockEntity extends BlasterBlockEntity {
     private static final int MAX_RANGE = 15;
     private static final double BASE_FORCE = 0.15D;
+
+    private BlockPos previousPos = BlockPos.ZERO;
+    private int blocksTraveled = 0;
 
     public WindBlasterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.WIND_BLASTER.get(), pos, state);
@@ -75,14 +82,37 @@ public class WindBlasterBlockEntity extends BlockEntity {
             BlockPos samplePos = BlockPos.containing(sample);
             BlockState state = world.getBlockState(samplePos);
 
+            if (previousPos != samplePos) {
+                previousPos = samplePos;
+                if (shouldBreakNext) {
+                    shouldBreakNext = false;
+                    break;
+                }
+            }
+
             if (state.isCollisionShapeFullBlock(world, samplePos)) break;
+            if (!BlasterUtils.canTraverse(facing, state, oldState, this)) {
+                blocksTraveled = Math.abs(origin.getX() - samplePos.getX())
+                        + Math.abs(origin.getY() - samplePos.getY())
+                        + Math.abs(origin.getZ() - samplePos.getZ());
+
+                if (strength - blocksTraveled >= 7) {
+                    BlockState openableBlock = level.getBlockState(samplePos);
+                    if (openableBlock.hasProperty(DoorBlock.OPEN)) {
+                        level.setBlock(samplePos, openableBlock.setValue(DoorBlock.OPEN, !(openableBlock.getValue(DoorBlock.OPEN))), 3);
+                        shouldBreakNext = false;
+                    }
+                } else {
+                    break;
+                }
+            }
 
             if (traveled >= nextParticle) {
                 nextParticle += particleInterval;
 
                 if (rand.nextFloat() < 0.8f) {
                     double speed = 0.05 + 0.15 * (force / BASE_FORCE);
-                    world.sendParticles(ParticleTypes.ASH,
+                    world.sendParticles(ModParticles.LIFESTEAL_PARTICLE.get(),
                             sample.x, sample.y, sample.z, 1,
                             facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
                 }

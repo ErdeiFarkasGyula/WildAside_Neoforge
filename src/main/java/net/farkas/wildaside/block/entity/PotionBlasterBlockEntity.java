@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvider {
+public class PotionBlasterBlockEntity extends BlasterBlockEntity implements MenuProvider {
     public final ItemStackHandler itemHandler = new ItemStackHandler(10) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -55,8 +55,6 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
             }
         }
     };
-
-    private boolean shouldBreakNext;
 
     public static final int OUTPUT_1 = 9;
 
@@ -145,119 +143,8 @@ public class PotionBlasterBlockEntity extends BlockEntity implements MenuProvide
 
             var nextBlock = level.getBlockState(target);
             var originBlock = level.getBlockState(this.getBlockPos());
-            var axis = originBlock.getValue(PotionBlaster.FACING).getAxis();
 
-            if (axis == Direction.Axis.Y) {
-                if (nextBlock.getBlock() instanceof SlabBlock) {
-                    break;
-                }
-                if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                    if (!nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                        break;
-                    }
-                }
-                if (nextBlock.getBlock() instanceof StairBlock) {
-                    break;
-                }
-            }
-            else
-            if (axis == Direction.Axis.X) {
-                if (nextBlock.getBlock() instanceof StairBlock) {
-                    if (nextBlock.getValue(StairBlock.FACING).getAxis() == Direction.Axis.X) {
-                        break;
-                    }
-                }
-                if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                    if (nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                        Direction facing = nextBlock.getValue(TrapDoorBlock.FACING);
-                        if (facing.getAxis() == Direction.Axis.X) {
-                            if (direction == facing) {
-                                break;
-                            } else {
-                                shouldBreakNext = true;
-                            }
-                        }
-                    }
-                }
-                if (nextBlock.getBlock() instanceof DoorBlock) {
-                    var open = nextBlock.getValue(DoorBlock.OPEN);
-                    Direction facing = nextBlock.getValue(DoorBlock.FACING);
-
-                    if (!open) {
-                        if (facing.getAxis() == Direction.Axis.X) {
-                            if (BlasterUtils.axisToDirection(axis, direction.getStepX()) == facing) {
-                                break;
-                            } else {
-                                shouldBreakNext = true;
-                            }
-                        }
-                    } else {
-                        if (facing.getAxis() != Direction.Axis.X) {
-                            if (BlasterUtils.doorDirectionCheck(axis, direction.getStepX(), facing)) {
-                                if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.LEFT) {
-                                    break;
-                                }
-                                shouldBreakNext = true;
-                            } else {
-                                if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.LEFT) {
-                                    shouldBreakNext = true;
-                                } else {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            if (axis == Direction.Axis.Z) {
-                if (nextBlock.getBlock() instanceof StairBlock) {
-                    if (nextBlock.getValue(StairBlock.FACING).getAxis() == Direction.Axis.Z) {
-                        break;
-                    }
-                }
-                if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                    if (nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                        Direction facing = nextBlock.getValue(TrapDoorBlock.FACING);
-                        if (facing.getAxis() == Direction.Axis.Z) {
-                            if (direction == facing) {
-                                break;
-                            } else {
-                                shouldBreakNext = true;
-                            }
-                        }
-                    }
-                }
-                if (nextBlock.getBlock() instanceof DoorBlock) {
-                    var open = nextBlock.getValue(DoorBlock.OPEN);
-                    Direction facing = nextBlock.getValue(DoorBlock.FACING);
-
-                    if (!open) {
-                        if (facing.getAxis() == Direction.Axis.Z) {
-                            if (direction == facing) {
-                                break;
-                            } else {
-                                shouldBreakNext = true;
-                            }
-                        }
-                    } else {
-                        if (facing.getAxis() != Direction.Axis.Z) {
-                            if (BlasterUtils.doorDirectionCheck(axis, direction.getStepZ(), facing)) {
-                                if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT) {
-                                    break;
-                                }
-                                shouldBreakNext = true;
-                            } else {
-                                if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT) {
-                                    shouldBreakNext = true;
-                                } else {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            if (!BlasterUtils.canTraverse(direction, nextBlock, originBlock, this)) return;
 
             for (int k = 0; k < 2; k++) {
                 double x = target.getX() + random.nextDouble();
