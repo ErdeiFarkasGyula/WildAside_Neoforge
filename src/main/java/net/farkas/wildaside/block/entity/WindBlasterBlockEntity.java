@@ -97,7 +97,7 @@ public class WindBlasterBlockEntity extends BlockEntity {
             double falloff = Math.exp(-0.25 * traveled);
             double appliedForce = force * falloff;
 
-            AABB box = new AABB(samplePos);
+            AABB box = new AABB(samplePos).inflate(-0.05);
             List<Entity> entities = world.getEntities((Entity) null, box, e -> true);
             for (Entity e : entities) {
                 if (e instanceof ArmorStand) continue;
