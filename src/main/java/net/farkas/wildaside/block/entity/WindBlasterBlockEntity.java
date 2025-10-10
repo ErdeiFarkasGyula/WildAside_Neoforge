@@ -5,6 +5,7 @@ import net.farkas.wildaside.particle.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -64,7 +65,10 @@ public class WindBlasterBlockEntity extends BlockEntity {
         RandomSource rand = world.random;
         SimpleParticleType particle = ModParticles.LIFESTEAL_PARTICLE.get();
         Vec3 start = Vec3.atCenterOf(worldPosition);
+
         double step = 0.1D;
+        double particleInterval = 0.7D;
+        double nextParticle = particleInterval;
 
         for (double traveled = 0.8D; traveled <= range; traveled += step) {
             Vec3 sample = start.add(facing.getStepX() * traveled, facing.getStepY() * traveled, facing.getStepZ() * traveled);
@@ -73,9 +77,22 @@ public class WindBlasterBlockEntity extends BlockEntity {
 
             if (state.isCollisionShapeFullBlock(world, samplePos)) break;
 
-            if (rand.nextFloat() < 0.3f + 0.02f * strength) {
-                world.sendParticles(particle, sample.x, sample.y, sample.z, 1,
-                        0.02 * facing.getStepX(), 0.02 * facing.getStepY(), 0.02 * facing.getStepZ(), 0.0);
+            if (traveled >= nextParticle) {
+                nextParticle += particleInterval;
+
+                if (rand.nextFloat() < 0.8f) {
+                    double speed = 0.05 + 0.15 * (force / BASE_FORCE);
+                    world.sendParticles(ParticleTypes.ASH,
+                            sample.x, sample.y, sample.z, 1,
+                            facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
+                }
+
+                // occasionally add a puff/ripple for flair
+                if (rand.nextFloat() < 0.1f) {
+                    world.sendParticles(ParticleTypes.POOF,
+                            sample.x, sample.y, sample.z, 1,
+                            facing.getStepX() * 0.02, facing.getStepY() * 0.02, facing.getStepZ() * 0.02, 0.0);
+                }
             }
 
             double falloff = Math.exp(-0.25 * traveled);
