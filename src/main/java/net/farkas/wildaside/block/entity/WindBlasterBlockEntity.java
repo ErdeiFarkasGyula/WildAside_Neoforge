@@ -81,7 +81,9 @@ public class WindBlasterBlockEntity extends BlockEntity {
         Direction dir = getBlockState().getValue(WindBlaster.FACING);
         int range = Mth.clamp(signal, 1, MAX_RANGE);
 
-        double force = BASE_FORCE * (signal / 15.0);
+        double baseForce = BASE_FORCE * (signal / 15.0);
+        double force = baseForce;
+
         if (mode == Mode.BURST) {
             if (burstCooldown > 0) {
                 force *= 0.25D;
@@ -95,9 +97,8 @@ public class WindBlasterBlockEntity extends BlockEntity {
         SimpleParticleType particle = ModParticles.LIFESTEAL_PARTICLE.get();
         Vec3 start = Vec3.atCenterOf(worldPosition);
         double step = 0.6D;
-        double traveled = 0.8D;
 
-        while (traveled <= range) {
+        for (double traveled = 0.8D; traveled <= range; traveled += step) {
             Vec3 sample = start.add(dir.getStepX() * traveled, dir.getStepY() * traveled, dir.getStepZ() * traveled);
             BlockPos samplePos = BlockPos.containing(sample);
             BlockState state = world.getBlockState(samplePos);
@@ -111,27 +112,19 @@ public class WindBlasterBlockEntity extends BlockEntity {
                         0.02 * dir.getStepX(), 0.02 * dir.getStepY(), 0.02 * dir.getStepZ(), 0.0);
             }
 
+            double falloff = Math.exp(-0.25 * traveled);
+            double appliedForce = force * falloff;
+
             AABB box = new AABB(samplePos);
             List<Entity> entities = world.getEntities((Entity) null, box, e -> true);
             for (Entity e : entities) {
-                if (e instanceof ArmorStand) continue;
-                if (isHeavyEntity(e)) continue;
+                if (e instanceof ArmorStand || isHeavyEntity(e)) continue;
 
                 Vec3 push = new Vec3(dir.getStepX(), dir.getStepY(), dir.getStepZ());
-                if (e instanceof LivingEntity le) {
-                    if (le.getDeltaMovement().y < -0.05 && dir.getStepY() > 0) {
-                        e.setDeltaMovement(e.getDeltaMovement().add(0.0, Math.abs(le.getDeltaMovement().y) * 0.8, 0.0));
-                    }
-                }
-
-                double appliedForce = force;
-                if (mode == Mode.BURST && burstCooldown == BURST_COOLDOWN_TICKS) appliedForce = force;
-
                 Vec3 vel = e.getDeltaMovement();
-                Vec3 toBlaster = Vec3.atCenterOf(worldPosition).subtract(e.position());
-                double dot = vel.dot(push.scale(-1));
-                if (dot > 0 && appliedForce > 0.4) {
-                    e.setDeltaMovement(vel.scale(0.2));
+
+                if (e instanceof LivingEntity le && le.getDeltaMovement().y < -0.05 && dir.getStepY() > 0) {
+                    e.setDeltaMovement(vel.add(0.0, Math.abs(le.getDeltaMovement().y) * 0.8, 0.0));
                 }
 
                 Vec3 newVel = vel.add(push.scale(appliedForce));
@@ -145,12 +138,10 @@ public class WindBlasterBlockEntity extends BlockEntity {
                 e.setDeltaMovement(newVel);
                 e.hurtMarked = true;
 
-                if (e instanceof ItemEntity) {
-                    ((ItemEntity) e).setPickUpDelay(20);
+                if (e instanceof ItemEntity item) {
+                    item.setPickUpDelay(20);
                 }
             }
-
-            traveled += step;
         }
 
         if (burstCooldown > 0) burstCooldown = Math.max(0, burstCooldown - 1);
@@ -163,23 +154,26 @@ public class WindBlasterBlockEntity extends BlockEntity {
     private void interactWithBlock(BlockState state, BlockPos pos, Direction windDir, ServerLevel world) {
         Block block = state.getBlock();
 
-        if (block instanceof DoorBlock) {
+        if (block instanceof DoorBlock door) {
             boolean open = state.getValue(DoorBlock.OPEN);
             Direction facing = state.getValue(DoorBlock.FACING);
 
-            if (windDir == facing && open) {
-                world.setBlock(pos, state.setValue(DoorBlock.OPEN, false), 3);
-            }
-            if (windDir == facing.getOpposite() && !open) {
+            if (windDir == facing && !open) {
                 world.setBlock(pos, state.setValue(DoorBlock.OPEN, true), 3);
+            } else if (windDir == facing.getOpposite() && open) {
+                world.setBlock(pos, state.setValue(DoorBlock.OPEN, false), 3);
             }
         }
 
-        if (block instanceof TrapDoorBlock) {
+        if (block instanceof TrapDoorBlock trapdoor) {
             boolean open = state.getValue(TrapDoorBlock.OPEN);
             Direction facing = state.getValue(TrapDoorBlock.FACING);
-            if (windDir == facing && !open) world.setBlock(pos, state.setValue(TrapDoorBlock.OPEN, true), 3);
-            if (windDir == facing.getOpposite() && open) world.setBlock(pos, state.setValue(TrapDoorBlock.OPEN, false), 3);
+
+            if (windDir == facing && !open) {
+                world.setBlock(pos, state.setValue(TrapDoorBlock.OPEN, true), 3);
+            } else if (windDir == facing.getOpposite() && open) {
+                world.setBlock(pos, state.setValue(TrapDoorBlock.OPEN, false), 3);
+            }
         }
     }
 }
