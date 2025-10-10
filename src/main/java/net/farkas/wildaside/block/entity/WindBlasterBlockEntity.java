@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Set;
 
 public class WindBlasterBlockEntity extends BlockEntity {
-
     private static final int MAX_RANGE = 15;
     private static final double BASE_FORCE = 0.1D;
 

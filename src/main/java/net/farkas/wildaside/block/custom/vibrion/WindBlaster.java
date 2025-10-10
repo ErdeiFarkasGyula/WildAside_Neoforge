@@ -72,17 +72,6 @@ public class WindBlaster extends BaseEntityBlock implements SimpleWaterloggedBlo
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide()) return InteractionResult.PASS;
-        BlockEntity be = level.getBlockEntity(pos);
-        if (be instanceof WindBlasterBlockEntity wb) {
-            wb.toggleMode();
-            wb.setChanged();
-        }
-        return InteractionResult.sidedSuccess(level.isClientSide);
-    }
-
-    @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
     }
