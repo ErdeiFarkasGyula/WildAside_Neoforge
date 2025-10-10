@@ -5,8 +5,6 @@ import net.farkas.wildaside.block.entity.ModBlockEntities;
 import net.farkas.wildaside.block.entity.WindBlasterBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -22,7 +20,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class WindBlaster extends BaseEntityBlock implements SimpleWaterloggedBlock {
@@ -41,13 +38,14 @@ public class WindBlaster extends BaseEntityBlock implements SimpleWaterloggedBlo
         builder.add(FACING, WATERLOGGED);
     }
 
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getNearestLookingDirection().getOpposite());
-    }
-
     @Override
-    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
-        return true;
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        boolean flag = context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER;
+        return this.defaultBlockState().setValue(WATERLOGGED, flag).setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        return state.getFluidState().isEmpty();
     }
 
     @Override
@@ -61,6 +59,11 @@ public class WindBlaster extends BaseEntityBlock implements SimpleWaterloggedBlo
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
         return super.updateShape(state, dir, neighborState, level, pos, neighborPos);
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+        return true;
     }
 
     @Nullable
