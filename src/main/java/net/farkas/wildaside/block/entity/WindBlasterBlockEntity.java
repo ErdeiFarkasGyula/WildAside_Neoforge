@@ -87,7 +87,6 @@ public class WindBlasterBlockEntity extends BlockEntity {
                             facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
                 }
 
-                // occasionally add a puff/ripple for flair
                 if (rand.nextFloat() < 0.1f) {
                     world.sendParticles(ParticleTypes.POOF,
                             sample.x, sample.y, sample.z, 1,
