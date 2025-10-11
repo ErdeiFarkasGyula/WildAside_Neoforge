@@ -2,10 +2,8 @@ package net.farkas.wildaside.worldgen.feature.tree;
 
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.worldgen.ModConfiguredFeatures;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.grower.TreeGrower;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 
 import java.util.Optional;
 
