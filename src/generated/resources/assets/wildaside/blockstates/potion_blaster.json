@@ -1,53 +1,27 @@
 {
   "variants": {
-    "facing=down,waterlogged=false": {
+    "facing=down": {
       "model": "wildaside:custom/potion_blaster",
       "x": 180
     },
-    "facing=down,waterlogged=true": {
-      "model": "wildaside:custom/potion_blaster",
-      "x": 180
-    },
-    "facing=east,waterlogged=false": {
+    "facing=east": {
       "model": "wildaside:custom/potion_blaster",
       "x": 90,
       "y": 90
     },
-    "facing=east,waterlogged=true": {
-      "model": "wildaside:custom/potion_blaster",
-      "x": 90,
-      "y": 90
-    },
-    "facing=north,waterlogged=false": {
+    "facing=north": {
       "model": "wildaside:custom/potion_blaster",
       "x": 90
     },
-    "facing=north,waterlogged=true": {
-      "model": "wildaside:custom/potion_blaster",
-      "x": 90
-    },
-    "facing=south,waterlogged=false": {
+    "facing=south": {
       "model": "wildaside:custom/potion_blaster",
       "x": 90,
       "y": 180
     },
-    "facing=south,waterlogged=true": {
-      "model": "wildaside:custom/potion_blaster",
-      "x": 90,
-      "y": 180
-    },
-    "facing=up,waterlogged=false": {
+    "facing=up": {
       "model": "wildaside:custom/potion_blaster"
     },
-    "facing=up,waterlogged=true": {
-      "model": "wildaside:custom/potion_blaster"
-    },
-    "facing=west,waterlogged=false": {
-      "model": "wildaside:custom/potion_blaster",
-      "x": 90,
-      "y": 270
-    },
-    "facing=west,waterlogged=true": {
+    "facing=west": {
       "model": "wildaside:custom/potion_blaster",
       "x": 90,
       "y": 270

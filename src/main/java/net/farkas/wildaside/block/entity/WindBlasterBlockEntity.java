@@ -11,6 +11,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -20,8 +22,11 @@ import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -92,14 +97,24 @@ public class WindBlasterBlockEntity extends BlasterBlockEntity {
 
             if (state.isCollisionShapeFullBlock(world, samplePos)) break;
             if (!BlasterUtils.canTraverse(facing, state, oldState, this)) {
-                blocksTraveled = Math.abs(origin.getX() - samplePos.getX())
-                        + Math.abs(origin.getY() - samplePos.getY())
-                        + Math.abs(origin.getZ() - samplePos.getZ());
+                blocksTraveled = Math.abs(origin.getX() - samplePos.getX()) + Math.abs(origin.getY() - samplePos.getY()) + Math.abs(origin.getZ() - samplePos.getZ());
 
                 if (strength - blocksTraveled >= 7) {
-                    BlockState openableBlock = level.getBlockState(samplePos);
-                    if (openableBlock.hasProperty(DoorBlock.OPEN)) {
-                        level.setBlock(samplePos, openableBlock.setValue(DoorBlock.OPEN, !(openableBlock.getValue(DoorBlock.OPEN))), 3);
+                    BlockState openableBlockState = level.getBlockState(samplePos);
+
+                    if (openableBlockState.hasProperty(BlockStateProperties.OPEN)) {
+//                        SoundEvent close = null;
+//                        SoundEvent open = null;
+//
+//                        boolean isOpen = openableBlockState.getValue(BlockS)
+//
+//                        if (openableBlockState.getBlock() instanceof DoorBlock doorBlock) {
+//                            close = doorBlock.type().doorClose();
+//                            open = doorBlock.type().doorOpen();
+//                        }
+//
+//                        level.playSound(null, samplePos, isOpening ?  : this.type.doorClose(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+                        level.setBlock(samplePos, openableBlockState.setValue(DoorBlock.OPEN, !(openableBlockState.getValue(DoorBlock.OPEN))), 3);
                         shouldBreakNext = false;
                     }
                 } else {
@@ -110,17 +125,30 @@ public class WindBlasterBlockEntity extends BlasterBlockEntity {
             if (traveled >= nextParticle) {
                 nextParticle += particleInterval;
 
-                if (rand.nextFloat() < 0.8f) {
-                    double speed = 0.05 + 0.15 * (force / BASE_FORCE);
-                    world.sendParticles(ModParticles.LIFESTEAL_PARTICLE.get(),
-                            sample.x, sample.y, sample.z, 1,
-                            facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
-                }
+                float density = (float) ((0.2 + strength / 15.0) * Math.exp(-0.3 * traveled));
+                if (rand.nextFloat() < density) {
+                    double radius = 0.25 + 0.1 * (strength / 15.0);
+                    double offsetX = (rand.nextDouble() - 0.5) * 2 * radius;
+                    double offsetY = (rand.nextDouble() - 0.5) * 2 * radius;
+                    double offsetZ = (rand.nextDouble() - 0.5) * 2 * radius;
 
-                if (rand.nextFloat() < 0.1f) {
-                    world.sendParticles(ParticleTypes.POOF,
-                            sample.x, sample.y, sample.z, 1,
-                            facing.getStepX() * 0.02, facing.getStepY() * 0.02, facing.getStepZ() * 0.02, 0.0);
+                    if (facing.getAxis() == Direction.Axis.X) offsetX = 0;
+                    else if (facing.getAxis() == Direction.Axis.Y) offsetY = 0;
+                    else offsetZ = 0;
+
+                    Vec3 particlePos = sample.add(offsetX, offsetY, offsetZ);
+
+                    double speed = 0.05 + 0.15 * (force / BASE_FORCE);
+                    if (rand.nextFloat() < 0.8f) {
+                        world.sendParticles(ModParticles.LIFESTEAL_PARTICLE.get(),
+                                particlePos.x, particlePos.y, particlePos.z, 1,
+                                facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
+                    }
+                    if (rand.nextFloat() < 0.2f) {
+                        world.sendParticles(ParticleTypes.POOF,
+                                particlePos.x, particlePos.y, particlePos.z, 1,
+                                facing.getStepX() * 0.02, facing.getStepY() * 0.02, facing.getStepZ() * 0.02, 0.0);
+                    }
                 }
             }
 
