@@ -20,7 +20,6 @@ public class ContaminationHandler {
         var data = livingEntity.getData(ModAttachments.CONTAMINATION);
         data.addDose(dose);
         applyContamination(livingEntity, data.getDose());
-
     }
 
     public static void setDose(Entity entity, int dose) {
@@ -40,7 +39,6 @@ public class ContaminationHandler {
 
     public static void applyContamination(LivingEntity entity, int dose) {
         if (dose == 0 || entity instanceof MucellithEntity) return;
-        if (entity.tickCount % 20 != 0) return;
 
         Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
         Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getDelegate();
