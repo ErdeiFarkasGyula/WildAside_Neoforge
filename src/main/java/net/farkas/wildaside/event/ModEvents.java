@@ -242,8 +242,12 @@ public class ModEvents {
     public static void onContaminationEffectExpired(MobEffectEvent.Expired event) {
         LivingEntity entity = event.getEntity();
         MobEffectInstance mobEffectInstance = event.getEffectInstance();
+
         if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
-            entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
+            Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
+            if (!entity.hasEffect(immunity)) {
+                entity.addEffect(new MobEffectInstance(immunity, (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
+            }
         }
     }
 
@@ -254,6 +258,7 @@ public class ModEvents {
     }
 
     public static void spreadContaminationOnCriticalHit(CriticalHitEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         Holder<MobEffect> contamEffect = ModMobEffects.CONTAMINATION.getDelegate();
 
         Player attacker = event.getEntity();
@@ -276,6 +281,7 @@ public class ModEvents {
 
     public static void passiveContaminationDoseReduction(LivingBreatheEvent event) {
         LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide()) return;
         entity.getData(ModAttachments.CONTAMINATION).addDose(-10);
     }
 }

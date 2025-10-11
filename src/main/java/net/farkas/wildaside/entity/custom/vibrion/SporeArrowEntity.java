@@ -24,7 +24,9 @@ public class SporeArrowEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult pResult) {
         super.onHitEntity(pResult);
         if (pResult.getEntity() instanceof LivingEntity entity) {
-            ContaminationHandler.addDose(entity, Math.round(entity.getRandom().nextFloat() + 1) * 500);
+            if (!level().isClientSide()) {
+                ContaminationHandler.addDose(entity, Math.round(entity.getRandom().nextFloat() + 1) * 500);
+            }
         }
     }
 
