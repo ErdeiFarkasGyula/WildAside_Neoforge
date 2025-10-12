@@ -71,7 +71,11 @@ public class ContaminationCommand {
             }
         }
 
-        if (affected < 0) {
+        if (affected > 0) {
+            int finalAffected = affected;
+            String entityString = finalAffected > 1 ? "entities" : "entity";
+            source.sendSuccess(() -> Component.literal("Applied '" + action + "' to " + finalAffected + " " + entityString), true);
+        } else {
             source.sendFailure(Component.literal("No valid living entities found."));
         }
         return affected;

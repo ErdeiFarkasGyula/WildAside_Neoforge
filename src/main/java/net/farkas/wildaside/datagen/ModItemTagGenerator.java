@@ -23,9 +23,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
-        this.tag(ModTags.Items.SHEARS)
-                .add(Items.SHEARS);
-
         this.tag(ItemTags.LOGS_THAT_BURN)
                 .add(ModBlocks.SUBSTILIUM_STEM.get().asItem())
                 .add(ModBlocks.STRIPPED_SUBSTILIUM_STEM.get().asItem())

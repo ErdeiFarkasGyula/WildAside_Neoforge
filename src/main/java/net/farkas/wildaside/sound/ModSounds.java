@@ -23,7 +23,6 @@ public class ModSounds {
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 
-
     public static void register(IEventBus bus) {
         SOUNDS.register(bus);
     }

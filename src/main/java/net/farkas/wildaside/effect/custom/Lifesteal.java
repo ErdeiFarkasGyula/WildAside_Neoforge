@@ -75,6 +75,7 @@ class LifestealHandler {
         Iterator<Task> it = TASKS.iterator();
         while (it.hasNext()) {
             Task t = it.next();
+
             var attacker = t.level.getEntity(t.attackerId);
             var target   = t.level.getEntity(t.targetId);
 

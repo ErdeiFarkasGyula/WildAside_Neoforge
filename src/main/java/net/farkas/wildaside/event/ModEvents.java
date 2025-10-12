@@ -145,7 +145,6 @@ public class ModEvents {
             event.getTrades().get(3).add((pTrader, pRandom) -> new MerchantOffer(
                     new ItemCost(Items.EMERALD, 6), new ItemStack(ModItems.ENTORIUM_PILL.get()), 2, 5, 0.06f
             ));
-
         }
     }
 

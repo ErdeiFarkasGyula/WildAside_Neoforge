@@ -59,7 +59,6 @@ public class ModDripParticle extends TextureSheetParticle {
         }
 
         this.yd -= this.gravity;
-
         this.move(this.xd, this.yd, this.zd);
         this.xd *= 0.98F;
         this.yd *= 0.98F;

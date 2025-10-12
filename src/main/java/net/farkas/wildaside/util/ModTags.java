@@ -21,10 +21,6 @@ public class ModTags {
     }
 
     public static class Items {
-        public static final TagKey<Item> SHEARS = tag("shears");
 
-        private static TagKey<Item> tag(String name) {
-            return ItemTags.create(ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, name));
-        }
     }
 }
