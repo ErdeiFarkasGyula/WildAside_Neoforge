@@ -245,9 +245,7 @@ public class ModEvents {
 
         if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
             Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
-            if (!entity.hasEffect(immunity)) {
-                entity.addEffect(new MobEffectInstance(immunity, (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
-            }
+            entity.addEffect(new MobEffectInstance(immunity, (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
         }
     }
 

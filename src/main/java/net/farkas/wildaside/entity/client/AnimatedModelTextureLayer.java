@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 
-public class AnimatedTextureLayer<T extends LivingEntity, M extends HierarchicalModel<T>> extends RenderLayer<T, M> {
+public class AnimatedModelTextureLayer<T extends LivingEntity, M extends HierarchicalModel<T>> extends RenderLayer<T, M> {
     public ResourceLocation frame_0;
     public ResourceLocation frame_1;
 
@@ -21,7 +21,7 @@ public class AnimatedTextureLayer<T extends LivingEntity, M extends Hierarchical
 
     public int[] sequence;
 
-    public AnimatedTextureLayer(RenderLayerParent<T, HierarchicalModel<T>> renderer, ResourceLocation frame_0, ResourceLocation frame_1, int frameTime, int totalFrames, int[] sequence) {
+    public AnimatedModelTextureLayer(RenderLayerParent<T, HierarchicalModel<T>> renderer, ResourceLocation frame_0, ResourceLocation frame_1, int frameTime, int totalFrames, int[] sequence) {
         super((RenderLayerParent<T, M>) renderer);
         this.frame_0 = frame_0;
         this.frame_1 = frame_1;
@@ -37,7 +37,6 @@ public class AnimatedTextureLayer<T extends LivingEntity, M extends Hierarchical
         int currentFrame = sequence[frameIndex];
         int nextFrame = sequence[(frameIndex + 1) % sequence.length];
 
-        float progress = (totalTicks % frameTime + partialTicks) / (float) frameTime;
         float interp = (float) (totalTicks % frameTime) / frameTime;
         float alpha = Mth.clamp(interp, 0f, 1f);
 

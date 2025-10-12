@@ -1,12 +1,12 @@
 package net.farkas.wildaside.entity.client.vibrion;
 
 import net.farkas.wildaside.WildAside;
-import net.farkas.wildaside.entity.client.AnimatedTextureLayer;
+import net.farkas.wildaside.entity.client.AnimatedModelTextureLayer;
 import net.farkas.wildaside.entity.custom.vibrion.MucellithEntity;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.resources.ResourceLocation;
 
-public class MucellithTextureLayer extends AnimatedTextureLayer<MucellithEntity, MucellithModel<MucellithEntity>> {
+public class MucellithTextureLayer extends AnimatedModelTextureLayer<MucellithEntity, MucellithModel<MucellithEntity>> {
     private static final ResourceLocation FRAME_0 = ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "textures/entity/mucellith_0.png");
     private static final ResourceLocation FRAME_1 = ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "textures/entity/mucellith_1.png");
 

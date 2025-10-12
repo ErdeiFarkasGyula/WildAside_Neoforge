@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public class ContaminationHandler {
-    private static final int maxAmplifier = 5;
+    private static final int MAX_AMPLIFIER = 5;
 
     public static void addDose(Entity entity, int dose) {
         if (!(entity instanceof LivingEntity livingEntity)) return;
@@ -43,7 +43,7 @@ public class ContaminationHandler {
         Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
         Holder<MobEffect> contamination = ModMobEffects.CONTAMINATION.getDelegate();
 
-        int amplifier = Mth.clamp(dose / 1000, 0, maxAmplifier);;
+        int amplifier = Mth.clamp(dose / 1000, 0, MAX_AMPLIFIER);;
         int contaminationDuration = calculateContaminationDuration(amplifier);
 
         MobEffectInstance existing = entity.getEffect(contamination);
@@ -59,7 +59,7 @@ public class ContaminationHandler {
             int existingAmp = existing.getAmplifier();
             int existingDuration = existing.getDuration();
 
-            amplifier = Mth.clamp(dose / 1000, existingAmp, maxAmplifier);
+            amplifier = Mth.clamp(dose / 1000, existingAmp, MAX_AMPLIFIER);
             contaminationDuration = calculateContaminationDuration(amplifier);
 
             if (entity.hasEffect(immunity)) {

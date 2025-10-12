@@ -42,10 +42,6 @@ public class VibrionGel extends Block implements SimpleWaterloggedBlock {
         double verticalFactor = 0.4f;
 
         entity.setDeltaMovement(entity.getDeltaMovement().multiply(slowFactor, verticalFactor, slowFactor));
-
-        if (level.isClientSide() && level.random.nextFloat() < 0.05f) {
-            level.addParticle(ModParticles.VIBRION_DRIP_PARTICLE.get(), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-        }
     }
 
     @Override

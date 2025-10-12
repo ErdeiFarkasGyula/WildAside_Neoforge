@@ -32,18 +32,13 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
     private int soundCooldown = 0;
     private final int soundCooldownMax = 20;
 
-    public final AnimationState idleAnimation = new AnimationState();
-    private final int idleAnimationMax = 40;
-    private int idleAnimationTimeout = 0;
-
-    public final AnimationState attackAnimation = new AnimationState();
     public final int attackAnimationMax = 60;
     public int attackAnimationTimeout = 0;
 
+    public final AnimationState idleAnimation = new AnimationState();
+    public final AnimationState attackAnimation = new AnimationState();
     public final AnimationState defenseAnimation = new AnimationState();
     public final AnimationState defenseAnimationReverse = new AnimationState();
-    private final int defenseAnimationReverseMax = 15;
-    private int defenseAnimationReverseTimeout = 15;
 
     public MucellithEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
