@@ -20,12 +20,11 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class NaturalSporeBlasterBlockEntity extends BlockEntity {
+public class NaturalSporeBlasterBlockEntity extends BlasterBlockEntity {
     private static final int MAX_TIMER = 40;
     private int changePowerTimer = MAX_TIMER;
     private int power1 = 0;
     private int power2 = 0;
-    private boolean shouldBreakNext = false;
 
     public NaturalSporeBlasterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.NATURAL_SPORE_BLASTER.get(), pos, state);
