@@ -36,10 +36,7 @@ public class ModEntities {
                     .sized(0.5f, 0.5f).build("fertiliser_bomb"));
     public static final Supplier<EntityType<SporeArrowEntity>> SPORE_ARROW =
             ENTITIES.register("spore_arrow", () -> EntityType.Builder.<SporeArrowEntity>of(SporeArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5f, 0.5f)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("spore_arrow"));
+                    .sized(0.5f, 0.5f).build("spore_arrow"));
 
     public static final Supplier<EntityType<MucellithEntity>> MUCELLITH =
             ENTITIES.register("mucellith", () -> EntityType.Builder.<MucellithEntity>of(MucellithEntity::new, MobCategory.MONSTER)
