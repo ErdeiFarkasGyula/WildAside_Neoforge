@@ -118,39 +118,31 @@ public class MucellithEntity extends PathfinderMob implements RangedAttackMob {
                 defenseAnimation.start(tickCount);
             }
         } else {
-            if (this.idleAnimationTimeout <= 0) {
-                this.idleAnimationTimeout = idleAnimationMax;
-                this.idleAnimation.start(this.tickCount);
-            } else {
-                --this.idleAnimationTimeout;
-            }
+            defenseAnimation.stop();
 
             if (hasDefended()) {
-                if (defenseAnimationReverseTimeout == defenseAnimationReverseMax) {
+                if (!defenseAnimationReverse.isStarted()) {
                     defenseAnimationReverse.start(tickCount);
-                    --defenseAnimationReverseTimeout;
-                } else
-                    if (defenseAnimationReverseTimeout > 0) {
-                        --defenseAnimationReverseTimeout;
-                    } else {
-                        defenseAnimationReverse.stop();
-                    }
-
+                }
+            } else {
+                defenseAnimationReverse.stop();
             }
-            defenseAnimation.stop();
+
+            if (!isAttacking()) {
+                if (!idleAnimation.isStarted()) {
+                    idleAnimation.start(tickCount);
+                }
+            } else {
+                idleAnimation.stop();
+            }
         }
 
         if (isAttacking()) {
-            if (attackAnimationTimeout <= 0) {
+            if (!attackAnimation.isStarted()) {
                 attackAnimation.start(tickCount);
-                attackAnimationTimeout = attackAnimationMax;
             }
-            --attackAnimationTimeout;
         } else {
-            if (attackAnimation.isStarted()) {
-                attackAnimation.stop();
-                attackAnimationTimeout = 0;
-            }
+            attackAnimation.stop();
         }
     }
 
