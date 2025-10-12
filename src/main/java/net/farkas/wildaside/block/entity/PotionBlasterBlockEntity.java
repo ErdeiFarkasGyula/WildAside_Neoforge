@@ -265,6 +265,8 @@ public class PotionBlasterBlockEntity extends BlasterBlockEntity implements Menu
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
+        if (level.isClientSide()) return;
+
         if (level.getBlockEntity(pos) instanceof PotionBlasterBlockEntity be) {
             if (level.getBestNeighborSignal(pos) > 0) {
                 int poweredSides = 0;
