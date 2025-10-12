@@ -22,7 +22,9 @@ import net.farkas.wildaside.worldgen.feature.ModFeatures;
 import net.farkas.wildaside.worldgen.feature.ModFoliagePlacers;
 import net.farkas.wildaside.worldgen.feature.decorator.ModTreeDecorators;
 import net.farkas.wildaside.worldgen.modifier.ModPlacementModifiers;
+import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -70,7 +72,10 @@ public class WildAside {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ModTerraBlenderAPI.registerRegions();
-            ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant(ModBlocks.VIBRION_GROWTH.getId(), ModBlocks.POTTED_VIBRION_GROWTH);
+            ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant( ModBlocks.VIBRION_GROWTH.getId(), ModBlocks.POTTED_VIBRION_GROWTH);
+            DispenserBlock.registerBehavior(ModItems.FERTILISER_BOMB.get(), new ProjectileDispenseBehavior(ModItems.FERTILISER_BOMB.get()));
+            DispenserBlock.registerBehavior(ModItems.SPORE_BOMB.get(), new ProjectileDispenseBehavior(ModItems.SPORE_BOMB.get()));
+            DispenserBlock.registerBehavior(ModItems.SPORE_ARROW.get(), new ProjectileDispenseBehavior(ModItems.SPORE_ARROW.get()));
         });
 
         SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, ModSurfaceRules.makeRules());

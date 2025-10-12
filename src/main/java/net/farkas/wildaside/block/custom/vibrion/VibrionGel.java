@@ -5,8 +5,10 @@ import net.farkas.wildaside.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -21,6 +23,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class VibrionGel extends Block implements SimpleWaterloggedBlock {
@@ -29,6 +32,20 @@ public class VibrionGel extends Block implements SimpleWaterloggedBlock {
     public VibrionGel(Properties pProperties) {
         super(pProperties);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
+    }
+
+    @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        super.entityInside(state, level, pos, entity);
+
+        double slowFactor = 0.3f;
+        double verticalFactor = 0.4f;
+
+        entity.setDeltaMovement(entity.getDeltaMovement().multiply(slowFactor, verticalFactor, slowFactor));
+
+        if (level.isClientSide() && level.random.nextFloat() < 0.05f) {
+            level.addParticle(ModParticles.VIBRION_DRIP_PARTICLE.get(), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+        }
     }
 
     @Override

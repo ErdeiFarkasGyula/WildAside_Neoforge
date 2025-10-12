@@ -27,17 +27,22 @@ public class SporeBombEntity extends ThrowableItemProjectile {
 
     public SporeBombEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.charge = 0;
-    }
-
-    public SporeBombEntity(Level pLevel) {
-        super(ModEntities.SPORE_BOMB.get(), pLevel);
-        this.charge = 0;
+        this.charge = level().random.nextFloat();
     }
 
     public SporeBombEntity(Level pLevel, LivingEntity livingEntity, float charge) {
         super(ModEntities.SPORE_BOMB.get(), livingEntity, pLevel);
         this.charge = charge;
+    }
+
+    public SporeBombEntity(Level pLevel, double x, double y, double z) {
+        super(ModEntities.SPORE_BOMB.get(), x, y, z, pLevel);
+        this.charge = level().random.nextFloat();
+    }
+
+    public SporeBombEntity(Level pLevel) {
+        super(ModEntities.SPORE_BOMB.get(), pLevel);
+        this.charge = level().random.nextFloat();
     }
 
     @Override
@@ -104,9 +109,7 @@ public class SporeBombEntity extends ThrowableItemProjectile {
         }
 
         if (entityCount >= 5) {
-            if (this.getOwner() instanceof ServerPlayer serverPlayer) {
-                AdvancementHandler.givePlayerAdvancement(serverPlayer, "weapons_of_mass_infection");
-            }
+            AdvancementHandler.givePlayerAdvancement(this.getOwner(), "weapons_of_mass_infection");
         }
     }
 }

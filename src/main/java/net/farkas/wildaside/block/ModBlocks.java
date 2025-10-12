@@ -60,8 +60,6 @@ public class ModBlocks {
                     .noCollission()
                     .noOcclusion()
                     .isRedstoneConductor((bs, br, bp) -> false)
-                    .speedFactor(0.2f)
-                    .jumpFactor(0.6f)
                     .noOcclusion()));
 
     public static final DeferredBlock<Block> LIT_VIBRION_GEL = registerBlock("lit_vibrion_gel",

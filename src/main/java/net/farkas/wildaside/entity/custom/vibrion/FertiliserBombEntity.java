@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
@@ -49,7 +50,7 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
 
     public FertiliserBombEntity(EntityType<? extends ThrowableItemProjectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.charge = 0;
+        this.charge = level().random.nextFloat();
         thrower = null;
     }
 
@@ -57,6 +58,18 @@ public class FertiliserBombEntity extends ThrowableItemProjectile {
         super(ModEntities.FERTILISER_BOMB.get(), thrower, pLevel);
         this.charge = charge + 0.1f;
         this.thrower = thrower;
+    }
+
+    public FertiliserBombEntity(Level level, double x, double y, double z) {
+        super(ModEntities.FERTILISER_BOMB.get(), x, y, z, level);
+        this.charge = level().random.nextFloat();
+        this.thrower = null;
+    }
+
+    public FertiliserBombEntity(Level level) {
+        super(ModEntities.FERTILISER_BOMB.get(), level);
+        this.charge = level.random.nextFloat();
+        this.thrower = null;
     }
 
     @Override
