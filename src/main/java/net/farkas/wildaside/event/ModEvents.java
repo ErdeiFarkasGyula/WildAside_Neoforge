@@ -6,7 +6,10 @@ import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.block.ModBlocks;
 import net.farkas.wildaside.command.ModCommands;
 import net.farkas.wildaside.effect.ModMobEffects;
+import net.farkas.wildaside.entity.ModEntities;
 import net.farkas.wildaside.entity.ModEntitySpawns;
+import net.farkas.wildaside.entity.custom.hickory.HickoryTreantEntity;
+import net.farkas.wildaside.entity.custom.vibrion.MucellithEntity;
 import net.farkas.wildaside.item.ModItems;
 import net.farkas.wildaside.network.WindSavedData;
 import net.farkas.wildaside.potion.ModPotions;
@@ -50,6 +53,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
@@ -94,6 +98,12 @@ public class ModEvents {
         if (pack != null) {
             event.addRepositorySource(consumer -> consumer.accept(pack));
         }
+    }
+
+    @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.MUCELLITH.get(), MucellithEntity.createAttributes().build());
+        event.put(ModEntities.HICKORY_TREANT.get(), HickoryTreantEntity.createAttributes().build());
     }
 
     @SubscribeEvent

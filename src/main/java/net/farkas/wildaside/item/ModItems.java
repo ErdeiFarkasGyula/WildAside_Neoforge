@@ -25,7 +25,7 @@ public class ModItems {
             () ->  new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> MUCELLITH_SPAWN_EGG = ITEMS.register("mucellith_spawn_egg",
-            () ->  new DeferredSpawnEggItem(ModEntities.MUCELLITH, 0xc8e3ff, 0xfff571, new Item.Properties()));
+            () ->  new DeferredSpawnEggItem(ModEntities.MUCELLITH, 0xbfd8f2, 0xf6e392, new Item.Properties()));
     public static final DeferredItem<Item> MUCELLITH_JAW = ITEMS.register("mucellith_jaw",
             () ->  new Item(new Item.Properties()));
 

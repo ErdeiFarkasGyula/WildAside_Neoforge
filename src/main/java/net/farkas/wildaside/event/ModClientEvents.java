@@ -9,8 +9,6 @@ import net.farkas.wildaside.entity.client.ModModelLayers;
 import net.farkas.wildaside.entity.client.hickory.HickoryTreantRenderer;
 import net.farkas.wildaside.entity.client.vibrion.MucellithModel;
 import net.farkas.wildaside.entity.client.vibrion.MucellithRenderer;
-import net.farkas.wildaside.entity.custom.hickory.HickoryTreantEntity;
-import net.farkas.wildaside.entity.custom.vibrion.MucellithEntity;
 import net.farkas.wildaside.entity.custom.vibrion.SporeArrowEntity;
 import net.farkas.wildaside.particle.ModParticles;
 import net.farkas.wildaside.particle.custom.*;
@@ -41,16 +39,9 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 
 @EventBusSubscriber(modid = WildAside.MOD_ID, value = Dist.CLIENT)
 public class ModClientEvents {
-    @SubscribeEvent
-    public static void registerAttributes(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.MUCELLITH.get(), MucellithEntity.createAttributes().build());
-        event.put(ModEntities.HICKORY_TREANT.get(), HickoryTreantEntity.createAttributes().build());
-    }
-
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.SUBSTILIUM_BOAT_LAYER, BoatModel::createBodyModel);
