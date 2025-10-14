@@ -58,8 +58,7 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND || pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING))
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (pLevel.isClientSide || pHand == InteractionHand.OFF_HAND || pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         ItemStack playerItem = pPlayer.getItemInHand(pHand);
 
@@ -80,8 +79,7 @@ public class GlowingHickoryLeavesBlock extends LeavesBlock {
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.tick(pState, pLevel, pPos, pRandom);
-
-        if (pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return;
+        if (pLevel.isClientSide() || pState.getValue(GlowingHickoryLeavesBlock.FIXED_LIGHTING)) return;
 
         int time = (int)pLevel.dayTime();
         int currentLight = pState.getValue(LIGHT);

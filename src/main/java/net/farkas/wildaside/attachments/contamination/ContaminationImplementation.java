@@ -4,7 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.UnknownNullability;
 
-public class ContaminationImplementation implements IContamination{
+public class ContaminationImplementation implements IContamination {
     private int dose = 0;
 
     @Override

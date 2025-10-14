@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BioengineeringWorkstation extends BaseEntityBlock {
     public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
+    public static final MapCodec<BioengineeringWorkstation> CODEC = simpleCodec(BioengineeringWorkstation::new);
 
     public BioengineeringWorkstation(Properties pProperties) {
         super(pProperties);
@@ -35,7 +36,7 @@ public class BioengineeringWorkstation extends BaseEntityBlock {
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return null;
+        return CODEC;
     }
 
     @Override

@@ -27,6 +27,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.BeehiveDecorato
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
+
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -116,7 +117,6 @@ public class ModConfiguredFeatures {
         HICKORY_BUSHES.put(HickoryColour.YELLOW_GLOWING, YELLOW_GLOWING_HICKORY_BUSH);
         HICKORY_BUSHES.put(HickoryColour.GREEN_GLOWING, GREEN_GLOWING_HICKORY_BUSH);
     }
-
 
     static final BeehiveDecorator glowingBeehive = new BeehiveDecorator(0.015f);
     static final List hickoryDecorator = List.of(new BeehiveDecorator(0.01f), new FallenLeavesDecorator(0.075f, HickoryColour.HICKORY));

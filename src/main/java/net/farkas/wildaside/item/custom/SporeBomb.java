@@ -1,6 +1,8 @@
 package net.farkas.wildaside.item.custom;
 
 import net.farkas.wildaside.entity.custom.vibrion.SporeBombEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -9,15 +11,13 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class SporeBomb extends Item {
+public class SporeBomb extends Item implements ProjectileItem {
     public SporeBomb(Properties pProperties) {
         super(pProperties);
     }
@@ -60,5 +60,10 @@ public class SporeBomb extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.translatable("item.wildaside.spore_bomb.tooltip"));
+    }
+
+    @Override
+    public Projectile asProjectile(Level level, Position position, ItemStack itemStack, Direction direction) {
+        return new SporeBombEntity(level, position.x(), position.y(), position.z());
     }
 }

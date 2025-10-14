@@ -13,20 +13,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.TrapDoorBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoorHingeSide;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-public class SporeBlasterBlockEntity extends BlockEntity {
+public class SporeBlasterBlockEntity extends BlasterBlockEntity {
     private int power = 0;
-    private boolean shouldBreakNext = false;
 
     public SporeBlasterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SPORE_BLASTER.get(), pos, state);
@@ -54,8 +47,7 @@ public class SporeBlasterBlockEntity extends BlockEntity {
             BlockState nextBlock = world.getBlockState(step);
 
             if (world.getBlockState(step).isCollisionShapeFullBlock(world, step)) break;
-            if (!canTraverse(dir, nextBlock, originBlock)) break;
-
+            if (!BlasterUtils.canTraverse(dir, nextBlock, originBlock, this)) break;
 
             double x = step.getX() + rand.nextDouble();
             double y = step.getY() + rand.nextDouble();
@@ -72,122 +64,6 @@ public class SporeBlasterBlockEntity extends BlockEntity {
                 world.sendParticles(particle, entity.getX(), entity.getY() + 0.5, entity.getZ(), 5, 0.2, 0.2, 0.2, 0.01);
             }
         }
-    }
-
-    private boolean canTraverse(Direction dir, BlockState nextBlock, BlockState originBlock) {
-        if (dir.getAxis() == Direction.Axis.Y) {
-            if (nextBlock.getBlock() instanceof SlabBlock) {
-                return false;
-            }
-            if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                if (!nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                    return false;
-                }
-            }
-            if (nextBlock.getBlock() instanceof StairBlock) {
-                return false;
-            }
-        }
-        if (dir.getAxis() == Direction.Axis.X) {
-            if (nextBlock.getBlock() instanceof StairBlock) {
-                if (nextBlock.getValue(StairBlock.FACING).getAxis() == Direction.Axis.X) {
-                    return false;
-                }
-            }
-            if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                if (nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                    Direction facing = nextBlock.getValue(TrapDoorBlock.FACING);
-                    if (facing.getAxis() == Direction.Axis.X) {
-                        Direction.Axis axis = originBlock.getValue(SporeBlaster.FACING).getAxis();
-                        if (BlasterUtils.axisToDirection(axis, dir.getStepX()) == facing) {
-                            return false;
-                        } else {
-                            shouldBreakNext = true;
-                        }
-                    }
-                }
-            }
-            if (nextBlock.getBlock() instanceof DoorBlock) {
-                var open = nextBlock.getValue(DoorBlock.OPEN);
-                Direction facing = nextBlock.getValue(DoorBlock.FACING);
-
-                if (!open) {
-                    if (facing.getAxis() == Direction.Axis.X) {
-                        if (dir == facing) {
-                            return false;
-                        } else {
-                            shouldBreakNext = true;
-                        }
-                    }
-                } else {
-                    if (facing.getAxis() != Direction.Axis.X) {
-                        if (BlasterUtils.doorDirectionCheck(dir.getAxis(), dir.getStepX(), facing)) {
-                            if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.LEFT) {
-                                return false;
-                            }
-                            shouldBreakNext = true;
-                        } else {
-                            if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.LEFT) {
-                                shouldBreakNext = true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-        if (dir.getAxis() == Direction.Axis.Z) {
-            if (nextBlock.getBlock() instanceof StairBlock) {
-                if (nextBlock.getValue(StairBlock.FACING).getAxis() == Direction.Axis.Z) {
-                    return false;
-                }
-            }
-            if (nextBlock.getBlock() instanceof TrapDoorBlock) {
-                if (nextBlock.getValue(TrapDoorBlock.OPEN)) {
-                    Direction facing = nextBlock.getValue(TrapDoorBlock.FACING);
-                    if (facing.getAxis() == Direction.Axis.Z) {
-                        if (dir == facing) {
-                            return false;
-                        } else {
-                            shouldBreakNext = true;
-                        }
-                    }
-                }
-            }
-            if (nextBlock.getBlock() instanceof DoorBlock) {
-                var open = nextBlock.getValue(DoorBlock.OPEN);
-                Direction facing = nextBlock.getValue(DoorBlock.FACING);
-                Direction.Axis axis = originBlock.getValue(SporeBlaster.FACING).getAxis();
-
-                if (!open) {
-                    if (facing.getAxis() == Direction.Axis.Z) {
-                        if (dir == facing) {
-                            return false;
-                        } else {
-                            shouldBreakNext = true;
-                        }
-                    }
-                } else {
-                    if (facing.getAxis() != Direction.Axis.Z) {
-                        if (BlasterUtils.doorDirectionCheck(axis, dir.getStepZ(), facing)) {
-                            if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT) {
-                                return false;
-                            }
-                            shouldBreakNext = true;
-                        } else {
-                            if (nextBlock.getValue(DoorBlock.HINGE) == DoorHingeSide.RIGHT) {
-                                shouldBreakNext = true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return true;
     }
 
     @Override

@@ -4,20 +4,25 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.farkas.wildaside.WildAside;
 import net.farkas.wildaside.attachments.ModAttachments;
 import net.farkas.wildaside.block.ModBlocks;
-import net.farkas.wildaside.command.ContaminationCommand;
+import net.farkas.wildaside.command.ModCommands;
 import net.farkas.wildaside.effect.ModMobEffects;
+import net.farkas.wildaside.entity.ModEntities;
 import net.farkas.wildaside.entity.ModEntitySpawns;
+import net.farkas.wildaside.entity.custom.hickory.HickoryTreantEntity;
+import net.farkas.wildaside.entity.custom.vibrion.MucellithEntity;
 import net.farkas.wildaside.item.ModItems;
+import net.farkas.wildaside.network.WindSavedData;
 import net.farkas.wildaside.potion.ModPotions;
 import net.farkas.wildaside.util.AdvancementHandler;
 import net.farkas.wildaside.util.ContaminationHandler;
-import net.farkas.wildaside.util.HickoryColour;
+import net.farkas.wildaside.util.WindManager;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.PackLocationInfo;
@@ -30,20 +35,17 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -51,17 +53,17 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
-import net.neoforged.neoforge.event.village.WandererTradesEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.List;
 import java.util.Optional;
 
 @EventBusSubscriber(modid = WildAside.MOD_ID)
@@ -99,6 +101,12 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.MUCELLITH.get(), MucellithEntity.createAttributes().build());
+        event.put(ModEntities.HICKORY_TREANT.get(), HickoryTreantEntity.createAttributes().build());
+    }
+
+    @SubscribeEvent
     public static void onRegisterSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         ModEntitySpawns.registerSpawnPlacements(event);
     }
@@ -106,7 +114,7 @@ public class ModEvents {
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-        ContaminationCommand.register(dispatcher);
+        ModCommands.register(dispatcher);
     }
 
     @SubscribeEvent
@@ -127,48 +135,45 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void addCustomTrades(VillagerTradesEvent event) {
-        if (event.getType() == VillagerProfession.FARMER) {
-            ItemStack emerald = new ItemStack(Items.EMERALD);
+    public static void onWorldLoad(LevelEvent.Load event) {
+        loadWind(event);
+    }
 
-            event.getTrades().get(2).add((pTrader, pRandom) -> new MerchantOffer(
-                    new ItemCost(ModItems.HICKORY_NUT.get(), 16), emerald, 20, 2, 0.05f
-            ));
-            for (HickoryColour colour : HickoryColour.values()) {
-                event.getTrades().get(2).add((pTrader, pRandom) -> new MerchantOffer(
-                        new ItemCost(ModItems.LEAF_ITEMS.get(colour).get(), 32), emerald, 20, 2, 0.05f
-                ));
-            }
-        }
+    public static void loadWind(LevelEvent.Load event) {
+        if (!(event.getLevel() instanceof ServerLevel serverLevel)) return;
+        if (!serverLevel.dimension().equals(ServerLevel.OVERWORLD)) return;
 
-        if (event.getType() == VillagerProfession.TOOLSMITH) {
-            event.getTrades().get(3).add((pTrader, pRandom) -> new MerchantOffer(
-                    new ItemCost(Items.EMERALD, 6), new ItemStack(ModItems.ENTORIUM_PILL.get()), 2, 5, 0.06f
-            ));
+        WindSavedData data = WindSavedData.get(serverLevel);
 
-        }
+        Vec3 dir = data.getWindDirection();
+        float strength = data.getWindStrength();
+
+        WindManager.setWind(dir, strength);
     }
 
     @SubscribeEvent
-    public static void addCustomWanderingTrades(WandererTradesEvent event) {
-        List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
-        //List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
+    public static void onServerTick(ServerTickEvent.Post event) {
+        manageWeather(event);
+    }
 
-        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 4), new ItemStack(ModBlocks.HICKORY_SAPLING.get()), 8, 2, 0.03f
-        ));
-        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 5), new ItemStack(ModBlocks.RED_GLOWING_HICKORY_SAPLING.get()), 8, 2, 0.03f
-        ));
-        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 5), new ItemStack(ModBlocks.BROWN_GLOWING_HICKORY_SAPLING.get()), 8, 2, 0.03f
-        ));
-        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 5), new ItemStack(ModBlocks.YELLOW_GLOWING_HICKORY_SAPLING.get()), 8, 2, 0.03f
-        ));
-        genericTrades.add((pTrader, pRandom) -> new MerchantOffer(
-                new ItemCost(Items.EMERALD, 5), new ItemStack(ModBlocks.GREEN_GLOWING_HICKORY_SAPLING.get()), 8, 2, 0.03f
-        ));
+    public static void manageWeather(ServerTickEvent.Post event) {
+        MinecraftServer server = event.getServer();
+        ServerLevel overworld = server.getLevel(Level.OVERWORLD);
+        if (overworld == null) return;
+
+        WindSavedData weatherData = WindSavedData.get(overworld);
+
+        boolean raining = overworld.isRaining();
+        boolean thundering = overworld.isThundering();
+
+        if (raining != weatherData.wasRaining() || thundering != weatherData.wasThundering()) {
+            WindManager.calculateAndSetWind(overworld, false);
+        }
+
+        int time = 1200;
+        if (server.getTickCount() % time == 0) {
+            WindManager.calculateAndSetWind(overworld, true);
+        }
     }
 
     @SubscribeEvent
@@ -242,8 +247,10 @@ public class ModEvents {
     public static void onContaminationEffectExpired(MobEffectEvent.Expired event) {
         LivingEntity entity = event.getEntity();
         MobEffectInstance mobEffectInstance = event.getEffectInstance();
+
         if (mobEffectInstance != null && mobEffectInstance.getEffect() == ModMobEffects.CONTAMINATION.getDelegate()) {
-            entity.addEffect(new MobEffectInstance(ModMobEffects.IMMUNITY.getDelegate(), (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
+            Holder<MobEffect> immunity = ModMobEffects.IMMUNITY.getDelegate();
+            entity.addEffect(new MobEffectInstance(immunity, (mobEffectInstance.getAmplifier() + 1 ) * 5 * 20, mobEffectInstance.getAmplifier()));
         }
     }
 
@@ -254,6 +261,7 @@ public class ModEvents {
     }
 
     public static void spreadContaminationOnCriticalHit(CriticalHitEvent event) {
+        if (event.getEntity().level().isClientSide()) return;
         Holder<MobEffect> contamEffect = ModMobEffects.CONTAMINATION.getDelegate();
 
         Player attacker = event.getEntity();
@@ -276,6 +284,7 @@ public class ModEvents {
 
     public static void passiveContaminationDoseReduction(LivingBreatheEvent event) {
         LivingEntity entity = event.getEntity();
+        if (entity.level().isClientSide()) return;
         entity.getData(ModAttachments.CONTAMINATION).addDose(-10);
     }
 }
