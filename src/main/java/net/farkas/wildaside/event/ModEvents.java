@@ -80,7 +80,7 @@ public class ModEvents {
         ModContainer mod = ModList.get().getModContainerById(WildAside.MOD_ID).orElse(null);
         if (mod == null || event.getPackType() != PackType.CLIENT_RESOURCES) return;
 
-        String id = "wildaside_ce";
+        String id = "wildaside_legacy";
 
         Pack.ResourcesSupplier supplier;
         supplier = new PathPackResources.PathResourcesSupplier(
@@ -88,7 +88,7 @@ public class ModEvents {
 
         PackLocationInfo location = new PackLocationInfo(
                 id,
-                Component.literal("Wild Aside CEntertain"),
+                Component.literal("Wild Aside Legacy"),
                 PackSource.DEFAULT,
                 Optional.empty());
 
