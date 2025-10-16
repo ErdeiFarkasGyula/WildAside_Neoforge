@@ -72,7 +72,11 @@ public class WildAside {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ModTerraBlenderAPI.registerRegions();
+
             ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant(ModBlocks.VIBRION_GROWTH.getId(), ModBlocks.POTTED_VIBRION_GROWTH);
+            ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant(ModBlocks.SPOTTED_WINTERGREEN.getId(), ModBlocks.POTTED_SPOTTED_WINTERGREEN);
+            ((FlowerPotBlock)Blocks.FLOWER_POT).addPlant(ModBlocks.PINKSTER_FLOWER.getId(), ModBlocks.POTTED_PINKSTER_FLOWER);
+
             DispenserBlock.registerBehavior(ModItems.FERTILISER_BOMB.get(), new ProjectileDispenseBehavior(ModItems.FERTILISER_BOMB.get()));
             DispenserBlock.registerBehavior(ModItems.SPORE_BOMB.get(), new ProjectileDispenseBehavior(ModItems.SPORE_BOMB.get()));
             DispenserBlock.registerBehavior(ModItems.SPORE_ARROW.get(), new ProjectileDispenseBehavior(ModItems.SPORE_ARROW.get()));

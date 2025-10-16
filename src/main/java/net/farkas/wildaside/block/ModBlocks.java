@@ -348,9 +348,13 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> SPOTTED_WINTERGREEN = registerBlock("spotted_wintergreen",
             () -> new FlowerBlock(MobEffects.MOVEMENT_SPEED, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
+    public static final DeferredBlock<Block> POTTED_SPOTTED_WINTERGREEN = BLOCKS.register("potted_spotted_wintergreen",
+            () ->  new FlowerPotBlock(() -> (FlowerPotBlock)Blocks.FLOWER_POT, ModBlocks.SPOTTED_WINTERGREEN, BlockBehaviour.Properties.ofFullCopy(ModBlocks.POTTED_VIBRION_GROWTH.get()).mapColor(MapColor.TERRACOTTA_WHITE)));
+
     public static final DeferredBlock<Block> PINKSTER_FLOWER = registerBlock("pinkster_flower",
             () -> new FlowerBlock(MobEffects.CONFUSION, 10, BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TULIP)));
-
+    public static final DeferredBlock<Block> POTTED_PINKSTER_FLOWER = BLOCKS.register("potted_pinkster_flower",
+            () ->  new FlowerPotBlock(() -> (FlowerPotBlock)Blocks.FLOWER_POT, ModBlocks.PINKSTER_FLOWER, BlockBehaviour.Properties.ofFullCopy(ModBlocks.POTTED_VIBRION_GROWTH.get()).mapColor(MapColor.COLOR_PINK)));
 
     public static final DeferredBlock<Block> HICKORY_LEAVES = registerBlock("hickory_leaves",
             () -> new HickoryLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)));
@@ -404,7 +408,6 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> HICKORY_ROOT_BUSH = registerBlock("hickory_root_bush",
             () -> new RootBushBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.SWEET_BERRY_BUSH).strength(0.5f)));
-
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> blockObj = BLOCKS.register(name, block);
