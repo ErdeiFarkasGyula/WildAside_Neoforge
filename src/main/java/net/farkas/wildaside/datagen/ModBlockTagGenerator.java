@@ -37,6 +37,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.SPORE_BLASTER.get())
                 .add(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())
                 .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_STAIRS.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_SLAB.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_BUTTON.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_PRESSURE_PLATE.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_WALLS.get())
                 .add(ModBlocks.CHISELED_SUBSTILIUM_SOIL.get())
                 .add(ModBlocks.SUBSTILIUM_TILES.get())
                 .add(ModBlocks.CRACKED_SUBSTILIUM_TILES.get())
@@ -125,18 +130,22 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
         //
         this.tag(BlockTags.STAIRS)
                 .add(ModBlocks.SUBSTILIUM_STAIRS.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_STAIRS.get())
                 .add(ModBlocks.SUBSTILIUM_TILE_STAIRS.get())
                 .add(ModBlocks.HICKORY_STAIRS.get());
         this.tag(BlockTags.SLABS)
                 .add(ModBlocks.SUBSTILIUM_SLAB.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_SLAB.get())
                 .add(ModBlocks.SUBSTILIUM_TILE_SLAB.get())
                 .add(ModBlocks.HICKORY_SLAB.get());
         this.tag(BlockTags.BUTTONS)
                 .add(ModBlocks.SUBSTILIUM_BUTTON.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_BUTTON.get())
                 .add(ModBlocks.SUBSTILIUM_TILE_BUTTON.get())
                 .add(ModBlocks.HICKORY_BUTTON.get());
         this.tag(BlockTags.PRESSURE_PLATES)
                 .add(ModBlocks.SUBSTILIUM_PRESSURE_PLATE.get())
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_PRESSURE_PLATE.get())
                 .add(ModBlocks.SUBSTILIUM_TILE_PRESSURE_PLATE.get())
                 .add(ModBlocks.HICKORY_PRESSURE_PLATE.get());
         this.tag(BlockTags.DOORS)
@@ -173,6 +182,7 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.SUBSTILIUM_FENCE_GATE.get())
                 .add(ModBlocks.HICKORY_FENCE_GATE.get());
         this.tag(BlockTags.WALLS)
+                .add(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_WALLS.get())
                 .add(ModBlocks.SUBSTILIUM_TILE_WALLS.get());
 
         this.tag(BlockTags.LOGS_THAT_BURN)

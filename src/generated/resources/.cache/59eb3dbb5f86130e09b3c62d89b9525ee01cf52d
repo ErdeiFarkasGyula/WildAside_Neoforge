@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-16T20:51:17.8566006	Loot Tables
+// 1.21.1	2025-10-16T21:40:13.2952259	Loot Tables
 cb111f4aa2094610caccd6c93bb58846842f1adf data/wildaside/loot_table/blocks/bioengineering_workstation.json
 42cc3917d8996867c8ff82d5599d5f9101a60f12 data/wildaside/loot_table/blocks/brown_glowing_hickory_leaves.json
 806c305e5b6bdf1e690e0d5df8ae5f63031a6a21 data/wildaside/loot_table/blocks/brown_glowing_hickory_sapling.json
@@ -44,6 +44,11 @@ c0b68b94aa45a7c9707a0d5ff6c24fd3750968f7 data/wildaside/loot_table/blocks/potted
 b1634525cd2d4334adf341e8ee8e2a162e445440 data/wildaside/loot_table/blocks/red_glowing_hickory_leaves.json
 e928ca40de410c55fa7ae34dc96f758f5d6ed7a7 data/wildaside/loot_table/blocks/red_glowing_hickory_sapling.json
 ead2a9edc65fa4962636d9f1c3c16db608af54e9 data/wildaside/loot_table/blocks/smooth_substilium_soil.json
+41a4ccadb5c3724a0cefe84496cd26229e5b8d1f data/wildaside/loot_table/blocks/smooth_substilium_soil_button.json
+9874cb7558f3233b86508943ef1e322220b410ff data/wildaside/loot_table/blocks/smooth_substilium_soil_pressure_plate.json
+dfa1a3cadc156cf5ea36b6f6939d426bc0f0eb94 data/wildaside/loot_table/blocks/smooth_substilium_soil_slab.json
+53cd948574af81c679a531ce36f146e8327827c4 data/wildaside/loot_table/blocks/smooth_substilium_soil_stairs.json
+f65edb8b719119f5cd5cf1e214ea0974724baf97 data/wildaside/loot_table/blocks/smooth_substilium_soil_walls.json
 76bc0673fde3ed2d091f046180680af35935fcc9 data/wildaside/loot_table/blocks/spore_blaster.json
 c3486c9600e2530973aebeb3b2a64c57b7ebb45b data/wildaside/loot_table/blocks/spotted_wintergreen.json
 cf70d33fdd34abe813646879c3c6a4c0fc96db44 data/wildaside/loot_table/blocks/stripped_hickory_log.json
