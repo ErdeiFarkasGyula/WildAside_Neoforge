@@ -281,6 +281,5 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         hangingSign(recipeOutput, hang_sign, blocks.get(4));
         woodenBoat(recipeOutput, boat, blocks.get(4));
         chestBoat(recipeOutput, chest_boat, blocks.get(15));
-
     }
 }

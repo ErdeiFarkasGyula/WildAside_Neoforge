@@ -207,17 +207,18 @@ public class ModBlocks {
     public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_SLAB = registerBlock("smooth_substilium_soil_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SMOOTH_SUBSTILIUM_SOIL.get())));
 
-    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_BUTTON = registerBlock("smooth_substilium_soil_button",
-            () -> new ButtonBlock(BlockSetType.STONE, 20, BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_WALLS = registerBlock("smooth_substilium_soil_walls",
+            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SMOOTH_SUBSTILIUM_SOIL.get())));
+
+    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_PRESSURE_PLATE = registerBlock("smooth_substilium_soil_pressure_plate",
+            () -> new PressurePlateBlock(BlockSetType.STONE, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_CYAN)
                     .sound(SoundType.DEEPSLATE)
                     .strength(1, 12)));
 
-    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_PRESSURE_PLATE = registerBlock("smooth_substilium_soil_pressure_plate",
-            () -> new PressurePlateBlock(BlockSetType.STONE, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_BUTTON.get())));
-
-    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_WALLS = registerBlock("smooth_substilium_soil_walls",
-            () -> new WallBlock(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SMOOTH_SUBSTILIUM_SOIL.get())));
+    public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL_BUTTON = registerBlock("smooth_substilium_soil_button",
+            () -> new ButtonBlock(BlockSetType.STONE, 20,
+                    BlockBehaviour.Properties.ofFullCopy(ModBlocks.SMOOTH_SUBSTILIUM_SOIL_PRESSURE_PLATE.get())));
 
     public static final DeferredBlock<Block> CHISELED_SUBSTILIUM_SOIL = registerBlock("chiseled_substilium_soil",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));

@@ -148,16 +148,6 @@ public class ModItemModelProvider extends ItemModelProvider {
                 modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath()));
     }
 
-    public void trapdoorItem(DeferredBlock<Block> block) {
-        this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(),
-                modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath() + "_bottom"));
-    }
-
-    public void spawenegg(DeferredBlock<Block> block) {
-        this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(),
-                modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath() + "_bottom"));
-    }
-
 
     private ItemModelBuilder simpleBlockItem(DeferredBlock<Block> item) {
         return withExistingParent(item.getId().getPath(),
@@ -177,15 +167,15 @@ public class ModItemModelProvider extends ItemModelProvider {
                 ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,"block/" + item.getId().getPath()));
     }
 
-    private ItemModelBuilder saplingItem(DeferredBlock<Block> item) {
+    private ItemModelBuilder handheldItem(DeferredItem<?> item) {
         return withExistingParent(item.getId().getPath(),
-                ResourceLocation.parse("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,"block/" + item.getId().getPath()));
+                ResourceLocation.parse("item/handheld")).texture("layer0",
+                ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,"item/" + item.getId().getPath()));
     }
 
-    public void buttonItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/button_inventory"))
-                .texture("texture",  ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,
+    public void wallItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
+                .texture("wall",  ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,
                         "block/" + baseBlock.getId().getPath()));
     }
 
@@ -195,15 +185,15 @@ public class ModItemModelProvider extends ItemModelProvider {
                         "block/" + baseBlock.getId().getPath()));
     }
 
-    public void wallItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
-        this.withExistingParent(block.getId().getPath(), mcLoc("block/wall_inventory"))
-                .texture("wall",  ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,
+    public void buttonItem(DeferredBlock<?> block, DeferredBlock<Block> baseBlock) {
+        this.withExistingParent(block.getId().getPath(), mcLoc("block/button_inventory"))
+                .texture("texture",  ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,
                         "block/" + baseBlock.getId().getPath()));
     }
 
-    private ItemModelBuilder handheldItem(DeferredItem<?> item) {
-        return withExistingParent(item.getId().getPath(),
-                ResourceLocation.parse("item/handheld")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID,"item/" + item.getId().getPath()));
+    public void trapdoorItem(DeferredBlock<Block> block) {
+        this.withExistingParent(BuiltInRegistries.BLOCK.getKey(block.get()).getPath(),
+                modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block.get()).getPath() + "_bottom"));
     }
+
 }
