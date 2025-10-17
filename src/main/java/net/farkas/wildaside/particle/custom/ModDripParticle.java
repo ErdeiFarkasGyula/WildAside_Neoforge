@@ -31,7 +31,7 @@ public class ModDripParticle extends TextureSheetParticle {
         super(level, x, y, z);
         this.setSize(0.01f, 0.01f);
         this.lifetime = hangTime + stretchTime + 60 + this.random.nextInt(20);
-        this.gravity = 0f;
+        this.gravity = 0.0f;
         this.pickSprite(spriteSet);
     }
 

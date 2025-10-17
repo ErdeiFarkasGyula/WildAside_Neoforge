@@ -140,6 +140,7 @@ public class FallenHickoryLeavesBlock extends Block {
     @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         super.tick(pState, pLevel, pPos, pRandom);
+
         if (pLevel.isClientSide() || pState.getValue(FallenHickoryLeavesBlock.FIXED_LIGHTING) || pState.getValue(FallenHickoryLeavesBlock.COLOUR) == HickoryColour.HICKORY) return;
 
         int maxLight = pState.getValue(COUNT);

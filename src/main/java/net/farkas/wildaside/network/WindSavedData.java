@@ -27,7 +27,6 @@ public class WindSavedData extends SavedData {
 
     public WindSavedData() {}
 
-
     @Override
     public CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider provider) {
         compoundTag.putBoolean("lastRaining", lastRaining);

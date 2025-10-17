@@ -2,6 +2,7 @@
   "name": "Overgrown Entorium ore",
   "icon": "wildaside:overgrown_entorium_ore",
   "category": "wildaside:blocks",
+  "advancement": "wildaside:its_shearing_time",
   "pages": [
     {
       "type": "patchouli:spotlight",

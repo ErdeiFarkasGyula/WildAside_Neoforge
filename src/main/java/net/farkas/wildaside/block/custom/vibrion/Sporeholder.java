@@ -48,7 +48,6 @@ public class Sporeholder extends SaplingBlock {
         }
     }
 
-
     private void applySporeCloud(ServerLevel level, BlockPos center) {
         int radius = 2;
         RandomSource rand = level.getRandom();

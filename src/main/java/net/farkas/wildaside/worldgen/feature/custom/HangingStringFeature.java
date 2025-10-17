@@ -77,7 +77,7 @@ public class HangingStringFeature extends Feature<SimpleBlockConfiguration> {
 
         double length = startVec.distance(endVec);
         int steps = (int)(length * 3);
-        
+
         for (int i = 0; i <= steps; i++) {
             double t = i / (double) steps;
 
