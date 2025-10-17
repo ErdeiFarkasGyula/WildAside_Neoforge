@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-16T20:45:11.07122	Registries
+// 1.21.1	2025-10-17T18:48:19.9472946	Registries
 654b809341e19d9c597443bba7cdc8f35dbdcaab data/wildaside/worldgen/biome/glowing_hickory_forest.json
 bdac7c20cc48fc98b33d66d825036c6fdac9a71c data/wildaside/worldgen/biome/hickory_forest.json
 a7a16ed6870d0f7bf7a9998827668d743be81f76 data/wildaside/worldgen/biome/vibrion_hive.json
@@ -58,7 +58,7 @@ d09a8d91432495c1a9f487fd5ae452e3e2d2f9a3 data/wildaside/worldgen/placed_feature/
 321aac5693db3be2a1940bad2a7c3f84cd7b300f data/wildaside/worldgen/placed_feature/hanging_vibrion_vines.json
 6fff5e198f1f94393bd5f72a04c7c272c649596a data/wildaside/worldgen/placed_feature/hickory_bush.json
 8d7a1ba06c43ea4fa20af12af84715837d8b12e1 data/wildaside/worldgen/placed_feature/hickory_sapling.json
-fa0c2597ad166b84cb51c17d1638a11ac85bfd36 data/wildaside/worldgen/placed_feature/hickory_tree.json
+143985b7b3cfe3c86c74e1b425879939d69e8dcc data/wildaside/worldgen/placed_feature/hickory_tree.json
 765ae97903a9d3d02307dca70f7172352058ad13 data/wildaside/worldgen/placed_feature/large_substilium_mushroom.json
 b1fadef2a8eb24e22143c2986f0827c34ab87b8c data/wildaside/worldgen/placed_feature/natural_spore_blaster.json
 a5be93f3e60520a57a1eee5e39337af40a4ffb04 data/wildaside/worldgen/placed_feature/overgrown_entorium_ore.json

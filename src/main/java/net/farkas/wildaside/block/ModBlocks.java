@@ -404,6 +404,7 @@ public class ModBlocks {
                     .noOcclusion()
                     .instabreak()
                     .replaceable()
+                    .offsetType(BlockBehaviour.OffsetType.XZ)
                     .pushReaction(PushReaction.DESTROY)));
 
     public static final DeferredBlock<Block> HICKORY_SAPLING = registerBlock("hickory_sapling",
