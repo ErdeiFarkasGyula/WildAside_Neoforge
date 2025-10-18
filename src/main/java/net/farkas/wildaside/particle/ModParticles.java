@@ -39,6 +39,9 @@ public class ModParticles {
     public static final Supplier<SimpleParticleType> GREEN_GLOWING_HICKORY_LEAF_PARTICLE =
             PARTICLES.register("green_glowing_hickory_leaf_particle", () -> new SimpleParticleType(true));
 
+    public static final Supplier<SimpleParticleType> WIND_PARTICLE =
+            PARTICLES.register("wind_particle", () -> new SimpleParticleType(true));
+
     public static final EnumMap<HickoryColour, Supplier<SimpleParticleType>> HICKORY_PARTICLES = new EnumMap<>(HickoryColour.class);
     static {
         HICKORY_PARTICLES.put(HickoryColour.HICKORY, HICKORY_LEAF_PARTICLE);

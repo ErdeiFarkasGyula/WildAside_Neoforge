@@ -90,6 +90,7 @@ public class ModClientEvents {
         event.registerSpriteSet(ModParticles.BROWN_GLOWING_HICKORY_LEAF_PARTICLE.get(), FallingHickoryLeafParticle.Provider::new);
         event.registerSpriteSet(ModParticles.YELLOW_GLOWING_HICKORY_LEAF_PARTICLE.get(), FallingHickoryLeafParticle.Provider::new);
         event.registerSpriteSet(ModParticles.GREEN_GLOWING_HICKORY_LEAF_PARTICLE.get(), FallingHickoryLeafParticle.Provider::new);
+        event.registerSpriteSet(ModParticles.WIND_PARTICLE.get(), WindParticle.Provider::new);
     }
 
     @SubscribeEvent

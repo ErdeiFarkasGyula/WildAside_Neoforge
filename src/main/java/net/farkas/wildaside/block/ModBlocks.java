@@ -197,6 +197,9 @@ public class ModBlocks {
     public static final DeferredBlock<Block> POTION_BLASTER = registerBlock("potion_blaster",
             () -> new PotionBlaster(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SPORE_BLASTER.get())));
 
+    public static final DeferredBlock<Block> WIND_BLASTER = registerBlock("wind_blaster",
+            () -> new WindBlaster(BlockBehaviour.Properties.ofFullCopy(ModBlocks.SPORE_BLASTER.get())));
+
     public static final DeferredBlock<Block> SMOOTH_SUBSTILIUM_SOIL = registerBlock("smooth_substilium_soil",
             () -> new Block(BlockBehaviour.Properties.ofFullCopy(ModBlocks.COMPRESSED_SUBSTILIUM_SOIL.get())));
 

@@ -1,4 +1,4 @@
-// 1.21.1	2025-10-16T21:40:13.2952259	Loot Tables
+// 1.21.1	2025-10-18T13:39:51.3258603	Loot Tables
 cb111f4aa2094610caccd6c93bb58846842f1adf data/wildaside/loot_table/blocks/bioengineering_workstation.json
 42cc3917d8996867c8ff82d5599d5f9101a60f12 data/wildaside/loot_table/blocks/brown_glowing_hickory_leaves.json
 806c305e5b6bdf1e690e0d5df8ae5f63031a6a21 data/wildaside/loot_table/blocks/brown_glowing_hickory_sapling.json
@@ -92,5 +92,6 @@ c954d9091f9890503a966363a52606b939180edd data/wildaside/loot_table/blocks/vibrio
 9ec04c69e33e9ee007a52227cc911eef5b4cf23b data/wildaside/loot_table/blocks/vibrion_glass_pane.json
 5f9a5037c85ecfa0fcafc9688b908daecbde238c data/wildaside/loot_table/blocks/vibrion_growth.json
 8b5a7588bff44347fe97a36a4705b767f06eeae5 data/wildaside/loot_table/blocks/vibrion_sporeholder.json
+b7bc97bc850643979cd8c1bb73e9354e5d2102c3 data/wildaside/loot_table/blocks/wind_blaster.json
 c0918049b789c8a0e303bef37a6c7cd607bc5014 data/wildaside/loot_table/blocks/yellow_glowing_hickory_leaves.json
 d94a429ff906bb4fed9b137684c9509b6cb3ee6e data/wildaside/loot_table/blocks/yellow_glowing_hickory_sapling.json

@@ -42,7 +42,7 @@ public class ModBlockEntities {
 
     public static final Supplier<BlockEntityType<WindBlasterBlockEntity>> WIND_BLASTER =
             BLOCK_ENTITIES.register("wind_blaster",
-                    () -> BlockEntityType.Builder.of(WindBlasterBlockEntity::new, ModBlocks.POTION_BLASTER.get()).build(null));
+                    () -> BlockEntityType.Builder.of(WindBlasterBlockEntity::new, ModBlocks.WIND_BLASTER.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
