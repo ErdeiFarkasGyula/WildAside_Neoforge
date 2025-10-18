@@ -87,7 +87,6 @@ public class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> PODZOL_VEIN = registerKey("podzol_vein");
 
-
     public static final EnumMap<HickoryColour, Vector2f> HICKORY_NOISES = new EnumMap<>(HickoryColour.class);
     static {
         HICKORY_NOISES.put(HickoryColour.HICKORY, null);
