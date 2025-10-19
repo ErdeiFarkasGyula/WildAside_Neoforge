@@ -44,6 +44,7 @@ public class WildAside {
 
     public WildAside(IEventBus modEventBus, ModContainer modContainer) {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
 
         ModCreativeModeTabs.register(modEventBus);
         ModAttachments.register(modEventBus);
