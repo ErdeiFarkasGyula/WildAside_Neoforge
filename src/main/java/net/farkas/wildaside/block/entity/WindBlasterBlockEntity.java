@@ -134,13 +134,13 @@ public class WindBlasterBlockEntity extends BlasterBlockEntity {
                     if (rand.nextFloat() < 0.8f) {
                         world.sendParticles(ModParticles.WIND_PARTICLE.get(),
                                 particlePos.x, particlePos.y, particlePos.z, 1,
-                                facing.getStepX() * speed, facing.getStepY() * speed, facing.getStepZ() * speed, 0.0);
+                                facing.getStepX(), facing.getStepY(), facing.getStepZ(), 0.0);
                     }
-                    if (rand.nextFloat() < 0.2f) {
-                        world.sendParticles(ParticleTypes.POOF,
-                                particlePos.x, particlePos.y, particlePos.z, 1,
-                                facing.getStepX() * 0.02, facing.getStepY() * 0.02, facing.getStepZ() * 0.02, 0.0);
-                    }
+//                    if (rand.nextFloat() < 0.2f) {
+//                        world.sendParticles(ParticleTypes.POOF,
+//                                particlePos.x, particlePos.y, particlePos.z, 1,
+//                                facing.getStepX() * 0.02, facing.getStepY() * 0.02, facing.getStepZ() * 0.02, 0.0);
+//                    }
                 }
             }
 
