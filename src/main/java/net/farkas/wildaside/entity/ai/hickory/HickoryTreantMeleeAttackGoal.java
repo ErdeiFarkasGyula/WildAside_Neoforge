@@ -1,9 +1,11 @@
 package net.farkas.wildaside.entity.ai.hickory;
 
 import net.farkas.wildaside.entity.custom.hickory.HickoryTreantEntity;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.EnumSet;
 
@@ -13,7 +15,7 @@ public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
 
     public HickoryTreantMeleeAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         this.entity = (HickoryTreantEntity) mob;
     }
 
@@ -22,8 +24,7 @@ public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
         LivingEntity target = entity.getTarget();
         if (target == null || !target.isAlive()) return false;
         double distance = entity.distanceTo(target);
-//        return distance >= 0 && distance <= maxRange;
-        return true;
+        return distance <= maxRange;
     }
 
     @Override
@@ -31,14 +32,14 @@ public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
         return canUse();
     }
 
-    //    @Override
-//    protected void checkAndPerformAttack(LivingEntity enemy, double distSqr) {
-//        double reach = this.mob.getBbWidth() * 2.0F + enemy.getBbWidth();
-//        if (distSqr <= reach * reach) {
-//            if (this.mob instanceof HickoryTreantEntity entity) {
-//                entity.doRootingSlam(enemy);
-//                this.resetAttackCooldown();
-//            }
-//        }
-//    }
+
+    @Override
+    protected void checkAndPerformAttack(LivingEntity target) {
+        if (this.canPerformAttack(target)) {
+            this.resetAttackCooldown();
+            this.mob.swing(InteractionHand.MAIN_HAND);
+            this.mob.swing(InteractionHand.OFF_HAND);
+            this.mob.doHurtTarget(target);
+        }
+    }
 }
