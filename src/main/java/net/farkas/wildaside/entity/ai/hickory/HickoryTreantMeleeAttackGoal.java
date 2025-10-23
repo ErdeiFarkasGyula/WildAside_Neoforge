@@ -31,15 +31,4 @@ public class HickoryTreantMeleeAttackGoal extends MeleeAttackGoal {
     public boolean canContinueToUse() {
         return canUse();
     }
-
-
-    @Override
-    protected void checkAndPerformAttack(LivingEntity target) {
-        if (this.canPerformAttack(target)) {
-            this.resetAttackCooldown();
-            this.mob.swing(InteractionHand.MAIN_HAND);
-            this.mob.swing(InteractionHand.OFF_HAND);
-            this.mob.doHurtTarget(target);
-        }
-    }
 }
