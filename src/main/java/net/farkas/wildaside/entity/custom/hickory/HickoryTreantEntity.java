@@ -160,7 +160,6 @@ public class HickoryTreantEntity extends Monster {
                     this.getJumpControl().jump();
                 }
             }
-
         }
     }
 
