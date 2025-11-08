@@ -18,7 +18,7 @@ public class ModMobEffects {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, WildAside.MOD_ID);
 
     public static final Holder<MobEffect> CONTAMINATION = MOB_EFFECTS.register("contamination",
-            () -> new Contamination(MobEffectCategory.HARMFUL, -6184663)
+            () -> new Contamination(MobEffectCategory.HARMFUL, 0xefca73)
                     .addAttributeModifier(Attributes.ARMOR, ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "contamination_armor_reduction"), -0.10 , AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
                     .addAttributeModifier(Attributes.ATTACK_DAMAGE, ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "contamination_damage_reduction"), -0.10 , AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
                     .addAttributeModifier(Attributes.SPAWN_REINFORCEMENTS_CHANCE, ResourceLocation.fromNamespaceAndPath(WildAside.MOD_ID, "contamination_reinforcement_boost"), 0.01, AttributeModifier.Operation.ADD_VALUE)

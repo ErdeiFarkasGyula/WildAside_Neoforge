@@ -292,7 +292,7 @@ public class ModBlocks {
                     Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> SUBSTILIUM_DOOR = registerBlock("substilium_door",
-            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get())));
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> SUBSTILIUM_TRAPDOOR = registerBlock("substilium_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.SUBSTILIUM_PLANKS.get()).noOcclusion()));
@@ -354,7 +354,7 @@ public class ModBlocks {
                     Optional.of(SoundEvents.FENCE_GATE_OPEN), Optional.of(SoundEvents.FENCE_GATE_CLOSE)));
 
     public static final DeferredBlock<Block> HICKORY_DOOR = registerBlock("hickory_door",
-            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get())));
+            () -> new DoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).noOcclusion()));
 
     public static final DeferredBlock<Block> HICKORY_TRAPDOOR = registerBlock("hickory_trapdoor",
             () -> new TrapDoorBlock(BlockSetType.OAK, BlockBehaviour.Properties.ofFullCopy(ModBlocks.HICKORY_PLANKS.get()).noOcclusion()));

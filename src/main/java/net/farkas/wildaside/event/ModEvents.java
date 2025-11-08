@@ -147,6 +147,9 @@ public class ModEvents {
         manageWeather(event);
     }
 
+    private static final int regularTime = 400;
+    private static int irregularTime = 670;
+
     public static void manageWeather(ServerTickEvent.Post event) {
         MinecraftServer server = event.getServer();
         ServerLevel overworld = server.getLevel(Level.OVERWORLD);
@@ -161,8 +164,13 @@ public class ModEvents {
             WindManager.calculateAndSetWind(overworld, false);
         }
 
-        int time = 1200;
-        if (server.getTickCount() % time == 0) {
+        int tickCount = server.getTickCount();;
+
+        if (server.getTickCount() % regularTime == 0) {
+            WindManager.calculateAndSetWind(overworld, true);
+            irregularTime = overworld.random.nextInt(40, 140);
+        }
+        else if (tickCount % irregularTime == 0) {
             WindManager.calculateAndSetWind(overworld, true);
         }
     }

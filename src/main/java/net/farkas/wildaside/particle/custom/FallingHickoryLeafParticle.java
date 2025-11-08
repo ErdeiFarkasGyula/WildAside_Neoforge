@@ -26,6 +26,8 @@ public class FallingHickoryLeafParticle extends TextureSheetParticle {
     private final float driftAmplitudeZ;
     private final float rollAmplitude;
 
+    private static final double windInfluence = 0.05;
+
     protected FallingHickoryLeafParticle(ClientLevel world, double x, double y, double z, double vx, double vy, double vz, SpriteSet spriteSet) {
         super(world, x, y, z);
         this.phaseOffset = level.random.nextFloat() * (float)Math.PI * 2;
@@ -34,8 +36,8 @@ public class FallingHickoryLeafParticle extends TextureSheetParticle {
         this.rollAmplitude = 0.5f + level.random.nextFloat() * 0.5f;
         this.setSize(0.2f, 0.2f);
         this.quadSize = (this.random.nextFloat() + 1) / 4f;
-        this.lifetime = 1024;
-        this.gravity = 0.05f + level.random.nextFloat() * 0.02f;
+        this.lifetime = 1000;
+        this.gravity = 0.05f + level.random.nextFloat() * 0.125f;
         this.hasPhysics = true;
 
         this.xd = vx * 0.1;
@@ -57,7 +59,7 @@ public class FallingHickoryLeafParticle extends TextureSheetParticle {
 
         Vec3 wind = ClientWindData.getWind();
 
-        double windInfluence = 0.025;
+        double windInfluence = 0.035;
         this.xd += wind.x * windInfluence;
         this.yd += wind.y * windInfluence;
         this.zd += wind.z * windInfluence;
